@@ -1,0 +1,22 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+*, :after, :before{
+  box-sizing: border-box;
+}
+html{
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+body{
+  color: $character-fontColor-blackMaximum;
+  font-family: $font-family-main;
+  .Toastify__toast-container {
+    .Toastify__toast{
+      height: 80px;
+      font-size: 15px;
+      top: 70px;
+    }
+  }
+}
