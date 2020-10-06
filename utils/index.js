@@ -8,6 +8,13 @@ export const urlHelper = {
       to: '/'
     },
     initProps: {}
+  }),
+  getUrlSignUp: () => ({
+    layout: DefaultLayout,
+    route: {
+      to: '/sign-up'
+    },
+    initProps: {}
   })
 };
 

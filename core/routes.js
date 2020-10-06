@@ -16,4 +16,5 @@ routes.Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-routes.add('Index', '/index', 'Index');
+routes.add('Index', '/index', 'index');
+routes.add('SignUp', '/sign-up', 'sign-up');
