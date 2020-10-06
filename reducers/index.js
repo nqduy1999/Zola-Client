@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import accountReducer from './accountManaged';
+import accountData from './accountManaged';
 
-export default combineReducers({ accountReducer });
+export default combineReducers({ accountData });
