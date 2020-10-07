@@ -11,13 +11,10 @@ const createSingleRequested = (base, act) =>
     return acc;
   }, {});
 const AUTHENTICATION_TYPE = {
-  ...createRequestTypes('AUTHENTICATION', 'LOGIN'),
-  ...createRequestTypes('AUTHENTICATION', 'REGISTER'),
-  ...createRequestTypes('AUTHENTICATION', 'FORGOT_PASSWORD'),
-  ...createRequestTypes('AUTHENTICATION', 'CHANGE_PASSWORD'),
+  ...createRequestTypes('AUTHENTICATION', 'SIGNIN'),
+  ...createRequestTypes('AUTHENTICATION', 'SIGNUP'),
+  ...createSingleRequested('AUTHENTICATION', 'ACCOUNT'),
   ...createSingleRequested('AUTHENTICATION', 'REGISTER_CLEAR'),
-  ...createSingleRequested('AUTHENTICATION', 'LOGOUT'),
-  ...createSingleRequested('AUTHENTICATION', 'ACTIVE_ACCOUNT'),
-  ...createSingleRequested('AUTHENTICATION', 'IS_LOGIN')
+  ...createSingleRequested('AUTHENTICATION', 'LOGOUT')
 };
 export default AUTHENTICATION_TYPE;

@@ -5,17 +5,18 @@ const initialState = {
   isLoading: false,
   isAuthenticated: false,
   auth_token: null,
-  message: null
+  message: null,
+  data: null
 };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTHENTICATION_TYPE.LOGIN_REQUEST:
+    case AUTHENTICATION_TYPE.SIGNIN_REQUEST:
       return {
         ...state,
         isLoading: true
       };
-    case AUTHENTICATION_TYPE.LOGIN_SUCCESS:
+    case AUTHENTICATION_TYPE.SIGNIN_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -24,7 +25,7 @@ const loginReducer = (state = initialState, action) => {
         message: null,
         auth_token: action.payload
       };
-    case AUTHENTICATION_TYPE.LOGIN_FAILURE:
+    case AUTHENTICATION_TYPE.SIGNIN_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -42,48 +43,37 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false
       };
-    case AUTHENTICATION_TYPE.REGISTER_REQUEST:
+    case AUTHENTICATION_TYPE.SIGNUP_REQUEST:
       return {
         ...state,
         isLoading: true
       };
-    case AUTHENTICATION_TYPE.REGISTER_SUCCESS:
+    case AUTHENTICATION_TYPE.SIGNUP_SUCCESS:
       return {
         ...state,
         isLoading: false
       };
-    case AUTHENTICATION_TYPE.REGISTER_FAILURE:
+    case AUTHENTICATION_TYPE.SIGNUP_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        error: action.payload
+        isLoading: false
       };
-    case AUTHENTICATION_TYPE.FORGOT_PASSWORD_REQUEST:
+    case AUTHENTICATION_TYPE.ACCOUNT_REQUEST:
+      return {
+        ...state,
+        data: action.payload
+      };
+    case AUTHENTICATION_TYPE.ACTIVE_REQUEST:
       return {
         ...state,
         isLoading: true
       };
-    case AUTHENTICATION_TYPE.FORGOT_PASSWORD_SUCCESS:
+    case AUTHENTICATION_TYPE.ACTIVE_SUCCESS:
       return {
         ...state,
         isLoading: false
       };
-    case AUTHENTICATION_TYPE.FORGOT_PASSWORD_FAILURE:
-      return {
-        ...state,
-        isLoading: false
-      };
-    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        isLoading: false
-      };
-    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE:
+    case AUTHENTICATION_TYPE.ACTIVE_FAILURE:
       return {
         ...state,
         isLoading: false

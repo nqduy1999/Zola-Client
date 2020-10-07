@@ -4,14 +4,13 @@ import axiosServices from 'services/axiosServices';
 const prefix = 'accounts/';
 export const SignUpAccount = dataDispatch => dispatch => {
   dispatch({
-    type: AUTHENTICATION_TYPE.REGISTER_REQUEST
+    type: AUTHENTICATION_TYPE.SIGNUP_REQUEST
   });
-  return axiosServices.post(`${prefix}signup/phone`, dataDispatch).then(res => {
-    console.log(res);
+  return axiosServices.post(`${prefix}signup`, dataDispatch).then(res => {
     const { error, data } = res.data;
     if (error) {
       dispatch({
-        type: AUTHENTICATION_TYPE.REGISTER_FAILURE,
+        type: AUTHENTICATION_TYPE.SIGNUP_FAILURE,
         payload: {
           error,
           data
@@ -21,7 +20,34 @@ export const SignUpAccount = dataDispatch => dispatch => {
     }
     if (!error) {
       dispatch({
-        type: AUTHENTICATION_TYPE.REGISTER_SUCCESS
+        type: AUTHENTICATION_TYPE.SIGNUP_SUCCESS
+      });
+    }
+  });
+};
+export const saveAccount = dataDispatch => dispatch => {
+  dispatch({
+    type: AUTHENTICATION_TYPE.ACCOUNT_REQUEST,
+    payload: {
+      dataDispatch
+    }
+  });
+};
+export const activeAccount = dataDispatch => dispatch => {
+  dispatch({
+    type: AUTHENTICATION_TYPE.ACTIVE_REQUEST
+  });
+  return axiosServices.post(`${prefix}active`, dataDispatch).then(res => {
+    const { error, data } = res.data;
+    if (error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
+      });
+      return { error, data };
+    }
+    if (!error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
       });
     }
   });
