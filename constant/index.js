@@ -1,2 +1,2 @@
-import AUTHENTICATION_TYPE from './accountTypes/authenticationType';
+import AUTHENTICATION_TYPE from './accountTypes';
 export { AUTHENTICATION_TYPE };

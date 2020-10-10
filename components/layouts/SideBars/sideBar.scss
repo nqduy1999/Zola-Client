@@ -1,0 +1,16 @@
+.side-bar{
+    &__container{
+        .has-sider{
+            flex: 0 0 200px;
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+        }
+    }
+}
+.ant-layout-sider{
+    flex: 0 0 200px;
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+}

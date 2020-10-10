@@ -2,13 +2,14 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    .form-signup{
-        top: 100px;
-        position: relative;
-        background-color: #fff;
-        max-width: 650px;
-        margin: 0 auto;
-        box-shadow: 0 8px 24px rgba(21,48,142,0.14);
-        border-radius: 2px;
+    .sign-up{
+        &__form-signup{
+            top:100px;
+            position: relative;
+            background-color: #fff;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 8px 24px rgba(21,48,142,0.14);
+            border-radius: 2px;        }
     }
 }

@@ -1,8 +1,41 @@
 import { AUTHENTICATION_TYPE } from 'constant';
 import axiosServices from 'services/axiosServices';
+import cookiesServices from 'services/cookiesServices';
 
 const prefix = 'accounts/';
-export const SignUpAccount = dataDispatch => dispatch => {
+export const SignInAccount = (dataDispatch, push) => dispatch => {
+  dispatch({
+    type: AUTHENTICATION_TYPE.SIGNIN_REQUEST
+  });
+  return axiosServices
+    .post(`${prefix}signin`, dataDispatch)
+    .then(res => {
+      const { error, data } = res.data;
+      if (!error) {
+        cookiesServices.setToken(data);
+        push('/home');
+        dispatch({
+          type: AUTHENTICATION_TYPE.SIGNIN_SUCCESS,
+          payload: {
+            auth_token: data,
+            data: dataDispatch
+          }
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: AUTHENTICATION_TYPE.SIGNIN_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+      return error;
+    });
+};
+export const SignUp = dataDispatch => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SIGNUP_REQUEST
   });
@@ -48,6 +81,26 @@ export const activeAccount = dataDispatch => dispatch => {
     if (!error) {
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
+      });
+    }
+  });
+};
+export const sendOtp = apiDefault => dispatch => {
+  console.log(apiDefault);
+  dispatch({
+    type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
+  });
+  return axiosServices.get(`${prefix}${apiDefault}`).then(res => {
+    const { error } = res.data;
+    if (error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE
+      });
+      return { error, data };
+    }
+    if (!error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
       });
     }
   });

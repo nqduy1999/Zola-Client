@@ -23,7 +23,8 @@ const loginReducer = (state = initialState, action) => {
         isAuthenticated: true,
         error: null,
         message: null,
-        auth_token: action.payload
+        auth_token: action.payload.auth_token,
+        data: action.payload.data
       };
     case AUTHENTICATION_TYPE.SIGNIN_FAILURE:
       return {
@@ -32,7 +33,7 @@ const loginReducer = (state = initialState, action) => {
         error: action.payload.error,
         message: action.payload.data[0]
       };
-    case AUTHENTICATION_TYPE.IS_LOGIN_REQUEST:
+    case AUTHENTICATION_TYPE.IS_SIGNIN_REQUEST:
       return {
         ...state,
         isAuthenticated: true,
@@ -74,6 +75,21 @@ const loginReducer = (state = initialState, action) => {
         isLoading: false
       };
     case AUTHENTICATION_TYPE.ACTIVE_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case AUTHENTICATION_TYPE.SEND_OTP_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case AUTHENTICATION_TYPE.SEND_OTP_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case AUTHENTICATION_TYPE.SEND_OTP_FAILURE:
       return {
         ...state,
         isLoading: false

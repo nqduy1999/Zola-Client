@@ -3,7 +3,7 @@ export const MAX_CHARS = 128;
 
 export const required = (nameField, message, isRequired = true) => ({
   required: isRequired,
-  message: message || `${nameField} is required.`
+  message: message || `${nameField} không được bỏ trống.`
 });
 
 export const max = (nameField, value = MAX_CHARS, message) => ({
@@ -45,7 +45,10 @@ export const lowercase = (nameField, message) => ({
   pattern: /^[^A-Z\s]+$/,
   message: message || `${nameField} must be in lowercase.`
 });
-
+export const phoneNumber = (nameField, message) => ({
+  pattern: /((09|03|07|08|05)+([0-9]{8})\b)/g,
+  message: message || `${nameField} must be a number.`
+});
 export const isPassConfirmedValid = (passValue, message) => ({
   validator: async (rule, value) => {
     if (!value || passValue === value) {

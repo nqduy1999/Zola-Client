@@ -18,3 +18,4 @@ routes.Router.onRouteChangeError = () => {
 
 routes.add('Index', '/index', 'index');
 routes.add('SignUp', '/sign-up', 'sign-up');
+routes.add('Home', '/home', 'home');

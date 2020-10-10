@@ -1,0 +1,58 @@
+.homePage{
+    &__main-container{
+        width: 855px;
+        height: auto;
+        color: #6d7379;
+        .title-header{
+            position: relative;
+            margin: 0 auto;
+            margin-top: 6%;
+            .img-title{
+                margin-left: 8px;
+                margin-top: 17px;
+                width: 28%;
+                float: right;
+            }
+        }
+        .clear-float{
+            clear: both;
+        }
+        .content{
+            padding-top: 20px;
+            font-size: 0.85em;
+            width: 385px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .img-home{
+            padding-top: 5%;
+            width: 70%;
+            margin: 0 auto;
+            .img-carousel{
+                width: 380px;
+                margin: 0 auto;
+            }
+            .content-carousel{
+                padding-top: 20px;
+                text-align: center;
+                letter-spacing: 0.5px;
+                .title-carousel{
+                    font-weight: 600;
+                    font-size: 18px;
+                    color: #0068ff;
+                    width: 100%;
+                }
+                .subcontent{
+                    font-size: 14px;
+                }
+            }
+            .ant-carousel .slick-dots-bottom {
+                top: 350px;
+                li button {
+                    color: #0068ff;
+                    background: #0068ff;
+                }
+            }
+        }
+    }
+}

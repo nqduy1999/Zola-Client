@@ -8,14 +8,17 @@ import 'antd/dist/antd.css';
 import 'nprogress/nprogress.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'assets/styles/main.scss';
+import GlobalProvider from 'components/common/context/GlobalContext';
 
 const store = configStore();
 
 const MyApp = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
-      <ToastContainer limit={3} />
+      <GlobalProvider>
+        <Component {...pageProps} />
+        <ToastContainer limit={3} />
+      </GlobalProvider>
     </Provider>
   );
 };
