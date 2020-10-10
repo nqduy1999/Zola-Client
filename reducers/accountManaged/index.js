@@ -33,12 +33,6 @@ const loginReducer = (state = initialState, action) => {
         error: action.payload.error,
         message: action.payload.data[0]
       };
-    case AUTHENTICATION_TYPE.IS_SIGNIN_REQUEST:
-      return {
-        ...state,
-        isAuthenticated: true,
-        auth_token: action.payload
-      };
     case AUTHENTICATION_TYPE.LOGOUT_REQUEST:
       return {
         ...state,
@@ -93,6 +87,12 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false
+      };
+    case AUTHENTICATION_TYPE.IS_LOGIN_REQUEST:
+      return {
+        ...state,
+        isAuthenticated: true,
+        auth_token: action.payload
       };
     default:
       return state;

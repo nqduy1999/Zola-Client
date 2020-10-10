@@ -11,6 +11,7 @@ const createRequestTypes = (base, act) =>
 //     return acc;
 //   }, {});
 const USER_TYPE = {
-  ...createRequestTypes('USER_TYPE', 'GET_DATA_USER')
+  ...createRequestTypes('USER_TYPE', 'GET_DATA_USER'),
+  ...createRequestTypes('USER_TYPE', 'UPDATE_USER')
 };
 export default USER_TYPE;

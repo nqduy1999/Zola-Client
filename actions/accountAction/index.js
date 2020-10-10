@@ -1,4 +1,5 @@
 import { AUTHENTICATION_TYPE } from 'constant';
+import jwtDecode from 'jwt-decode';
 import axiosServices from 'services/axiosServices';
 import cookiesServices from 'services/cookiesServices';
 
@@ -21,6 +22,7 @@ export const SignInAccount = (dataDispatch, push) => dispatch => {
             data: dataDispatch
           }
         });
+        return { error, data };
       }
     })
     .catch(err => {
@@ -32,7 +34,7 @@ export const SignInAccount = (dataDispatch, push) => dispatch => {
           data
         }
       });
-      return error;
+      return { error, data };
     });
 };
 export const SignUp = dataDispatch => dispatch => {
@@ -104,4 +106,17 @@ export const sendOtp = apiDefault => dispatch => {
       });
     }
   });
+};
+export const isTokenExpired = () => dispatch => {
+  const token = cookiesServices.getAccessToken();
+  const refeshToken = cookiesServices.getRefreshToken();
+  if (token) {
+    const isExpired = jwtDecode(token)?.exp - jwtDecode(token)?.iat;
+    if (isExpired > 0) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.IS_LOGIN_REQUEST,
+        payload: { accessToken: token, refreshToken: refeshToken }
+      });
+    }
+  }
 };

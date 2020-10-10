@@ -2,10 +2,35 @@
     &__container{
         .has-sider{
             flex: 0 0 200px;
-    max-width: 100px;
-    min-width: 100px;
-    width: 100px;
+            max-width: 100px;
+            min-width: 100px;
+            width: 100px;
         }
+        .avatar
+        {
+            display: block;
+            position: relative;    
+        .img_avatar
+        {
+            margin-left:5px;
+            border:0.5px solid white;
+            height: 56px;
+            width: 56px;
+            display: block;
+            border-radius: 50% !important;
+        }
+        .icon-online{
+            position: absolute;
+            top:80%;
+            left: 65%;
+            width: 10px;
+            height: 10px;
+            background: rgb(98, 203, 0);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: white 0px 0px 0px 1px;}
+            
+        }  
     }
 }
 .ant-layout-sider{
@@ -13,4 +38,26 @@
     max-width: 100px;
     min-width: 100px;
     width: 100px;
+}
+.ant-modal-content{
+    width: 400px;
+    margin: 0 auto;
+    .ant-upload.ant-upload-select-picture-card{
+        border: none;
+        background-color: white;
+    }
+    .avatar
+    {
+        left: 120%;
+        display: block;
+        position: relative;    
+    .img_avatar
+    {
+        margin-left:5px;
+        height: 84px;
+        width: 84px;
+        display: block;
+        border-radius: 50% !important;
+    }
+}
 }

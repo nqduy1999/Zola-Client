@@ -31,10 +31,10 @@ const HomePage = () => {
             float: 'left'
           }}
         >
-          <span>Welcome To </span>
+          <span>Welcome to </span>
         </div>
         <div className="img-title">
-          <img src={logo} style={{ width: '100%' }} />
+          <img src={logo} style={{ width: '90%' }} />
         </div>
       </div>
       <div className="clear-float"></div>
