@@ -28,6 +28,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const onSignIn = data => {
     dispatch(SignInAccount(data, push)).then(res => {
+      console.log(res);
       const { error } = res;
       if (!error) {
         toast.success('🦄 Đăng nhập thành công!', {

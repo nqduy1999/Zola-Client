@@ -120,3 +120,10 @@ export const isTokenExpired = () => dispatch => {
     }
   }
 };
+export const accountLogout = push => dispatch => {
+  cookiesServices.clearToken();
+  push('/');
+  dispatch({
+    type: AUTHENTICATION_TYPE.LOGOUT_REQUEST
+  });
+};
