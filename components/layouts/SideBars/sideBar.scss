@@ -31,6 +31,73 @@
             box-shadow: white 0px 0px 0px 1px;}
             
         }  
+        .zola-section{
+            background-color: white;
+            border-right:2px solid #E3E5E8 ;
+            .zola-header{
+                height: 100px;
+                border-bottom:2px solid #E3E5E8;
+                .logo-header{
+                margin-top: 3%;
+                margin-left: 5%;
+                img{
+                    width: 124px;
+                }
+            }
+            }
+            .zola-section-mid{
+                border-bottom:2px solid #E3E5E8;
+                padding: 20px 0;
+                .search-zola-message{
+                    margin-left: 10px;
+                }
+                .icon-zola-message{
+                    margin-top:5px;
+                    margin-left: 30px;
+                    color:#8E8E93;
+                    font-size: 18px;
+                }
+            }
+            .content-zola-message{
+                padding-top: 20px;
+                .header-content-zola-message{
+                .message{
+                margin-left: 10px;
+                color:#8E8E93;
+                display: inline-block;
+                position: relative;
+                font-weight: 600;
+                max-width: calc(100% - 20px);
+                }
+                }
+                .main-content-zola-message{
+                padding-top: 15px;
+                height: 100%;
+                overflow: scroll;
+                cursor: pointer;
+                    .message-view{
+                        padding:5px 0;
+                        margin-left: 5px;
+                        .name-message-room{
+                            font-size: 20px;
+                            font-weight: 400;
+                        }
+                        .content-message-room{
+                            font-size: 12px;
+                            color: #8E8E93;
+                        }
+                        .last-time-message-room{
+                            font-size: 12px;
+                            color: #8E8E93;
+                        }
+                        .open-option-message-room{
+                            font-size: 24px;
+                            color: #8E8E93;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 .ant-layout-sider{
@@ -60,4 +127,20 @@
         border-radius: 50% !important;
     }
 }
+
+}
+.ant-menu {
+    background-color: transparent;
+    border: none;
+    li{
+        border: none;
+        font-size: 24px;
+        color: white;
+    }
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: transparent;
+}
+.clear{
+    clear: both;
 }

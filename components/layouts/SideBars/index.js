@@ -1,7 +1,8 @@
-import { EditOutlined, HomeOutlined } from '@ant-design/icons';
+import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { isTokenExpired } from 'actions/accountAction';
 import { uploadImgSingle } from 'actions/uploadImgActions';
 import { updateProfileUser } from 'actions/userAction';
+import logo from 'assets/images/zola-logo.png';
 import {
   Button,
   Col,
@@ -20,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { classPrefixor } from 'utils/classPrefixor';
 const prefix = 'side-bar';
+const { Search } = Input;
 const c = classPrefixor(prefix);
 const Sidebar = () => {
   const [imageChange, setImageChange] = useState();
@@ -74,10 +76,32 @@ const Sidebar = () => {
         </a>
       </Menu.Item>
       <Menu.Item
+        icon={<SettingOutlined style={styleIcon} />}
+        style={styleMenuItem}
+      >
+        <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
+          Cài đặt
+        </a>
+      </Menu.Item>
+      <Menu.Item
         style={{ padding: '10px 20px', color: 'red', fontWeight: '500' }}
       >
         <a target="_blank" rel="noopener noreferrer" style={{ color: 'red' }}>
           Đăng Xuất
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
+  const messageList = (
+    <Menu style={menuUser}>
+      <Menu.Item style={styleMenuItem}>
+        <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
+          Tin nhắn cá nhân{' '}
+        </a>
+      </Menu.Item>
+      <Menu.Item style={styleMenuItem}>
+        <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
+          Tin nhắn nhóm{' '}
         </a>
       </Menu.Item>
     </Menu>
@@ -292,13 +316,203 @@ const Sidebar = () => {
                 </Form>
               </Modal>
             </div>
-            <Menu mode="inline">
-              <Menu.Item key="3">
-                <HomeOutlined />
+            <Menu
+              mode="inline"
+              style={{
+                height: 'calc(13vh - 0px)'
+              }}
+            >
+              <Menu.Item
+                key="1"
+                style={{
+                  paddingBottom: '50px',
+                  paddingTop: '20px'
+                }}
+              >
+                <i className="fa fa-comment"></i>
+              </Menu.Item>
+              <Menu.Item
+                key="2"
+                style={{ paddingBottom: '50px', paddingTop: '20px' }}
+              >
+                <i className="fa fa-address-book"></i>
+              </Menu.Item>
+              <Menu.Item
+                key="3"
+                style={{ paddingBottom: '50px', paddingTop: '20px' }}
+              >
+                <i
+                  className="fa fa-user-friends"
+                  style={{ marginRight: '10px' }}
+                ></i>
               </Menu.Item>
             </Menu>
           </Col>
-          <Col span={20}></Col>
+          <Col span={20}>
+            <div className="zola-section">
+              <div className="zola-header">
+                <div
+                  className="logo-header"
+                  style={{
+                    display: 'inline-block',
+                    width: '40%',
+                    float: 'left'
+                  }}
+                >
+                  <img src={logo} alt="hihi" />
+                </div>
+                <div
+                  style={{
+                    display: 'inline-block',
+                    width: '40%',
+                    marginTop: '24px',
+                    float: 'left',
+                    fontWeight: '350',
+                    fontSize: '30px'
+                  }}
+                >
+                  <span>- {userData ? userData.name : ''}</span>
+                </div>
+              </div>
+              <Row className="zola-section-mid">
+                <Col span={15} className="search-zola-message">
+                  <Search
+                    placeholder="Nhập vào tin nhắn"
+                    onSearch={value => console.log(value)}
+                    enterButton
+                  />
+                </Col>
+                <Col span={6} className="icon-zola-message">
+                  <i
+                    className="fa fa-user-plus"
+                    style={{ marginRight: '15px' }}
+                  ></i>
+                  <i className="fa fa-plus"></i>
+                </Col>
+              </Row>
+              <div className="content-zola-message">
+                <div className="header-content-zola-message">
+                  <Dropdown overlay={messageList}>
+                    <span className="message">
+                      Tin nhắn <i className="fa fa-caret-down"></i>
+                    </span>
+                  </Dropdown>
+                </div>
+                <div className="main-content-zola-message">
+                  <Row className="message-view">
+                    <Col span={6} className="avatar">
+                      <img
+                        src={
+                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
+                        }
+                        className="img_avatar"
+                        data-reactid="23"
+                        alt="avatar"
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <h4 className="name-message-room">{userData?.name}</h4>
+                      <p className="content-message-room">
+                        Tin nhan o day..........
+                      </p>
+                    </Col>
+                    <Col span={3}>
+                      <span className="last-time-message-room">1h</span>
+                      <p className="open-option-message-room">...</p>
+                    </Col>
+                  </Row>
+                  <Row className="message-view">
+                    <Col span={6} className="avatar">
+                      <img
+                        src={
+                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
+                        }
+                        className="img_avatar"
+                        data-reactid="23"
+                        alt="avatar"
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <h4 className="name-message-room">{userData?.name}</h4>
+                      <p className="content-message-room">
+                        Tin nhan o day..........
+                      </p>
+                    </Col>
+                    <Col span={3}>
+                      <span className="last-time-message-room">1h</span>
+                      <p className="open-option-message-room">...</p>
+                    </Col>
+                  </Row>
+                  <Row className="message-view">
+                    <Col span={6} className="avatar">
+                      <img
+                        src={
+                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
+                        }
+                        className="img_avatar"
+                        data-reactid="23"
+                        alt="avatar"
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <h4 className="name-message-room">{userData?.name}</h4>
+                      <p className="content-message-room">
+                        Tin nhan o day..........
+                      </p>
+                    </Col>
+                    <Col span={3}>
+                      <span className="last-time-message-room">1h</span>
+                      <p className="open-option-message-room">...</p>
+                    </Col>
+                  </Row>
+                  <Row className="message-view">
+                    <Col span={6} className="avatar">
+                      <img
+                        src={
+                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
+                        }
+                        className="img_avatar"
+                        data-reactid="23"
+                        alt="avatar"
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <h4 className="name-message-room">{userData?.name}</h4>
+                      <p className="content-message-room">
+                        Tin nhan o day..........
+                      </p>
+                    </Col>
+                    <Col span={3}>
+                      <span className="last-time-message-room">1h</span>
+                      <p className="open-option-message-room">...</p>
+                    </Col>
+                  </Row>
+                  <Row className="message-view">
+                    <Col span={6} className="avatar">
+                      <img
+                        src={
+                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
+                        }
+                        className="img_avatar"
+                        data-reactid="23"
+                        alt="avatar"
+                      />
+                    </Col>
+                    <Col span={15}>
+                      <h4 className="name-message-room">{userData?.name}</h4>
+                      <p className="content-message-room">
+                        Tin nhan o day..........
+                      </p>
+                    </Col>
+                    <Col span={3}>
+                      <span className="last-time-message-room">1h</span>
+                      <p className="open-option-message-room">...</p>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </div>
+          </Col>
         </Row>
       </Layout>
     </div>
