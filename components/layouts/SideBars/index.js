@@ -157,7 +157,7 @@ const Sidebar = () => {
               >
                 <i
                   className="fa fa-user-friends"
-                  style={{ marginRight: '10px' }}
+                  style={{ marginRight: '15px' }}
                 ></i>
               </Menu.Item>
             </Menu>
@@ -199,7 +199,7 @@ const Sidebar = () => {
                 <Col span={6} className="icon-zola-message">
                   <i
                     className="fa fa-user-plus"
-                    style={{ marginRight: '15px' }}
+                    style={{ marginRight: '20px' }}
                   ></i>
                   <i className="fa fa-plus"></i>
                 </Col>
