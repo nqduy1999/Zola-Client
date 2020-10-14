@@ -1,11 +1,12 @@
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
-import { isTokenExpired } from 'actions/accountAction';
+import { accountLogout, isTokenExpired } from 'actions/accountAction';
 import logo from 'assets/images/zola-logo.png';
 import { Col, Dropdown, Input, Layout, Menu, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
+import { useRouter } from 'next/router';
 const prefix = 'side-bar';
 const { Search } = Input;
 const c = classPrefixor(prefix);
@@ -14,6 +15,7 @@ const Sidebar = () => {
   const [userData, setUserData] = useState(null);
   const { userProfile, isAuthenticated } = useSelector(state => state.userData);
   const dispatch = useDispatch();
+  const { push } = useRouter();
   const showModal = () => {
     setVisible(true);
   };
@@ -62,7 +64,14 @@ const Sidebar = () => {
       <Menu.Item
         style={{ padding: '10px 20px', color: 'red', fontWeight: '500' }}
       >
-        <a target="_blank" rel="noopener noreferrer" style={{ color: 'red' }}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'red' }}
+          onClick={() => {
+            dispatch(accountLogout(push));
+          }}
+        >
           Đăng Xuất
         </a>
       </Menu.Item>

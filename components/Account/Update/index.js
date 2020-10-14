@@ -1,5 +1,5 @@
 import { EditOutlined } from '@ant-design/icons';
-import { Button, Input, Upload, Form } from 'antd';
+import { Button, Input, Upload, Form, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import ImgCrop from 'antd-img-crop';
 import Modal from 'antd/lib/modal/Modal';
@@ -15,6 +15,7 @@ const Update = props => {
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
   const { cancelAvatar, userProfile, visible, setVisible } = props;
+  const [sendOtp, setSendOtp] = useState(false);
   const dispatch = useDispatch();
   const cancelModal = () => {
     cancelAvatar();
@@ -78,6 +79,25 @@ const Update = props => {
     } else if (!e.file.originFileObj) {
       setImageChange(null);
     }
+  };
+  const onSendOtp = () => {
+    setSendOtp(true);
+  };
+  // const activePhoneNumber = () => {};
+  const sendOtpToEmailOrPhone = () => {
+    return (
+      <Row>
+        <Col span={17}>
+          <Input name="phone" onChange={handleOnChange} />
+        </Col>
+        <Col
+          span={5}
+          style={{ marginLeft: '15px', marginTop: '7px', fontSize: '12px' }}
+        >
+          <a onClick={onSendOtp}>Gửi mã Otp</a>
+        </Col>
+      </Row>
+    );
   };
   return (
     <Modal
@@ -196,9 +216,28 @@ const Update = props => {
           {userData && userData.phone ? (
             <Input name="phone" disabled value={userData.phone} />
           ) : (
-            <Input name="phone" onChange={handleOnChange} />
+            sendOtpToEmailOrPhone()
           )}
         </Form.Item>
+        {sendOtp ? (
+          <Form.Item
+            label="Nhập mã Otp đã nhận"
+            rules={[
+              {
+                required: true,
+                message: 'Số điện thoại không để trống!'
+              }
+            ]}
+          >
+            {userData && userData.phone ? (
+              <Input name="phone" disabled value={userData.phone} />
+            ) : (
+              <Input name="phone" disabled value={userData.phone} />
+            )}
+          </Form.Item>
+        ) : (
+          ''
+        )}
       </Form>
     </Modal>
   );
