@@ -1,22 +1,34 @@
 import { EditOutlined } from '@ant-design/icons';
-import { Button, Input, Upload, Form, Row, Col } from 'antd';
+import { Button, Input, Upload, Form } from 'antd';
 import PropTypes from 'prop-types';
 import ImgCrop from 'antd-img-crop';
 import Modal from 'antd/lib/modal/Modal';
-import { func } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { uploadImgSingle } from 'actions/uploadImgActions';
 import { useDispatch } from 'react-redux';
 import { updateProfileUser } from 'actions/userAction';
 import { toast } from 'react-toastify';
+import SendOtp from '../SendOtp';
 const Update = props => {
   const [imageChange, setImageChange] = useState();
   const [imageFormData, setImageFormData] = useState();
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
+  const [visibleOtp, setVisibleOtp] = useState(false);
   const { cancelAvatar, userProfile, visible, setVisible } = props;
-  const [sendOtp, setSendOtp] = useState(false);
+  const [typeOfsendOtp, setTypeSentOtp] = useState(false);
   const dispatch = useDispatch();
+  const cancelSendOtp = () => {
+    setVisibleOtp(false);
+  };
+  const showSendOtpEmail = () => {
+    setVisibleOtp(true);
+    setTypeSentOtp(true);
+  };
+  const showSendOtpPhone = () => {
+    setVisibleOtp(true);
+    setTypeSentOtp(false);
+  };
   const cancelModal = () => {
     cancelAvatar();
     setChangeName(false);
@@ -47,6 +59,18 @@ const Update = props => {
             position: 'top-right',
             autoClose: 3000
           });
+        });
+      });
+    } else {
+      const dataUpdate = {
+        name: userData?.name,
+        avatar: userData?.avatar
+      };
+      dispatch(updateProfileUser(dataUpdate)).then(() => {
+        setVisible(false);
+        toast.success('🦄 Update Successful!', {
+          position: 'top-right',
+          autoClose: 3000
         });
       });
     }
@@ -80,23 +104,20 @@ const Update = props => {
       setImageChange(null);
     }
   };
-  const onSendOtp = () => {
-    setSendOtp(true);
-  };
-  // const activePhoneNumber = () => {};
-  const sendOtpToEmailOrPhone = () => {
+  const sendOtpToPhone = () => {
     return (
-      <Row>
-        <Col span={17}>
-          <Input name="phone" onChange={handleOnChange} />
-        </Col>
-        <Col
-          span={5}
-          style={{ marginLeft: '15px', marginTop: '7px', fontSize: '12px' }}
-        >
-          <a onClick={onSendOtp}>Gửi mã Otp</a>
-        </Col>
-      </Row>
+      <Button className="addPhoneBtn" onClick={showSendOtpPhone}>
+        <i className="fa fa-plus"></i>
+        <span>Thêm số điện thoại</span>
+      </Button>
+    );
+  };
+  const sendOtpToEmail = () => {
+    return (
+      <Button className="addPhoneBtn" onClick={showSendOtpEmail}>
+        <i className="fa fa-plus"></i>
+        <span>Thêm Email</span>
+      </Button>
     );
   };
   return (
@@ -183,7 +204,7 @@ const Update = props => {
               paddingLeft: '5em'
             }}
           >
-            Chào mừng, {userData ? userData.name : ''}
+            {userData ? userData.name : ''}
             <Button
               style={{ border: 'none', paddingLeft: '6em' }}
               onClick={() => {
@@ -201,7 +222,7 @@ const Update = props => {
           {userData && userData.email ? (
             <Input name="email" disabled value={userData.email} />
           ) : (
-            <Input name="email" onChange={handleOnChange} />
+            sendOtpToEmail()
           )}
         </Form.Item>
         <Form.Item
@@ -216,28 +237,14 @@ const Update = props => {
           {userData && userData.phone ? (
             <Input name="phone" disabled value={userData.phone} />
           ) : (
-            sendOtpToEmailOrPhone()
+            sendOtpToPhone()
           )}
         </Form.Item>
-        {sendOtp ? (
-          <Form.Item
-            label="Nhập mã Otp đã nhận"
-            rules={[
-              {
-                required: true,
-                message: 'Số điện thoại không để trống!'
-              }
-            ]}
-          >
-            {userData && userData.phone ? (
-              <Input name="phone" disabled value={userData.phone} />
-            ) : (
-              <Input name="phone" disabled value={userData.phone} />
-            )}
-          </Form.Item>
-        ) : (
-          ''
-        )}
+        <SendOtp
+          visible={visibleOtp}
+          cancelModal={cancelSendOtp}
+          typeOfsendOtp={typeOfsendOtp}
+        />
       </Form>
     </Modal>
   );
@@ -246,10 +253,10 @@ export default Update;
 
 Update.propTypes = {
   children: PropTypes.objectOf(PropTypes.any),
-  cancelAvatar: func,
+  cancelAvatar: PropTypes.objectOf(PropTypes.any),
   userProfile: PropTypes.objectOf(PropTypes.any),
-  visible: Boolean,
-  setVisible: func
+  visible: PropTypes.objectOf(PropTypes.any),
+  setVisible: PropTypes.objectOf(PropTypes.any)
 };
 Update.defaultProps = {
   children: {},

@@ -73,17 +73,18 @@ export const activeAccount = dataDispatch => dispatch => {
     type: AUTHENTICATION_TYPE.ACTIVE_REQUEST
   });
   return axiosServices.post(`${prefix}active`, dataDispatch).then(res => {
-    const { error, data } = res.data;
+    const { error } = res.data;
     if (error) {
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
       });
-      return { error, data };
+      return res?.data;
     }
     if (!error) {
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
       });
+      return res?.data;
     }
   });
 };
@@ -93,6 +94,7 @@ export const sendOtp = apiDefault => dispatch => {
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
   return axiosServices.get(`${prefix}${apiDefault}`).then(res => {
+    console.log(res);
     const { error } = res.data;
     if (error) {
       dispatch({
@@ -104,6 +106,7 @@ export const sendOtp = apiDefault => dispatch => {
       dispatch({
         type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
       });
+      return res;
     }
   });
 };

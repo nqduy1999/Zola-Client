@@ -1,7 +1,7 @@
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { accountLogout, isTokenExpired } from 'actions/accountAction';
 import logo from 'assets/images/zola-logo.png';
-import { Col, Dropdown, Input, Layout, Menu, Row } from 'antd';
+import { Button, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
@@ -11,6 +11,7 @@ const prefix = 'side-bar';
 const { Search } = Input;
 const c = classPrefixor(prefix);
 const Sidebar = () => {
+  const { TabPane } = Tabs;
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState(null);
   const { userProfile, isAuthenticated } = useSelector(state => state.userData);
@@ -19,7 +20,7 @@ const Sidebar = () => {
   const showModal = () => {
     setVisible(true);
   };
-  const cancelAvatar = () => {
+  const cancelModal = () => {
     setVisible(false);
     setUserData(userProfile);
   };
@@ -96,114 +97,40 @@ const Sidebar = () => {
   }, [isAuthenticated, dispatch]);
   return (
     <div className={c`container`}>
-      <Layout>
-        <Row>
-          <Col
-            span={4}
+      <div>
+        <div className="left-section">
+          <div
             style={{
-              paddingTop: '20px',
-              backgroundImage: 'linear-gradient(#0cb3ff,#0068ff)',
-              height: 'calc(100vh - 0px)'
+              height: 'calc(13vh - 0px)'
             }}
+            mode="inline"
           >
-            <div
-              style={{
-                height: 'calc(13vh - 0px)'
-              }}
-              mode="inline"
-            >
-              <Dropdown overlay={menuList} placement="bottomRight">
-                <div className="avatar" style={{ cursor: 'pointer' }}>
-                  <img
-                    src={userProfile?.avatar ? userProfile?.avatar : 'avatar'}
-                    className="img_avatar"
-                    data-reactid="23"
-                    alt="avatar"
-                  />
-                  <div className="icon-online"></div>
-                </div>
-              </Dropdown>
-              <Update
-                cancelAvatar={cancelAvatar}
-                userProfile={userProfile}
-                visible={visible}
-                setVisible={setVisible}
-              />
-            </div>
-            <Menu
-              mode="inline"
-              style={{
-                height: 'calc(13vh - 0px)'
-              }}
-            >
-              <Menu.Item
-                key="1"
-                style={{
-                  paddingBottom: '50px',
-                  paddingTop: '20px'
-                }}
-              >
-                <i className="fa fa-comment"></i>
-              </Menu.Item>
-              <Menu.Item
-                key="2"
-                style={{ paddingBottom: '50px', paddingTop: '20px' }}
-              >
-                <i className="fa fa-address-book"></i>
-              </Menu.Item>
-              <Menu.Item
-                key="3"
-                style={{ paddingBottom: '50px', paddingTop: '20px' }}
-              >
-                <i
-                  className="fa fa-user-friends"
-                  style={{ marginRight: '15px' }}
-                ></i>
-              </Menu.Item>
-            </Menu>
-          </Col>
-          <Col span={20}>
-            <div className="zola-section">
-              <div className="zola-header">
-                <div
-                  className="logo-header"
-                  style={{
-                    display: 'inline-block',
-                    width: '40%',
-                    float: 'left'
-                  }}
-                >
-                  <img src={logo} alt="hihi" />
-                </div>
-                <div
-                  style={{
-                    display: 'inline-block',
-                    width: '40%',
-                    marginTop: '24px',
-                    float: 'left',
-                    fontWeight: '350',
-                    fontSize: '30px'
-                  }}
-                >
-                  <span>- {userData ? userData.name : ''}</span>
-                </div>
+            <Dropdown overlay={menuList} placement="bottomRight">
+              <div className="avatar" style={{ cursor: 'pointer' }}>
+                <img
+                  src={userProfile?.avatar ? userProfile?.avatar : 'avatar'}
+                  className="img_avatar"
+                  data-reactid="23"
+                  alt="avatar"
+                />
+                <div className="icon-online"></div>
               </div>
-              <Row className="zola-section-mid">
-                <Col span={15} className="search-zola-message">
-                  <Search
-                    placeholder="Nhập vào tin nhắn"
-                    onSearch={value => console.log(value)}
-                    enterButton
-                  />
-                </Col>
-                <Col span={6} className="icon-zola-message">
-                  <i
-                    className="fa fa-user-plus"
-                    style={{ marginRight: '20px' }}
-                  ></i>
-                  <i className="fa fa-plus"></i>
-                </Col>
-              </Row>
+            </Dropdown>
+          </div>
+          <Tabs
+            style={{
+              height: '78%'
+            }}
+            tabPosition="left"
+          >
+            <TabPane
+              key="1"
+              style={{
+                paddingBottom: '50px',
+                paddingTop: '20px'
+              }}
+              tab={<i className="fa fa-comment"></i>}
+            >
               <div className="content-zola-message">
                 <div className="header-content-zola-message">
                   <Dropdown overlay={messageList}>
@@ -213,122 +140,120 @@ const Sidebar = () => {
                   </Dropdown>
                 </div>
                 <div className="main-content-zola-message">
-                  <Row className="message-view">
-                    <Col span={6} className="avatar">
-                      <img
-                        src={
-                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
-                        }
-                        className="img_avatar"
-                        data-reactid="23"
-                        alt="avatar"
-                      />
-                    </Col>
-                    <Col span={15}>
-                      <h4 className="name-message-room">{userData?.name}</h4>
-                      <p className="content-message-room">
-                        Tin nhan o day..........
-                      </p>
-                    </Col>
-                    <Col span={3}>
-                      <span className="last-time-message-room">1h</span>
-                      <p className="open-option-message-room">...</p>
-                    </Col>
-                  </Row>
-                  <Row className="message-view">
-                    <Col span={6} className="avatar">
-                      <img
-                        src={
-                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
-                        }
-                        className="img_avatar"
-                        data-reactid="23"
-                        alt="avatar"
-                      />
-                    </Col>
-                    <Col span={15}>
-                      <h4 className="name-message-room">{userData?.name}</h4>
-                      <p className="content-message-room">
-                        Tin nhan o day..........
-                      </p>
-                    </Col>
-                    <Col span={3}>
-                      <span className="last-time-message-room">1h</span>
-                      <p className="open-option-message-room">...</p>
-                    </Col>
-                  </Row>
-                  <Row className="message-view">
-                    <Col span={6} className="avatar">
-                      <img
-                        src={
-                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
-                        }
-                        className="img_avatar"
-                        data-reactid="23"
-                        alt="avatar"
-                      />
-                    </Col>
-                    <Col span={15}>
-                      <h4 className="name-message-room">{userData?.name}</h4>
-                      <p className="content-message-room">
-                        Tin nhan o day..........
-                      </p>
-                    </Col>
-                    <Col span={3}>
-                      <span className="last-time-message-room">1h</span>
-                      <p className="open-option-message-room">...</p>
-                    </Col>
-                  </Row>
-                  <Row className="message-view">
-                    <Col span={6} className="avatar">
-                      <img
-                        src={
-                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
-                        }
-                        className="img_avatar"
-                        data-reactid="23"
-                        alt="avatar"
-                      />
-                    </Col>
-                    <Col span={15}>
-                      <h4 className="name-message-room">{userData?.name}</h4>
-                      <p className="content-message-room">
-                        Tin nhan o day..........
-                      </p>
-                    </Col>
-                    <Col span={3}>
-                      <span className="last-time-message-room">1h</span>
-                      <p className="open-option-message-room">...</p>
-                    </Col>
-                  </Row>
-                  <Row className="message-view">
-                    <Col span={6} className="avatar">
-                      <img
-                        src={
-                          userProfile?.avatar ? userProfile?.avatar : 'avatar'
-                        }
-                        className="img_avatar"
-                        data-reactid="23"
-                        alt="avatar"
-                      />
-                    </Col>
-                    <Col span={15}>
-                      <h4 className="name-message-room">{userData?.name}</h4>
-                      <p className="content-message-room">
-                        Tin nhan o day..........
-                      </p>
-                    </Col>
-                    <Col span={3}>
-                      <span className="last-time-message-room">1h</span>
-                      <p className="open-option-message-room">...</p>
-                    </Col>
-                  </Row>
+                  <Menu style={{ width: '357px', height: 'auto' }}>
+                    <Menu.Item style={{ width: '357px', height: 'auto' }}>
+                      <Row className="message-view">
+                        <Col span={6} className="avatar">
+                          <img
+                            src={
+                              userProfile?.avatar
+                                ? userProfile?.avatar
+                                : 'avatar'
+                            }
+                            className="img_avatar"
+                            data-reactid="23"
+                            alt="avatar"
+                          />
+                        </Col>
+                        <Col span={15}>
+                          <h4 className="name-message-room">Quoc Duy</h4>
+                          <p className="content-message-room">Anh iu em </p>
+                        </Col>
+                        <Col span={3}>
+                          <span className="last-time-message-room">1h</span>
+                          <p className="open-option-message-room">...</p>
+                        </Col>
+                      </Row>
+                    </Menu.Item>
+                  </Menu>{' '}
                 </div>
               </div>
+            </TabPane>
+            <TabPane
+              key="2"
+              style={{ paddingBottom: '50px', paddingTop: '20px' }}
+              tab={<i className="fa fa-address-book"></i>}
+            ></TabPane>
+            <TabPane
+              key="3"
+              style={{ paddingBottom: '50px', paddingTop: '20px' }}
+              tab={
+                <i
+                  className="fa fa-user-friends"
+                  style={{ marginRight: '15px' }}
+                ></i>
+              }
+            ></TabPane>
+          </Tabs>
+          <div mode="inline">
+            <div className="sign-out">
+              <Button
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  marginLeft: '10px',
+                  fontSize: '20px',
+                  color: 'white'
+                }}
+                onClick={() => {
+                  dispatch(accountLogout(push));
+                }}
+              >
+                <i className="fa fa-sign-out-alt"></i>
+              </Button>
             </div>
-          </Col>
-        </Row>
-      </Layout>
+          </div>
+        </div>
+        <div className="right-section">
+          <div className="zola-section">
+            <Row className="zola-header">
+              <Col
+                span={5}
+                className="logo-header"
+                style={{
+                  display: 'inline-block'
+                }}
+              >
+                <img src={logo} alt="hihi" />
+              </Col>
+              <Col
+                span={8}
+                style={{
+                  display: 'inline-block',
+                  marginTop: '26px',
+                  fontWeight: '350',
+                  fontSize: '14px',
+                  color: '#000'
+                }}
+              >
+                <span>- {userData ? userData.name : ''}</span>
+              </Col>
+            </Row>
+            <Row className="zola-section-mid">
+              <Col span={15} className="search-zola-message">
+                <Search
+                  placeholder="Nhập vào tin nhắn"
+                  onSearch={value => console.log(value)}
+                  enterButton
+                />
+              </Col>
+              <Col span={6} className="icon-zola-message">
+                <i
+                  className="fa fa-user-plus"
+                  style={{ marginRight: '20px' }}
+                ></i>
+                <i className="fa fa-plus"></i>
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </div>
+      <Update
+        cancelAvatar={cancelModal}
+        userProfile={userProfile}
+        visible={visible}
+        setVisible={setVisible}
+      />
     </div>
   );
 };

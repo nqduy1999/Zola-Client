@@ -29,7 +29,6 @@ const SignUp = () => {
   const [form] = Form.useForm();
   console.log(isLoading);
   const handleSendOtp = () => {
-    console.log(apiDefault);
     dispatch(sendOtp(apiDefault)).then(res => console.log(res));
   };
   const onChangeEmail = e => {
