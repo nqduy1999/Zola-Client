@@ -27,7 +27,6 @@ export const getProfileUser = auth_token => dispatch => {
   });
 };
 export const updateProfileUser = dataDispatch => async dispatch => {
-  console.log(dataDispatch);
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
@@ -35,7 +34,7 @@ export const updateProfileUser = dataDispatch => async dispatch => {
     .put(`${prefix}profile/update`, dataDispatch)
     .then(res => {
       console.log(res);
-      const { error } = res;
+      const { error } = res.data;
       if (error) {
         dispatch({
           type: USER_TYPE.UPDATE_USER_FAILURE
@@ -47,5 +46,28 @@ export const updateProfileUser = dataDispatch => async dispatch => {
           payload: dataDispatch
         });
       }
+    });
+};
+export const updateOtpUser = dataDispatch => dispatch => {
+  console.log(dataDispatch);
+  dispatch({
+    type: USER_TYPE.UPDATE_USER_REQUEST
+  });
+  return axiosServices
+    .put(`${prefix}profile/contact/update`, dataDispatch)
+    .then(res => {
+      const { error, message } = res.data;
+      if (error) {
+        dispatch({
+          type: USER_TYPE.UPDATE_USER_FAILURE
+        });
+        return { error };
+      }
+      if (!error) {
+        dispatch({
+          type: USER_TYPE.UPDATE_USER_SUCCESS
+        });
+      }
+      return { message };
     });
 };

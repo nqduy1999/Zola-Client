@@ -94,11 +94,14 @@ export const sendOtp = apiDefault => dispatch => {
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
   return axiosServices.get(`${prefix}${apiDefault}`).then(res => {
-    console.log(res);
-    const { error } = res.data;
+    const { error, data, message } = res.data;
     if (error) {
       dispatch({
-        type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE
+        type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE,
+        payload: {
+          error: error,
+          data: data
+        }
       });
       return { error, data };
     }
@@ -106,7 +109,7 @@ export const sendOtp = apiDefault => dispatch => {
       dispatch({
         type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
       });
-      return res;
+      return { message };
     }
   });
 };

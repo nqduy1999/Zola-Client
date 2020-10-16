@@ -6,6 +6,7 @@ import FormItem from 'antd/lib/form/FormItem';
 import { useDispatch } from 'react-redux';
 import { sendOtp } from 'actions/accountAction';
 import { toast } from 'react-toastify';
+import { updateOtpUser } from 'actions/userAction';
 const SendOtpComponent = props => {
   const { cancelModal, visible, typeOfsendOtp } = props;
   const [otpSent, setOtpSent] = useState(false);
@@ -22,21 +23,52 @@ const SendOtpComponent = props => {
         code: value.code,
         email: otp.email
       };
-      console.log(valueUpdate);
+      dispatch(updateOtpUser(valueUpdate)).then(res => {
+        if (res.error) {
+          toast.error(res.data[0].msg, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+        } else {
+          toast.success(res.message, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+          handleCancelModal();
+        }
+      });
     } else {
       const valueUpdate = {
         code: value.code,
         phone: otp.phone
       };
-      console.log(valueUpdate);
+      dispatch(updateOtpUser(valueUpdate)).then(res => {
+        if (res.error) {
+          toast.error(res.data[0].msg, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+        } else {
+          toast.success(res.message, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+          handleCancelModal();
+        }
+      });
     }
   };
   const sendOtpForConfirm = value => {
     if (typeOfsendOtp) {
       const apiSendOtp = `active/send?email=${value.email}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
-        if (!res?.data?.error) {
-          toast.success(res?.data?.message, {
+        if (res.error) {
+          toast.error(res.data[0].msg, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+        } else {
+          toast.success('Xác nhận thành công', {
             position: 'top-right',
             autoClose: 3000
           });
@@ -47,8 +79,13 @@ const SendOtpComponent = props => {
     } else {
       const apiSendOtp = `active/send?phone=${value.phone}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
-        if (!res?.data?.error) {
-          toast.success(res?.data?.message, {
+        if (res.error) {
+          toast.error(res.data[0].msg, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+        } else {
+          toast.success(res.message, {
             position: 'top-right',
             autoClose: 3000
           });
