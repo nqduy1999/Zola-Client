@@ -1,5 +1,5 @@
 import USER_TYPE from 'constant/userTypes';
-import axiosServices from 'services/axiosServices';
+import axiosServices from 'utils/service/axiosServices';
 import jwt_decode from 'jwt-decode';
 const prefix = 'users/';
 export const getProfileUser = auth_token => dispatch => {

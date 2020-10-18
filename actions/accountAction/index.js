@@ -1,7 +1,7 @@
 import { AUTHENTICATION_TYPE } from 'constant';
 import jwtDecode from 'jwt-decode';
-import axiosServices from 'services/axiosServices';
-import cookiesServices from 'services/cookiesServices';
+import axiosServices from 'utils/service/axiosServices';
+import cookiesServices from 'utils/service/cookiesServices';
 
 const prefix = 'accounts/';
 export const SignInAccount = (dataDispatch, push) => dispatch => {

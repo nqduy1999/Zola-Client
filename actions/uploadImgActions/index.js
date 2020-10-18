@@ -1,4 +1,4 @@
-import axiosServices from 'services/axiosServices';
+import axiosServices from 'utils/service/axiosServices';
 
 const prefix = 'https://api-ret.ml/api/v0/images/';
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import cookiesServices from './cookiesServices';
 
 const axiosApiInstance = axios.create({
-  baseURL: 'https://api-chat.ga/api/v0/'
+  baseURL: 'https://api-ret.ml/api/v0/'
 });
 // ABC
 // Request interceptor for API calls
