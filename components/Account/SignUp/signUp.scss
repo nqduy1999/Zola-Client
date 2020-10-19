@@ -11,6 +11,14 @@
             margin: 0 auto;
             box-shadow: 0 8px 24px rgba(21,48,142,0.14);
             border-radius: 2px;  
+            .action-more {
+                display: block;
+                padding: 20px 15px;
+                color: #888;
+                font-size: 0.875em;
+                font-weight: normal;
+                text-align: center;
+            }
             .ant-tabs-nav-wrap{
                 box-shadow: 0 8px 24px rgba(21,48,142,0.14);
             }
@@ -56,7 +64,19 @@
             border: 0 none;
             border-radius: 5px;
                 }
-        
+                .login-or {
+                    margin-top: 36px;
+                    margin-bottom: -24px;
+                    padding-top: 10px;
+                    border-top: 1px solid #ecedf0;
+                    font-size: 12px;
+                    a{
+                        overflow: hidden;
+                        white-space: nowrap;
+                        color: black;
+                    }
+                }
     }
     }
+
 }

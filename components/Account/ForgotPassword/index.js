@@ -4,26 +4,26 @@ import { Button, Form, Input, Tabs } from 'antd';
 import * as Validator from 'utils/validatorFormat';
 import { PhoneFilled, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { sendOtp } from 'actions/accountAction';
-import ConfirmOtpSignUp from '../ConfirmOtpSignUp';
+import { sendOtpForgot } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import useChangeMeta from 'components/common/hook/useChangeMeta';
 import { Link } from 'core/routes';
 import { urlHelper } from 'utils';
+import ConfirmOtpForgot from '../ConfirmOtpForgot';
 const prefix = 'sign-up';
 const c = classPrefixor(prefix);
 
-const SignUp = () => {
+const ForgotPassword = () => {
   const dispatch = useDispatch();
   const { TabPane } = Tabs;
-  useChangeMeta('Đăng ký');
+  useChangeMeta('Quên mật khẩu');
   const [otpSent, setOtpSent] = useState(false);
   const [valueSent, setValueSent] = useState(null);
-  const onSendOtp = value => {
+  const onSendOtpForgotPassword = value => {
     if (value.email) {
-      const apiSendOtp = `active/send?email=${value.email}`;
+      const apiSendOtp = `email=${value.email}`;
       setValueSent(value);
-      dispatch(sendOtp(apiSendOtp)).then(res => {
+      dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
           toast.error(res.data[0].msg, {
             position: 'top-right',
@@ -38,9 +38,9 @@ const SignUp = () => {
         }
       });
     } else if (value.phone) {
-      const apiSendOtp = `active/send?phone=${value.phone}`;
+      const apiSendOtp = `phone=${value.phone}`;
       setValueSent(value);
-      dispatch(sendOtp(apiSendOtp)).then(res => {
+      dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
           toast.error(res.data[0].msg, {
             position: 'top-right',
@@ -75,7 +75,7 @@ const SignUp = () => {
                 <Form
                   name="basic"
                   initialValues={{ remember: true }}
-                  onFinish={onSendOtp}
+                  onFinish={onSendOtpForgotPassword}
                 >
                   <Form.Item
                     name="phone"
@@ -101,15 +101,15 @@ const SignUp = () => {
                       textAlign: 'center'
                     }}
                   >
-                    Bằng cách bấm vào nút đăng ký, bạn đã đồng ý với
-                    <a href="https://zalo.me/zalo/dieukhoan/">
-                      {' '}
-                      các điều khoản sử dụng của Zola
-                    </a>
+                    Bằng cách bấm vào nút tiếp tục, chúng tôi sẽ gửi mã otp về
+                    số điện thoại bạn đã đăng ký hoặc bạn đã nhớ ra mật khẩu ?{' '}
+                    <Link {...urlHelper.getUrlHomePage().route}>
+                      bấm vào đây để trở về đăng nhập
+                    </Link>
                   </Form.Item>
                   <Form.Item>
                     <Button type="primary" htmlType="submit">
-                      Nhận mã kích hoạt
+                      Tiếp tục
                     </Button>
                   </Form.Item>
                 </Form>
@@ -126,7 +126,7 @@ const SignUp = () => {
                 <Form
                   name="basic"
                   initialValues={{ remember: true }}
-                  onFinish={onSendOtp}
+                  onFinish={onSendOtpForgotPassword}
                 >
                   <Form.Item
                     name="email"
@@ -146,11 +146,11 @@ const SignUp = () => {
                       textAlign: 'center'
                     }}
                   >
-                    Bằng cách bấm vào nút đăng ký, bạn đã đồng ý với
-                    <a href="https://zalo.me/zalo/dieukhoan/">
-                      {' '}
-                      các điều khoản sử dụng của Zola
-                    </a>
+                    Bằng cách bấm vào nút tiếp tục, chúng tôi sẽ gửi mã otp về
+                    email bạn đã đăng ký hoặc bạn đã nhớ ra mật khẩu ?{' '}
+                    <Link {...urlHelper.getUrlHomePage().route}>
+                      bấm vào đây để trở về đăng nhập
+                    </Link>
                   </Form.Item>
                   <Form.Item>
                     <Button type="primary" htmlType="submit">
@@ -161,15 +161,19 @@ const SignUp = () => {
               </TabPane>
             </Tabs>
           ) : (
-            <ConfirmOtpSignUp valueSent={valueSent} />
+            <ConfirmOtpForgot valueSent={valueSent} />
           )}
-          <p className="action-more">
-            Bạn đã có tài khoản ?{' '}
-            <Link {...urlHelper.getUrlHomePage().route}>Đăng nhập ngay!</Link>
-          </p>
+          <div className="login-or">
+            <Link {...urlHelper.getUrlHomePage().route}>
+              <div>
+                <i className="fa fa-angle-double-left"></i> Quay lại
+              </div>
+            </Link>
+            <div className="box-gap"></div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-export default SignUp;
+export default ForgotPassword;
