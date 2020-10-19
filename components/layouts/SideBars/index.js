@@ -1,12 +1,14 @@
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { accountLogout, isTokenExpired } from 'actions/accountAction';
 import logo from 'assets/images/zola-logo.png';
+import avatar from 'assets/images/logo.png';
 import { Button, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
 import { useRouter } from 'next/router';
+
 const prefix = 'side-bar';
 const { Search } = Input;
 const c = classPrefixor(prefix);
@@ -108,10 +110,9 @@ const Sidebar = () => {
             <Dropdown overlay={menuList} placement="bottomRight">
               <div className="avatar" style={{ cursor: 'pointer' }}>
                 <img
-                  src={userProfile?.avatar ? userProfile?.avatar : 'avatar'}
+                  src={userProfile?.avatar ? userProfile?.avatar : avatar}
                   className="img_avatar"
                   data-reactid="23"
-                  alt="avatar"
                 />
                 <div className="icon-online"></div>
               </div>
@@ -231,11 +232,7 @@ const Sidebar = () => {
             </Row>
             <Row className="zola-section-mid">
               <Col span={15} className="search-zola-message">
-                <Search
-                  placeholder="Nhập vào tin nhắn"
-                  onSearch={value => console.log(value)}
-                  enterButton
-                />
+                <Search placeholder="Nhập vào tin nhắn" enterButton />
               </Col>
               <Col span={6} className="icon-zola-message">
                 <i

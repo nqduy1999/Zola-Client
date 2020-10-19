@@ -5,12 +5,13 @@ import ImgCrop from 'antd-img-crop';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect, useState } from 'react';
 import { uploadImgSingle } from 'actions/uploadImgActions';
+import avatar from 'assets/images/logo.png';
 import { useDispatch } from 'react-redux';
 import { updateProfileUser } from 'actions/userAction';
 import { toast } from 'react-toastify';
 import SendOtp from '../SendOtp';
 const Update = props => {
-  const [imageChange, setImageChange] = useState();
+  const [imageChange, setImageChange] = useState(avatar);
   const [imageFormData, setImageFormData] = useState();
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
@@ -32,6 +33,8 @@ const Update = props => {
   const cancelModal = () => {
     cancelAvatar();
     setChangeName(false);
+    setImageFormData(null);
+    setImageChange(avatar);
   };
   const handleOnChange = e => {
     setUserData({
@@ -89,7 +92,6 @@ const Update = props => {
   const handleChangeFile = e => {
     const reader = new FileReader();
     reader.onload = () => {
-      console.log(reader);
       if (reader.readyState === 2) {
         setImageChange(reader.result);
       }

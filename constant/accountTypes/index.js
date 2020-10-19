@@ -15,6 +15,7 @@ const AUTHENTICATION_TYPE = {
   ...createRequestTypes('AUTHENTICATION', 'SIGNUP'),
   ...createRequestTypes('AUTHENTICATION', 'SEND_OTP'),
   ...createSingleRequested('AUTHENTICATION', 'IS_LOGIN'),
-  ...createSingleRequested('AUTHENTICATION', 'LOGOUT')
+  ...createSingleRequested('AUTHENTICATION', 'LOGOUT'),
+  ...createRequestTypes('AUTHENTICATION', 'ACTIVE')
 };
 export default AUTHENTICATION_TYPE;

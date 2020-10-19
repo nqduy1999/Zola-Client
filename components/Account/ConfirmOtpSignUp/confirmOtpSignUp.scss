@@ -1,0 +1,41 @@
+.confirm-otp-sign-up{
+    &__form-signup{
+        background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 24px;
+    box-shadow: none;
+    border-radius: 3px;
+    box-shadow: 0 8px 24px rgba(21,48,142,0.14);
+        .box-au{
+        background-color: #e1eff9;
+        margin-bottom: 30px;
+        padding: 15px;
+        border-radius: 3px;
+         p {
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 0.85em;
+            text-align: center;
+            letter-spacing: -0.05px;
+        }
+        .number-phone {
+            display: block;
+            color: #0189e7;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .line-form {
+            background-color: #fff;
+            margin-top: 18px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 12px !important;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 4px 8px rgba(21,48,142,0.08);
+            border-bottom: 1px solid #0190f3;
+        }
+        }
+    }
+}

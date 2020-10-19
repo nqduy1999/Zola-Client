@@ -6,34 +6,21 @@ import { PhoneFilled, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { sendOtp } from 'actions/accountAction';
 import ConfirmOtpSignUp from '../ConfirmOtpSignUp';
+import { toast } from 'react-toastify';
+import useChangeMeta from 'components/common/hook/useChangeMeta';
 const prefix = 'sign-up';
 const c = classPrefixor(prefix);
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const { TabPane } = Tabs;
+  useChangeMeta('Đăng ký');
   const [otpSent, setOtpSent] = useState(false);
+  const [valueSent, setValueSent] = useState(null);
   const onSendOtp = value => {
     if (value.email) {
       const apiSendOtp = `active/send?email=${value.email}`;
-      // dispatch(sendOtp(apiSendOtp)).then(res => {
-      //   if (res.error) {
-      //     toast.error(res.data[0].msg, {
-      //       position: 'top-right',
-      //       autoClose: 3000
-      //     });
-      //   } else {
-      //     toast.success('Xác nhận thành công', {
-      //       position: 'top-right',
-      //       autoClose: 3000
-      //     });
-      //     setOtpSent(true);
-      //   }
-      // });
-      console.log(apiSendOtp);
-      setOtpSent(true);
-    } else if (value.phone) {
-      const apiSendOtp = `active/send?phone=${value.phone}`;
+      setValueSent(value);
       dispatch(sendOtp(apiSendOtp)).then(res => {
         if (res.error) {
           toast.error(res.data[0].msg, {
@@ -41,7 +28,24 @@ const SignUp = () => {
             autoClose: 3000
           });
         } else {
-          toast.success('Xác nhận thành công', {
+          toast.success('Gửi mã otp thành công', {
+            position: 'top-right',
+            autoClose: 3000
+          });
+          setOtpSent(true);
+        }
+      });
+    } else if (value.phone) {
+      const apiSendOtp = `active/send?phone=${value.phone}`;
+      setValueSent(value);
+      dispatch(sendOtp(apiSendOtp)).then(res => {
+        if (res.error) {
+          toast.error(res.data[0].msg, {
+            position: 'top-right',
+            autoClose: 3000
+          });
+        } else {
+          toast.success('Gửi mã otp thành công', {
             position: 'top-right',
             autoClose: 3000
           });
@@ -155,7 +159,7 @@ const SignUp = () => {
               </TabPane>
             </Tabs>
           ) : (
-            <ConfirmOtpSignUp />
+            <ConfirmOtpSignUp valueSent={valueSent} />
           )}
         </div>
       </div>

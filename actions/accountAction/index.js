@@ -37,12 +37,12 @@ export const SignInAccount = (dataDispatch, push) => dispatch => {
       return { error, data };
     });
 };
-export const SignUp = dataDispatch => dispatch => {
+export const SignUp = (push, dataDispatch) => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SIGNUP_REQUEST
   });
   return axiosServices.post(`${prefix}signup`, dataDispatch).then(res => {
-    const { error, data } = res.data;
+    const { error, data, message } = res.data;
     if (error) {
       dispatch({
         type: AUTHENTICATION_TYPE.SIGNUP_FAILURE,
@@ -51,12 +51,14 @@ export const SignUp = dataDispatch => dispatch => {
           data
         }
       });
-      return { error, data };
+      return { error, data, message };
     }
     if (!error) {
       dispatch({
         type: AUTHENTICATION_TYPE.SIGNUP_SUCCESS
       });
+      push('/');
+      return { error, data };
     }
   });
 };
@@ -72,24 +74,27 @@ export const activeAccount = dataDispatch => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.ACTIVE_REQUEST
   });
-  return axiosServices.post(`${prefix}active`, dataDispatch).then(res => {
-    const { error } = res.data;
-    if (error) {
+  return axiosServices
+    .post(`${prefix}code/verify`, dataDispatch)
+    .then(res => {
+      const { error, data } = res.data;
+      if (!error) {
+        dispatch({
+          type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
+        });
+        cookiesServices.setToken(data);
+        return res?.data;
+      }
+    })
+    .catch(err => {
+      const { error, data, message } = err.response?.data;
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
       });
-      return res?.data;
-    }
-    if (!error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
-      });
-      return res?.data;
-    }
-  });
+      return { error, data, message };
+    });
 };
 export const sendOtp = apiDefault => dispatch => {
-  console.log(apiDefault);
   dispatch({
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });

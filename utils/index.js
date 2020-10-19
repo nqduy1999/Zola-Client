@@ -15,6 +15,13 @@ export const urlHelper = {
       to: '/sign-up'
     },
     initProps: {}
+  }),
+  getUrlForgot: () => ({
+    layout: DefaultLayout,
+    route: {
+      to: '/forgot-password'
+    },
+    initProps: {}
   })
 };
 

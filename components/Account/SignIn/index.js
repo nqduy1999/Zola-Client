@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import { Form, Input, Button, Tabs } from 'antd';
 import useChangeMeta from 'components/common/hook/useChangeMeta';
@@ -31,27 +31,30 @@ const prefix = 'sign-in';
 const c = classPrefixor(prefix);
 const { TabPane } = Tabs;
 const SignIn = () => {
-  const [type, setChangeType] = useState('phone');
   useChangeMeta('Đăng nhập');
   const { push } = useRouter();
   const dispatch = useDispatch();
   const onSignIn = data => {
-    console.log(data);
     dispatch(SignInAccount(data, push)).then(res => {
-      console.log(res);
       const { error } = res;
       if (!error) {
         toast.success('🦄 Đăng nhập thành công!', {
           position: 'top-right',
           autoClose: 3000
         });
+        if (data.email) {
+          const type = 'email';
+          localStorage.setItem('type', JSON.stringify(type));
+        } else {
+          const type = 'phone';
+          localStorage.setItem('type', JSON.stringify(type));
+        }
       } else {
         toast.error(res?.data[0]?.msg, {
           position: 'top-right',
           autoClose: 3000
         });
       }
-      localStorage.setItem('type', JSON.stringify(type));
     });
   };
   return (
@@ -67,9 +70,6 @@ const SignIn = () => {
                 </span>
               }
               key="1"
-              onFinish={() => {
-                setChangeType('phone');
-              }}
             >
               <Form
                 {...layout}
@@ -111,9 +111,6 @@ const SignIn = () => {
                   </Button>
                 </Form.Item>
               </Form>
-              <Link {...urlHelper.getUrlSignUp().route}>
-                Bạn chưa có tài khoản? Đăng ký ngay!
-              </Link>
             </TabPane>
             <TabPane
               tab={
@@ -123,9 +120,6 @@ const SignIn = () => {
                 </span>
               }
               key="2"
-              onFinish={() => {
-                setChangeType('email');
-              }}
             >
               <Form
                 {...layout}
@@ -157,12 +151,16 @@ const SignIn = () => {
                     Đăng nhập
                   </Button>
                 </Form.Item>
-                <Link {...urlHelper.getUrlSignUp().route}>
-                  Bạn chưa có tài khoản? Đăng ký ngay!
-                </Link>
               </Form>
             </TabPane>
           </Tabs>
+          <p className="action-more">
+            <Link {...urlHelper.getUrlForgot().route}>Quên mật khẩu?</Link>
+          </p>
+          <p className="action-more">
+            Bạn chưa có tài khoản?{' '}
+            <Link {...urlHelper.getUrlSignUp().route}>Đăng ký ngay!</Link>
+          </p>
         </div>
       </div>
     </div>

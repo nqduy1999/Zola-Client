@@ -33,7 +33,6 @@ export const updateProfileUser = dataDispatch => async dispatch => {
   return axiosServices
     .put(`${prefix}profile/update`, dataDispatch)
     .then(res => {
-      console.log(res);
       const { error } = res.data;
       if (error) {
         dispatch({
@@ -49,7 +48,6 @@ export const updateProfileUser = dataDispatch => async dispatch => {
     });
 };
 export const updateOtpUser = dataDispatch => dispatch => {
-  console.log(dataDispatch);
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
