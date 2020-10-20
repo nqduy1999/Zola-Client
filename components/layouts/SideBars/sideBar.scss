@@ -144,7 +144,17 @@
     height: 100%;
     overflow: scroll;
     cursor: pointer;
-    
+    .tab-message {
+        .ant-tabs-nav{
+        width: 100%;
+        .ant-tabs-tab{
+            background-color: transparent;
+        }
+        .ant-tabs-tab .ant-tabs-tab-active{
+            background-color: #40a9ff29
+        }
+        }
+    }
         .message-view{
             .avatar{
                     display: block;

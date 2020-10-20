@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 import FormItem from 'antd/lib/form/FormItem';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendOtp } from 'actions/accountAction';
 import { toast } from 'react-toastify';
-import { updateOtpUser } from 'actions/userAction';
+import { getProfileUser, updateOtpUser } from 'actions/userAction';
 const SendOtpComponent = props => {
   const { cancelModal, visible, typeOfsendOtp } = props;
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState({});
+  const { auth_token } = useSelector(state => state.accountData);
   const radioStyle = {
     display: 'block',
     height: '30px',
@@ -34,6 +35,7 @@ const SendOtpComponent = props => {
             position: 'top-right',
             autoClose: 3000
           });
+          dispatch(getProfileUser(auth_token));
           handleCancelModal();
         }
       });
@@ -53,6 +55,7 @@ const SendOtpComponent = props => {
             position: 'top-right',
             autoClose: 3000
           });
+          dispatch(getProfileUser(auth_token));
           handleCancelModal();
         }
       });
@@ -62,6 +65,7 @@ const SendOtpComponent = props => {
     if (typeOfsendOtp) {
       const apiSendOtp = `active/send?email=${value.email}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
+        console.log(res);
         if (res.error) {
           toast.error(res.data[0].msg, {
             position: 'top-right',

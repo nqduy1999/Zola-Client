@@ -16,7 +16,7 @@ routes.Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-routes.add('Index', '/index', 'index');
+routes.add('Index', '/', 'index');
 routes.add('SignUp', '/sign-up', 'sign-up');
-routes.add('Home', '/home', 'home');
+routes.add('HomePage', '/home', 'home');
 routes.add('ForgotPassword', '/forgot-password', 'forgot-password');

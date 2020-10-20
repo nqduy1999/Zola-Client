@@ -1,17 +1,18 @@
-import HomeComponent from 'components/HomePage';
+import withNotAuth from 'components/common/withNotAuth';
+import HomePageComponent from 'components/HomePage';
 import DefaultLayout from 'components/layouts';
 import React, { PureComponent } from 'react';
 
-class Home extends PureComponent {
+class HomePage extends PureComponent {
   render() {
     return (
       <DefaultLayout>
-        <HomeComponent />
+        <HomePageComponent />
       </DefaultLayout>
     );
   }
 }
 
-export default Home;
+export default withNotAuth(HomePage);
 
-Home.pageName = 'Home';
+HomePage.pageName = 'HomePage';

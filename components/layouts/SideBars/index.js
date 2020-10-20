@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
 import { useRouter } from 'next/router';
+import MessageList from 'components/Message';
 
 const prefix = 'side-bar';
 const { Search } = Input;
@@ -141,32 +142,7 @@ const Sidebar = () => {
                   </Dropdown>
                 </div>
                 <div className="main-content-zola-message">
-                  <Menu style={{ width: '357px', height: 'auto' }}>
-                    <Menu.Item style={{ width: '357px', height: 'auto' }}>
-                      <Row className="message-view">
-                        <Col span={6} className="avatar">
-                          <img
-                            src={
-                              userProfile?.avatar
-                                ? userProfile?.avatar
-                                : 'avatar'
-                            }
-                            className="img_avatar"
-                            data-reactid="23"
-                            alt="avatar"
-                          />
-                        </Col>
-                        <Col span={15}>
-                          <h4 className="name-message-room">Quoc Duy</h4>
-                          <p className="content-message-room">Anh iu em </p>
-                        </Col>
-                        <Col span={3}>
-                          <span className="last-time-message-room">1h</span>
-                          <p className="open-option-message-room">...</p>
-                        </Col>
-                      </Row>
-                    </Menu.Item>
-                  </Menu>{' '}
+                  <MessageList />
                 </div>
               </div>
             </TabPane>

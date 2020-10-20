@@ -154,7 +154,7 @@ const SignUp = () => {
                   </Form.Item>
                   <Form.Item>
                     <Button type="primary" htmlType="submit">
-                      Tiếp tục
+                      Nhận mã kích hoạt
                     </Button>
                   </Form.Item>
                 </Form>

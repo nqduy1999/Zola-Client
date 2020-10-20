@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import ForgotPassword from 'components/Account/ForgotPassword';
+import withAuth from 'components/common/withAuth';
 
 class ForgotPass extends PureComponent {
   render() {
@@ -7,6 +8,6 @@ class ForgotPass extends PureComponent {
   }
 }
 
-export default ForgotPass;
+export default withAuth(ForgotPass);
 
 ForgotPass.pageName = 'ForgotPassword';

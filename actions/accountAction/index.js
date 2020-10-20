@@ -1,15 +1,14 @@
 import { AUTHENTICATION_TYPE } from 'constant';
 import jwtDecode from 'jwt-decode';
-import axiosServices from 'utils/service/axiosServices';
+import { accountService } from 'services';
 import cookiesServices from 'utils/service/cookiesServices';
 
-const prefix = 'accounts/';
 export const SignInAccount = (dataDispatch, push) => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SIGNIN_REQUEST
   });
-  return axiosServices
-    .post(`${prefix}signin`, dataDispatch)
+  return accountService
+    .SignInService(dataDispatch)
     .then(res => {
       const { error, data } = res.data;
       if (!error) {
@@ -41,7 +40,7 @@ export const SignUp = (push, dataDispatch) => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SIGNUP_REQUEST
   });
-  return axiosServices.post(`${prefix}signup`, dataDispatch).then(res => {
+  return accountService.SignUpService(dataDispatch).then(res => {
     const { error, data, message } = res.data;
     if (error) {
       dispatch({
@@ -57,6 +56,7 @@ export const SignUp = (push, dataDispatch) => dispatch => {
       dispatch({
         type: AUTHENTICATION_TYPE.SIGNUP_SUCCESS
       });
+      cookiesServices.clearToken();
       push('/');
       return { error, data };
     }
@@ -74,8 +74,8 @@ export const activeAccount = dataDispatch => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.ACTIVE_REQUEST
   });
-  return axiosServices
-    .post(`${prefix}code/verify`, dataDispatch)
+  return accountService
+    .ActiveService(dataDispatch)
     .then(res => {
       const { error, data } = res.data;
       if (!error) {
@@ -98,7 +98,8 @@ export const sendOtp = apiDefault => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
-  return axiosServices.get(`${prefix}${apiDefault}`).then(res => {
+  return accountService.sendOtpService(apiDefault).then(res => {
+    console.log(res);
     const { error, data, message } = res.data;
     if (error) {
       dispatch({
@@ -139,12 +140,11 @@ export const accountLogout = push => dispatch => {
   });
 };
 export const sendOtpForgot = value => dispatch => {
-  console.log(value);
   dispatch({
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
-  return axiosServices
-    .get(`${prefix}passwords/forgot?${value}`)
+  return accountService
+    .sendOtpForgotService(value)
     .then(res => {
       console.log(res);
       const { error, message } = res.data;
@@ -167,8 +167,8 @@ export const verifyForgotAccount = dataDispatch => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.ACTIVE_REQUEST
   });
-  return axiosServices
-    .post(`${prefix}code/password/verify`, dataDispatch)
+  return accountService
+    .verifyForgotAccountService(dataDispatch)
     .then(res => {
       const { error, data } = res.data;
       if (!error) {
@@ -191,7 +191,7 @@ export const changePassword = (push, dataDispatch) => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST
   });
-  return axiosServices.post(`${prefix}signup`, dataDispatch).then(res => {
+  return accountService.changePasswordService(dataDispatch).then(res => {
     const { error, data, message } = res.data;
     if (error) {
       dispatch({

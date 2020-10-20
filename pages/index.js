@@ -1,4 +1,5 @@
 import SignIn from 'components/Account/SignIn';
+import withAuth from 'components/common/withAuth';
 import React, { PureComponent } from 'react';
 
 class Index extends PureComponent {
@@ -47,6 +48,6 @@ class Index extends PureComponent {
   }
 }
 
-export default Index;
+export default withAuth(Index);
 
 Index.pageName = 'Index';

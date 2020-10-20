@@ -1,9 +1,7 @@
-import axiosServices from 'utils/service/axiosServices';
-
-const prefix = 'https://api-ret.ml/api/v0/images/';
+import { uploadService } from 'services';
 
 export const uploadImgSingle = formData => {
-  return axiosServices.post(`${prefix}upload-avatar`, formData).then(res => {
+  return uploadService.uploadImgSingleService(formData).then(res => {
     return res?.data;
   });
 };

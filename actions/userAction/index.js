@@ -1,6 +1,7 @@
 import USER_TYPE from 'constant/userTypes';
 import axiosServices from 'utils/service/axiosServices';
 import jwt_decode from 'jwt-decode';
+import { userService } from 'services';
 const prefix = 'users/';
 export const getProfileUser = auth_token => dispatch => {
   dispatch({
@@ -30,42 +31,45 @@ export const updateProfileUser = dataDispatch => async dispatch => {
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
-  return axiosServices
-    .put(`${prefix}profile/update`, dataDispatch)
+  return userService
+    .updateProfileUserService(dataDispatch)
     .then(res => {
       const { error } = res.data;
-      if (error) {
-        dispatch({
-          type: USER_TYPE.UPDATE_USER_FAILURE
-        });
-      }
       if (!error) {
         dispatch({
           type: USER_TYPE.UPDATE_USER_SUCCESS,
           payload: dataDispatch
         });
       }
+    })
+    .catch(err => {
+      const { error, data, message } = err.response?.data;
+      dispatch({
+        type: USER_TYPE.UPDATE_USER_FAILURE
+      });
+      return { error, data, message };
     });
 };
 export const updateOtpUser = dataDispatch => dispatch => {
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
-  return axiosServices
-    .put(`${prefix}profile/contact/update`, dataDispatch)
+  return userService
+    .updateOtpUserService(dataDispatch)
     .then(res => {
       const { error, message } = res.data;
-      if (error) {
-        dispatch({
-          type: USER_TYPE.UPDATE_USER_FAILURE
-        });
-        return { error };
-      }
       if (!error) {
         dispatch({
           type: USER_TYPE.UPDATE_USER_SUCCESS
         });
       }
       return { message };
+    })
+    .catch(err => {
+      const { error, data, message } = err.response?.data;
+      dispatch({
+        type: USER_TYPE.UPDATE_USER_FAILURE
+      });
+      return { error, data, message };
     });
 };

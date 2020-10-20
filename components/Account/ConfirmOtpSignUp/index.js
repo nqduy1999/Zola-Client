@@ -122,7 +122,7 @@ const ConfirmOtpSignUp = props => {
         <Form className={c`form-signup`} onFinish={submit}>
           <div className="box-au">
             <p>
-              Mã kích hoạt đã được gửi đến
+              Mã kích hoạt đã được gửi đến {''}
               {valueSent?.email ? 'email' : 'số điện thoại'}:
             </p>
             <p>
