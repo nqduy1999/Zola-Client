@@ -64,11 +64,11 @@ const ConfirmOtpForgot = props => {
             autoClose: 3000
           });
         } else {
-          const valueSignUp = {
+          const valueChange = {
             newPassword: value.password,
             confirmNewPassword: value.passwordConfirm
           };
-          dispatch(changePassword(push, valueSignUp)).then(res => {
+          dispatch(changePassword(push, valueChange)).then(res => {
             if (res.error) {
               toast.error(res.message, {
                 position: 'top-right',
@@ -86,7 +86,7 @@ const ConfirmOtpForgot = props => {
     } else {
       const valueActive = {
         code: value.code,
-        email: valueSent.phone
+        phone: valueSent.phone
       };
       dispatch(verifyForgotAccount(valueActive)).then(res => {
         if (res.error) {
@@ -95,12 +95,11 @@ const ConfirmOtpForgot = props => {
             autoClose: 3000
           });
         } else {
-          const valueSignUp = {
+          const valueChange = {
             newPassword: value.password,
-            confirmNewPassword: value.passwordConfirm,
-            phone: valueSent.phone
+            confirmNewPassword: value.passwordConfirm
           };
-          dispatch(changePassword(push, valueSignUp)).then(res => {
+          dispatch(changePassword(push, valueChange)).then(res => {
             if (res.error) {
               toast.error(res.message, {
                 position: 'top-right',

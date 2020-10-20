@@ -43,7 +43,7 @@ class AccountServices {
   };
   changePasswordService = data => {
     return axios.request({
-      method: 'POST',
+      method: 'PUT',
       url: `${prefix}passwords/change`,
       data: data
     });

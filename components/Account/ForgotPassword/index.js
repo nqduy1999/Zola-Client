@@ -24,8 +24,9 @@ const ForgotPassword = () => {
       const apiSendOtp = `email=${value.email}`;
       setValueSent(value);
       dispatch(sendOtpForgot(apiSendOtp)).then(res => {
+        console.log(res);
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.message, {
             position: 'top-right',
             autoClose: 3000
           });

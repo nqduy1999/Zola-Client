@@ -34,6 +34,8 @@ const Update = props => {
     cancelAvatar();
     setChangeName(false);
     setImageFormData(null);
+    setUserData(userProfile);
+    setImageChange(userProfile.avatar);
     setImageChange(avatar);
   };
   const handleOnChange = e => {
@@ -45,6 +47,7 @@ const Update = props => {
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
+      setImageChange(userProfile.avatar);
     }
   }, [userProfile]);
   const submitAvatar = () => {
@@ -62,6 +65,10 @@ const Update = props => {
             position: 'top-right',
             autoClose: 3000
           });
+          setUserData(userProfile);
+          setImageChange(
+            `https://api-ret.ml/api/v0/images/download/${res.data}`
+          );
         });
       });
     } else {
@@ -75,6 +82,8 @@ const Update = props => {
           position: 'top-right',
           autoClose: 3000
         });
+        setUserData(userProfile);
+        setImageChange(userProfile.avatar);
       });
     }
   };

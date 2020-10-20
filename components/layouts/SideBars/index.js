@@ -27,6 +27,7 @@ const Sidebar = () => {
     setVisible(false);
     setUserData(userProfile);
   };
+  console.log(userProfile);
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);

@@ -207,6 +207,7 @@ export const changePassword = (push, dataDispatch) => dispatch => {
       dispatch({
         type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS
       });
+      cookiesServices.clearToken();
       push('/');
       return { error, data };
     }
