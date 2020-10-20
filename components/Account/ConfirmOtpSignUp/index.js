@@ -6,6 +6,7 @@ import { Button, Form, Input } from 'antd';
 import { activeAccount, sendOtp, SignUp } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import * as Validator from 'utils/validatorFormat';
 
 const prefix = 'confirm-otp-sign-up';
 const c = classPrefixor(prefix);
@@ -147,7 +148,13 @@ const ConfirmOtpSignUp = props => {
               </a>
             </p>
           </div>
-          <Form.Item name="name">
+          <Form.Item
+            name="name"
+            rules={[
+              Validator.NameUser('name', 'Tên không đúng định dạng'),
+              Validator.required('name', 'Không được bỏ trống')
+            ]}
+          >
             <div className="line-form">
               <Input
                 placeholder="Nhập tên bạn muốn hiển thị"
@@ -155,7 +162,13 @@ const ConfirmOtpSignUp = props => {
               />
             </div>
           </Form.Item>
-          <Form.Item name="password">
+          <Form.Item
+            name="password"
+            rules={[
+              Validator.password('name', 'Password không đúng định dạng'),
+              Validator.required('name', 'Không được bỏ trống')
+            ]}
+          >
             <div className="line-form">
               <Input.Password
                 placeholder="Nhập mật khẩu"
@@ -163,7 +176,13 @@ const ConfirmOtpSignUp = props => {
               />
             </div>
           </Form.Item>
-          <Form.Item name="passwordConfirm">
+          <Form.Item
+            name="passwordConfirm"
+            rules={[
+              Validator.password('name', 'Password không đúng định dạng'),
+              Validator.required('name', 'Không được bỏ trống')
+            ]}
+          >
             <div className="line-form">
               <Input.Password
                 placeholder="Nhập lại mật khẩu"

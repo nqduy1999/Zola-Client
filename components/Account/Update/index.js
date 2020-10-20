@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import { updateProfileUser } from 'actions/userAction';
 import { toast } from 'react-toastify';
 import SendOtp from '../SendOtp';
+import * as Validator from 'utils/validatorFormat';
+
 const Update = props => {
   const [imageChange, setImageChange] = useState(avatar);
   const [imageFormData, setImageFormData] = useState();
@@ -195,7 +197,10 @@ const Update = props => {
       >
         {changeName ? (
           <Form.Item
-            rules={[{ required: true, message: 'Tên không được để trống!' }]}
+            rules={[
+              Validator.NameUser('Phone', 'Tên không đúng định dạng'),
+              Validator.required('Phone', 'Không được bỏ trống')
+            ]}
           >
             <Input
               name="name"
@@ -228,7 +233,10 @@ const Update = props => {
         )}
         <Form.Item
           label="Email"
-          rules={[{ required: true, message: 'Tên không được để trống!' }]}
+          rules={[
+            Validator.emailFormat('Phone', 'Email không đúng định dạng'),
+            Validator.required('Phone', 'Không được bỏ trống')
+          ]}
         >
           {userData && userData.email ? (
             <Input name="email" disabled value={userData.email} />
@@ -239,10 +247,11 @@ const Update = props => {
         <Form.Item
           label="Phone"
           rules={[
-            {
-              required: true,
-              message: 'Số điện thoại không để trống!'
-            }
+            Validator.phoneNumber(
+              'Phone',
+              'Số điện thoại không đúng định dạng'
+            ),
+            Validator.required('Phone', 'Không được bỏ trống')
           ]}
         >
           {userData && userData.phone ? (

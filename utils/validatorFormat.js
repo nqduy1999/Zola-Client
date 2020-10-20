@@ -26,8 +26,8 @@ export const pattern = (nameField, regx, message) => ({
   message: message || `Special characters are not allowed in ${nameField}.`
 });
 
-export const emailFormat = (nameField, regx, message) => ({
-  pattern: regx,
+export const emailFormat = (nameField, message) => ({
+  pattern: /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g,
   message: message || `Invalid ${nameField}.`
 });
 
@@ -45,8 +45,16 @@ export const lowercase = (nameField, message) => ({
   pattern: /^[^A-Z\s]+$/,
   message: message || `${nameField} must be in lowercase.`
 });
+export const password = (nameField, message) => ({
+  pattern: /[a-zA-Z0-9]{6,20}/,
+  message: message || `${nameField} must be a number.`
+});
 export const phoneNumber = (nameField, message) => ({
   pattern: /((09|03|07|08|05)+([0-9]{8})\b)/g,
+  message: message || `${nameField} must be a number.`
+});
+export const NameUser = (nameField, message) => ({
+  pattern: /^[a-zA-Z]{6,20}/,
   message: message || `${nameField} must be a number.`
 });
 export const isPassConfirmedValid = (passValue, message) => ({

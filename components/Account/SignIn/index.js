@@ -38,10 +38,6 @@ const SignIn = () => {
     dispatch(SignInAccount(data, push)).then(res => {
       const { error } = res;
       if (!error) {
-        toast.success('🦄 Đăng nhập thành công!', {
-          position: 'top-right',
-          autoClose: 3000
-        });
         if (data.email) {
           const type = 'email';
           localStorage.setItem('type', JSON.stringify(type));
@@ -49,6 +45,10 @@ const SignIn = () => {
           const type = 'phone';
           localStorage.setItem('type', JSON.stringify(type));
         }
+        toast.success('🦄 Đăng nhập thành công!', {
+          position: 'top-right',
+          autoClose: 3000
+        });
       } else {
         toast.error(res?.data[0]?.msg, {
           position: 'top-right',
@@ -96,7 +96,11 @@ const SignIn = () => {
                 <Form.Item
                   name="password"
                   rules={[
-                    { required: true, message: 'Vui lòng nhập mật khẩu!' }
+                    Validator.password(
+                      'Phone',
+                      'Password không đúng định dạng'
+                    ),
+                    Validator.required('Password', 'Không được bỏ trống')
                   ]}
                 >
                   <Input.Password
@@ -129,7 +133,13 @@ const SignIn = () => {
               >
                 <Form.Item
                   name="email"
-                  rules={[Validator.required('Email', 'Không được bỏ trống')]}
+                  rules={[
+                    Validator.emailFormat(
+                      'Phone',
+                      'Email không đúng định dạng'
+                    ),
+                    Validator.required('Email', 'Không được bỏ trống')
+                  ]}
                 >
                   <Input placeholder="Nhập Email " prefix={<MailOutlined />} />
                 </Form.Item>

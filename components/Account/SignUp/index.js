@@ -130,7 +130,13 @@ const SignUp = () => {
                 >
                   <Form.Item
                     name="email"
-                    rules={[Validator.required('Email', 'Không được bỏ trống')]}
+                    rules={[
+                      Validator.emailFormat(
+                        'Email',
+                        'Email không đúng định dạng'
+                      ),
+                      Validator.required('Email', 'Không được bỏ trống')
+                    ]}
                   >
                     <Input
                       placeholder="Nhập Email "
