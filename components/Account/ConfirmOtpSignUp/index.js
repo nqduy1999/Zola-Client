@@ -150,10 +150,7 @@ const ConfirmOtpSignUp = props => {
           </div>
           <Form.Item
             name="name"
-            rules={[
-              Validator.NameUser('name', 'Tên không đúng định dạng'),
-              Validator.required('name', 'Không được bỏ trống')
-            ]}
+            rules={[Validator.required('name', 'Không được bỏ trống')]}
           >
             <div className="line-form">
               <Input

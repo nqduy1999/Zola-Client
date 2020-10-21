@@ -197,10 +197,7 @@ const Update = props => {
       >
         {changeName ? (
           <Form.Item
-            rules={[
-              Validator.NameUser('Phone', 'Tên không đúng định dạng'),
-              Validator.required('Phone', 'Không được bỏ trống')
-            ]}
+            rules={[Validator.required('Phone', 'Không được bỏ trống')]}
           >
             <Input
               name="name"
