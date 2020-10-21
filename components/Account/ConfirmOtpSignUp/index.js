@@ -85,7 +85,7 @@ const ConfirmOtpSignUp = props => {
     } else {
       const valueActive = {
         code: value.code,
-        email: valueSent.phone
+        phone: valueSent.phone
       };
       dispatch(activeAccount(valueActive)).then(res => {
         if (res.error) {
