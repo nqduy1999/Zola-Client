@@ -5,7 +5,14 @@ export const urlHelper = {
   getUrlHomePage: () => ({
     layout: DefaultLayout,
     route: {
-      to: '/'
+      to: '/home'
+    },
+    initProps: {}
+  }),
+  getUrlFriend: () => ({
+    layout: DefaultLayout,
+    route: {
+      to: '/list-contact'
     },
     initProps: {}
   }),

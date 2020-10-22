@@ -148,6 +148,13 @@
         .ant-tabs-tab .ant-tabs-tab-active {
           background-color: #40a9ff29;
         }
+        .ant-tabs-content-holder{
+          .ant-tabs-content{
+            .ant-tabs-tabpane{
+              display: block;
+            }
+          }
+        }
       }
     }
     .message-view {

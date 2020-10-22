@@ -29,7 +29,6 @@ const Sidebar = () => {
     setVisible(false);
     setUserData(userProfile);
   };
-  console.log(userProfile);
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
@@ -49,7 +48,6 @@ const Sidebar = () => {
   const styleMenuItem = {
     padding: '10px 20px'
   };
-
   const menuList = (
     <Menu style={menuUser}>
       <Menu.Item
@@ -195,7 +193,13 @@ const Sidebar = () => {
         </div>
         <div className="right-section">
           <div className="zola-section">
-            <Row className="zola-header">
+            <Row
+              className="zola-header"
+              style={{
+                padding: '20px',
+                width: '110%'
+              }}
+            >
               <Col
                 span={5}
                 className="logo-header"
@@ -218,7 +222,7 @@ const Sidebar = () => {
                 <span>- {userData ? userData.name : ''}</span>
               </Col>
             </Row>
-            <Row className="zola-section-mid">
+            <Row className="zola-section-mid" style={{ width: '110%' }}>
               <Col span={15} className="search-zola-message">
                 <Search placeholder="Nhập vào tin nhắn" enterButton />
               </Col>

@@ -227,9 +227,9 @@ export default SendOtpComponent;
 SendOtpComponent.propTypes = {
   children: PropTypes.objectOf(PropTypes.any),
   userProfile: PropTypes.objectOf(PropTypes.any),
-  visible: PropTypes.objectOf(PropTypes.any),
+  visible: PropTypes.any,
   setVisible: PropTypes.objectOf(PropTypes.any),
-  cancelModal: PropTypes.objectOf(PropTypes.any),
+  cancelModal: PropTypes.any,
   typeOfsendOtp: PropTypes.any
 };
 SendOtpComponent.defaultProps = {

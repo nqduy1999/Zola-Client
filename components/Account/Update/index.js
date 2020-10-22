@@ -1,6 +1,6 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Input, Upload, Form } from 'antd';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import ImgCrop from 'antd-img-crop';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect, useState } from 'react';
@@ -270,10 +270,10 @@ export default Update;
 
 Update.propTypes = {
   children: PropTypes.objectOf(PropTypes.any),
-  cancelAvatar: PropTypes.objectOf(PropTypes.any),
+  cancelAvatar: func,
   userProfile: PropTypes.objectOf(PropTypes.any),
-  visible: PropTypes.objectOf(PropTypes.any),
-  setVisible: PropTypes.objectOf(PropTypes.any)
+  visible: PropTypes.any,
+  setVisible: PropTypes.func
 };
 Update.defaultProps = {
   children: {},

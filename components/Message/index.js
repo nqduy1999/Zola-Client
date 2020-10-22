@@ -1,15 +1,30 @@
 import { Col, Row, Tabs } from 'antd';
+import HomePage from 'components/HomePage';
 import React from 'react';
 import { useSelector } from 'react-redux';
 const MessageList = () => {
   const { userProfile } = useSelector(state => state.userData);
   const { TabPane } = Tabs;
+  const handleChangeTab = e => {
+    console.log(e);
+  };
   return (
     <Tabs
       style={{ width: '357px', height: 'auto' }}
       tabPosition="left"
       className="tab-message"
+      defaultActiveKey="0"
+      onChange={handleChangeTab}
     >
+      <TabPane
+        style={{
+          position: 'absolute',
+          marginTop: '-80%'
+        }}
+        key="0"
+      >
+        <HomePage />
+      </TabPane>
       <TabPane
         style={{
           width: '357px',
@@ -34,8 +49,10 @@ const MessageList = () => {
             </Col>
           </Row>
         }
+        key="1"
       ></TabPane>
       <TabPane
+        key="2"
         style={{
           width: '357px',
           height: 'auto'
