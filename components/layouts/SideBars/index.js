@@ -1,18 +1,20 @@
+import React, { useEffect, useState } from 'react';
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { accountLogout, isTokenExpired } from 'actions/accountAction';
 import logo from 'assets/images/zola-logo.png';
 import avatar from 'assets/images/logo.png';
 import { Button, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
 import { useRouter } from 'next/router';
+import Directory from './Directory';
 import MessageList from 'components/Message';
 
 const prefix = 'side-bar';
 const { Search } = Input;
 const c = classPrefixor(prefix);
+
 const Sidebar = () => {
   const { TabPane } = Tabs;
   const [visible, setVisible] = useState(false);
@@ -86,12 +88,12 @@ const Sidebar = () => {
     <Menu style={menuUser}>
       <Menu.Item style={styleMenuItem}>
         <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
-          Tin nhắn cá nhân{' '}
+          Tin nhắn cá nhân
         </a>
       </Menu.Item>
       <Menu.Item style={styleMenuItem}>
         <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
-          Tin nhắn nhóm{' '}
+          Tin nhắn nhóm
         </a>
       </Menu.Item>
     </Menu>
@@ -99,6 +101,7 @@ const Sidebar = () => {
   useEffect(() => {
     if (!isAuthenticated) dispatch(isTokenExpired());
   }, [isAuthenticated, dispatch]);
+
   return (
     <div className={c`container`}>
       <div>
@@ -125,6 +128,7 @@ const Sidebar = () => {
               height: '78%'
             }}
             tabPosition="left"
+            defaultActiveKey="1"
           >
             <TabPane
               key="1"
@@ -151,7 +155,9 @@ const Sidebar = () => {
               key="2"
               style={{ paddingBottom: '50px', paddingTop: '20px' }}
               tab={<i className="fa fa-address-book"></i>}
-            ></TabPane>
+            >
+              <Directory />
+            </TabPane>
             <TabPane
               key="3"
               style={{ paddingBottom: '50px', paddingTop: '20px' }}
