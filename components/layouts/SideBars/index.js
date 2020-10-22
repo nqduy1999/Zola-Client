@@ -53,8 +53,9 @@ const Sidebar = () => {
       <Menu.Item
         icon={<EditOutlined style={styleIcon} />}
         style={styleMenuItem}
+        onClick={showModal}
       >
-        <a target="_blank" rel="noopener noreferrer" onClick={showModal}>
+        <a target="_blank" rel="noopener noreferrer">
           Cập nhật thông tin
         </a>
       </Menu.Item>
@@ -112,7 +113,11 @@ const Sidebar = () => {
             <Dropdown overlay={menuList} placement="bottomRight">
               <div className="avatar" style={{ cursor: 'pointer' }}>
                 <img
-                  src={userProfile?.avatar ? userProfile?.avatar : avatar}
+                  src={
+                    userProfile?.avatar
+                      ? `https://api-ret.ml/api/v0/images/download/${userProfile?.avatar}`
+                      : avatar
+                  }
                   className="img_avatar"
                   data-reactid="23"
                 />

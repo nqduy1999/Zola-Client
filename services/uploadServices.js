@@ -9,5 +9,11 @@ class UploadServices {
       data: formData
     });
   };
+  getImgService = value => {
+    return axios.request({
+      method: 'GET',
+      url: `${prefix}download/${value}`
+    });
+  };
 }
 export default UploadServices;

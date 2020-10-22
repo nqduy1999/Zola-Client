@@ -5,3 +5,8 @@ export const uploadImgSingle = formData => {
     return res?.data;
   });
 };
+export const getImg = values => {
+  return uploadService.getImgService(values).then(res => {
+    return res?.data;
+  });
+};

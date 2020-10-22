@@ -13,7 +13,7 @@ import SendOtp from '../SendOtp';
 import * as Validator from 'utils/validatorFormat';
 
 const Update = props => {
-  const [imageChange, setImageChange] = useState(avatar);
+  const [imageChange, setImageChange] = useState(null);
   const [imageFormData, setImageFormData] = useState();
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
@@ -38,7 +38,6 @@ const Update = props => {
     setImageFormData(null);
     setUserData(userProfile);
     setImageChange(userProfile.avatar);
-    setImageChange(avatar);
   };
   const handleOnChange = e => {
     setUserData({
@@ -49,7 +48,11 @@ const Update = props => {
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
-      setImageChange(userProfile.avatar);
+      setImageChange(
+        `https://api-ret.ml/api/v0/images/download/${userProfile.avatar}`
+      );
+    } else {
+      setImageChange(avatar);
     }
   }, [userProfile]);
   const submitAvatar = () => {
@@ -59,7 +62,7 @@ const Update = props => {
       uploadImgSingle(formData).then(res => {
         const dataUpdate = {
           name: userData?.name,
-          avatar: `https://api-ret.ml/api/v0/images/download/${res.data}`
+          avatar: res.data
         };
         dispatch(updateProfileUser(dataUpdate)).then(() => {
           setVisible(false);
@@ -68,9 +71,6 @@ const Update = props => {
             autoClose: 3000
           });
           setUserData(userProfile);
-          setImageChange(
-            `https://api-ret.ml/api/v0/images/download/${res.data}`
-          );
         });
       });
     } else {
@@ -114,7 +114,7 @@ const Update = props => {
       reader.readAsDataURL(e.file.originFileObj);
       setImageFormData(e.file.originFileObj);
     } else if (!e.file.originFileObj) {
-      setImageChange(null);
+      setImageChange(avatar);
     }
   };
   const sendOtpToPhone = () => {
@@ -181,7 +181,7 @@ const Update = props => {
         >
           <div className="avatar" style={{ cursor: 'pointer' }}>
             <img
-              src={imageChange ? imageChange : userProfile?.avatar}
+              src={imageChange}
               className="img_avatar"
               data-reactid="23"
               alt="avatar"

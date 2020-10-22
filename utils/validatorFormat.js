@@ -54,7 +54,7 @@ export const phoneNumber = (nameField, message) => ({
   message: message || `${nameField} must be a number.`
 });
 export const NameUser = (nameField, message) => ({
-  pattern: /^[a-zA-Z]{6,20}/,
+  pattern: /^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$/,
   message: message || `${nameField} must be a number.`
 });
 export const isPassConfirmedValid = (passValue, message) => ({
