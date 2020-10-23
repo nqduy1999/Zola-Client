@@ -53,6 +53,12 @@ const renderHelmet = meta => (
       },
       {
         src: 'https://code.jquery.com/jquery-3.5.1.slim.min.js'
+      },
+      {
+        src: 'https://unpkg.com/react-tabs/dist/react-tabs.development.js'
+      },
+      {
+        src: 'https://unpkg.com/react-tabs/dist/react-tabs.production.min.js'
       }
     ]}
   />

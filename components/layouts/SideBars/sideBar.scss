@@ -148,9 +148,9 @@
         .ant-tabs-tab .ant-tabs-tab-active {
           background-color: #40a9ff29;
         }
-        .ant-tabs-content-holder{
-          .ant-tabs-content{
-            .ant-tabs-tabpane{
+        .ant-tabs-content-holder {
+          .ant-tabs-content {
+            .ant-tabs-tabpane {
               display: block;
             }
           }
@@ -213,60 +213,5 @@
   .open-option-message-room {
     font-size: 24px;
     color: #8e8e93;
-  }
-}
-
-.content-zola-directory {
-  padding-bottom: 15px;
-  width: 315px;
-  top: 25%;
-  left: 120%;
-  background: white;
-  position: absolute;
-  .addFriend {
-    text-align: center;
-    font-size: 16px;
-    padding: 5px;
-    p {
-      cursor: pointer;
-      svg {
-        margin-right: 5px;
-        font-size: 18px;
-        color: #0068ff;
-      }
-    }
-  }
-  .userContact {
-    cursor: pointer;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    img {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-
-    .right {
-      display: flex;
-      justify-content: flex-end;
-      svg {
-        font-size: 20px;
-        color: white;
-      }
-    }
-    &:hover {
-      background-color: #e6f0ff;
-      transition: all 0.5s;
-      .right {
-        svg {
-          transition: all 0.5s;
-
-          color: black;
-        }
-      }
-    }
   }
 }

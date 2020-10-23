@@ -18,6 +18,26 @@ class FriendService {
       url: `users/getListRequestId?userId=${id}`
     });
   };
+  acceptFriend = (userID, userIDWantAccept) => {
+    return axios.request({
+      method: 'POST',
+      url: `users/accepFriend`,
+      data: {
+        user_id: userID,
+        user_id_want_accept: userIDWantAccept
+      }
+    });
+  };
+  avoidFriendRequest = (userID, userIDWantAvoid) => {
+    return axios.request({
+      method: 'POST',
+      url: `users/deletePhoneByIdRequest`,
+      data: {
+        user_id: userID,
+        user_id_want_delete: userIDWantAvoid
+      }
+    });
+  };
 }
 
 export default FriendService;

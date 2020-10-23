@@ -78,3 +78,64 @@ export const fetchFriendsRequestAction = id => dispatch => {
       });
     });
 };
+
+export const acceptFriendAction = (userID, userIDWantAccept) => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.ACCEPT_FRIEND_REQUEST
+  });
+  friendService
+    .acceptFriend(userID, userIDWantAccept)
+    .then(res => {
+      const { error, message } = res.data;
+      if (!error) {
+        dispatch({
+          type: FRIENDS_TYPE.ACCEPT_FRIEND_SUCCESS,
+          payload: message
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.ACCEPT_FRIEND_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
+export const avoidFriendRequestAcion = (
+  userID,
+  userIDWantAvoid
+) => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.AVOID_FRIEND_REQUEST
+  });
+  friendService
+    .avoidFriendRequest(userID, userIDWantAvoid)
+    .then(res => {
+      const { error, message } = res.data;
+      if (!error) {
+        dispatch({
+          type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
+          payload: message
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.AVOID_FRIEND_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
+export const dispatchDefaultAction = () => ({
+  type: 'DEFAULT_ACTION'
+});
