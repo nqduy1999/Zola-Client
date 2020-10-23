@@ -5,6 +5,8 @@ import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Avatar from 'antd/lib/avatar/avatar';
 import { UserOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFriendAction } from 'actions/friendAction';
 const prefix = 'view-user-friend';
 const c = classPrefixor(prefix);
 const inforUser = {
@@ -25,8 +27,20 @@ const label_user = {
   fontSize: '15px',
   display: 'inline-block'
 };
+
 const ViewUserFriend = props => {
+  const { userProfile } = useSelector(state => state.userData);
   const { visible, onCancelModal, userData } = props;
+  const dispatch = useDispatch();
+  const OnAddFriend = () => {
+    const value = {
+      user_id: userData?.id,
+      user_request_id: userProfile?.id
+    };
+    dispatch(addFriendAction(value)).then(res => {
+      console.log(res);
+    });
+  };
   return (
     <Modal
       className={c`main`}
@@ -118,7 +132,11 @@ const ViewUserFriend = props => {
       </div>
       <div className="friend-profile__actions friend-profile__actions__header">
         <div style={{ paddingTop: '10px' }}>
-          <Button type="primary" style={{ margin: '0 auto', display: 'block' }}>
+          <Button
+            type="primary"
+            style={{ margin: '0 auto', display: 'block' }}
+            onClick={OnAddFriend}
+          >
             Kết bạn
           </Button>
         </div>
@@ -140,7 +158,6 @@ const ViewUserFriend = props => {
             <div style={user_profile_line}>
               <span style={label_user}>Email</span>
               <span style={{ position: 'relative' }}>
-                {' '}
                 {userData?.email ? userData.email : ' Chưa cập nhật'}
               </span>
             </div>

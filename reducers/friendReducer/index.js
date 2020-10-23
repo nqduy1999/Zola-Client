@@ -38,6 +38,15 @@ const FriendReducer = (state = initialState, action) => {
     case FRIENDS_TYPE.SEARCH_FRIEND_FAILURE: {
       return { ...state, loading: false };
     }
+    case FRIENDS_TYPE.ADD_FRIEND_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case FRIENDS_TYPE.ADD_FRIEND_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case FRIENDS_TYPE.ADD_FRIEND_FAILURE: {
+      return { ...state, loading: false };
+    }
     default:
       return state;
   }

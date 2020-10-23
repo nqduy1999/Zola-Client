@@ -24,6 +24,13 @@ class FriendService {
       url: `users/textSearch?value=${value}`
     });
   };
+  addFriend = value => {
+    return axios.request({
+      method: 'POST',
+      url: `users/addFriend`,
+      data: value
+    });
+  };
 }
 
 export default FriendService;

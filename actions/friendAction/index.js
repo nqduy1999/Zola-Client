@@ -79,7 +79,6 @@ export const fetchFriendsRequestAction = id => dispatch => {
     });
 };
 export const searchFriendAction = value => dispatch => {
-  console.log(value);
   dispatch({
     type: FRIENDS_TYPE.SEARCH_FRIEND_REQUEST
   });
@@ -102,5 +101,29 @@ export const searchFriendAction = value => dispatch => {
           data
         }
       });
+    });
+};
+export const addFriendAction = value => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.ADD_FRIEND_REQUEST
+  });
+  return friendService
+    .addFriend(value)
+    .then(res => {
+      dispatch({
+        type: FRIENDS_TYPE.ADD_FRIEND_SUCCESS
+      });
+      return res;
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.ADD_FRIEND_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+      return err.response?.data;
     });
 };

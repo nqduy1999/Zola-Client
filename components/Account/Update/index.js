@@ -1,11 +1,10 @@
-import { EditOutlined } from '@ant-design/icons';
-import { Button, Input, Upload, Form } from 'antd';
+import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Input, Upload, Form, Avatar } from 'antd';
 import PropTypes, { func } from 'prop-types';
 import ImgCrop from 'antd-img-crop';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect, useState } from 'react';
 import { uploadImgSingle } from 'actions/uploadImgActions';
-import avatar from 'assets/images/logo.png';
 import { useDispatch } from 'react-redux';
 import { updateProfileUser } from 'actions/userAction';
 import { toast } from 'react-toastify';
@@ -13,13 +12,13 @@ import SendOtp from '../SendOtp';
 import * as Validator from 'utils/validatorFormat';
 
 const Update = props => {
-  const [imageChange, setImageChange] = useState(null);
   const [imageFormData, setImageFormData] = useState();
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
   const [visibleOtp, setVisibleOtp] = useState(false);
   const { cancelAvatar, userProfile, visible, setVisible } = props;
   const [typeOfsendOtp, setTypeSentOtp] = useState(false);
+  const [imageChange, setImageChange] = useState(userProfile?.avatar);
   const dispatch = useDispatch();
   const cancelSendOtp = () => {
     setVisibleOtp(false);
@@ -48,11 +47,6 @@ const Update = props => {
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
-      setImageChange(
-        `https://api-ret.ml/api/v0/images/download/${userProfile.avatar}`
-      );
-    } else {
-      setImageChange(avatar);
     }
   }, [userProfile]);
   const submitAvatar = () => {
@@ -60,6 +54,7 @@ const Update = props => {
     formData.append('avatar', imageFormData);
     if (imageFormData) {
       uploadImgSingle(formData).then(res => {
+        console.log(res);
         const dataUpdate = {
           name: userData?.name,
           avatar: res.data
@@ -181,12 +176,18 @@ const Update = props => {
           onChange={handleChangeFile}
         >
           <div className="avatar" style={{ cursor: 'pointer' }}>
-            <img
-              src={imageChange}
-              className="img_avatar"
-              data-reactid="23"
-              alt="avatar"
-            />
+            {imageChange != null || imageChange != undefined ? (
+              <img
+                className="img_avatar"
+                src={`https://api-ret.ml/api/v0/images/download/${imageChange}`}
+              />
+            ) : (
+              <Avatar
+                size={64}
+                icon={<UserOutlined />}
+                style={{ marginLeft: '44%' }}
+              />
+            )}
           </div>
         </Upload>
       </ImgCrop>
