@@ -1,0 +1,76 @@
+.add-friend {
+    &__main {
+        margin: 0 auto;
+        border-radius: 2px;
+        .ant-modal-content{
+            width: 450px;
+        .ant-form-item-control-input {
+            width: 350px;
+        }
+        .ReactVirtualized__Grid__innerScrollContainer {
+            width: auto;
+            height: 300px;
+            max-width: 340px;
+            max-height: 138px;
+            overflow: hidden;
+            position: relative;
+            .headerFriendRequest {
+                height: 30px;
+                left: 0px;
+                position: relative;
+                top: 0px;
+                width: 100%;
+                bottom: 30px;
+                .contentFriendRequest {
+                    font-size: 13px;
+                    color: rgb(74, 74, 74);
+                    position: relative;
+                    top: 5px;
+                    display: flex;
+                }
+            }
+            .recent-search-item {
+                background-color: transparent;
+                transition: background-color 1s ease;
+                .avatar--xs {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 17px;
+                }
+                .avatar {
+                    position: relative;
+                    color: #fff;
+                    contain: layout size style;
+                }
+                .avatar-img-user{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+                .rsi-name {
+                    line-height: 22px;
+                    font-weight: 400;
+                    text-align: left;
+                    font-size: 16px;
+                    letter-spacing: normal;
+                    color: #050a19;
+                }
+                .rsi-close {
+                    display: none;
+                    font-size: 11px;
+                    line-height: 40px;
+                    padding: 0 5px;
+                }
+            }
+        }
+        .tabSearchUser {
+            font-size: 13px;
+            color: rgb(74, 74, 74);
+            position: relative;
+            top: 5px;
+            display: flex;
+        }
+    }
+}
+}

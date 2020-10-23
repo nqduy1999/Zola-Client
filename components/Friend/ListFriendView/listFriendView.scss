@@ -1,47 +1,47 @@
-.list-friend{
-    &__main-container{
+.list-friend {
+    &__main-container {
         width: 855px;
         height: auto;
         color: #6d7379;
-        .title-header{
+        .title-header {
             position: relative;
             margin: 0 auto;
             margin-top: 6%;
-            .img-title{
+            .img-title {
                 margin-top: 15px;
                 width: 30%;
                 float: right;
             }
         }
-        .clear-float{
+        .clear-float {
             clear: both;
         }
-        .content{
+        .content {
             padding-top: 20px;
             font-size: 0.85em;
             width: 385px;
             margin: 0 auto;
             text-align: center;
         }
-        .img-home{
+        .img-home {
             padding-top: 5%;
             width: 70%;
             margin: 0 auto;
-            .img-carousel{
+            .img-carousel {
                 width: 380px;
                 margin: 0 auto;
             }
-            .content-carousel{
+            .content-carousel {
                 padding-top: 20px;
                 text-align: center;
                 letter-spacing: 0.5px;
-                .title-carousel{
+                .title-carousel {
                     font-weight: 600;
                     font-size: 18px;
                     color: #0068ff;
                     width: 100%;
                 }
-                .subcontent{
+                .subcontent {
                     font-size: 14px;
                 }
             }

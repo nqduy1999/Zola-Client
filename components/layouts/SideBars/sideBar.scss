@@ -86,23 +86,25 @@
   min-width: 100px;
   width: 100px;
 }
-.ant-modal-content {
-  width: 400px;
-  margin: 0 auto;
-  .ant-upload.ant-upload-select-picture-card {
-    border: none;
-    background-color: white;
-  }
-  .avatar {
-    left: 120%;
-    display: block;
-    position: relative;
-    .img_avatar {
-      margin-left: 5px;
-      height: 84px;
-      width: 84px;
+.modalUpdateUser {
+  .ant-modal-content {
+    width: 400px;
+    margin: 0 auto;
+    .ant-upload.ant-upload-select-picture-card {
+      border: none;
+      background-color: white;
+    }
+    .avatar {
+      left: 120%;
       display: block;
-      border-radius: 50% !important;
+      position: relative;
+      .img_avatar {
+        margin-left: 5px;
+        height: 84px;
+        width: 84px;
+        display: block;
+        border-radius: 50% !important;
+      }
     }
   }
 }
@@ -148,9 +150,9 @@
         .ant-tabs-tab .ant-tabs-tab-active {
           background-color: #40a9ff29;
         }
-        .ant-tabs-content-holder{
-          .ant-tabs-content{
-            .ant-tabs-tabpane{
+        .ant-tabs-content-holder {
+          .ant-tabs-content {
+            .ant-tabs-tabpane {
               display: block;
             }
           }

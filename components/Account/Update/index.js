@@ -136,6 +136,7 @@ const Update = props => {
   return (
     <Modal
       title="Cập nhật thông tin"
+      className="modalUpdateUser"
       visible={visible}
       onOk={submitAvatar}
       onCancel={cancelModal}

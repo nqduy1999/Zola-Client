@@ -18,6 +18,12 @@ class FriendService {
       url: `users/getListRequestId?userId=${id}`
     });
   };
+  searchFriendByEmailorPhone = value => {
+    return axios.request({
+      method: 'GET',
+      url: `users/textSearch?value=${value}`
+    });
+  };
 }
 
 export default FriendService;

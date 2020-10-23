@@ -1,8 +1,8 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-.wrapper-page{
+.wrapper-page {
     .bg-svg {
         position: absolute;
         top: 0;
@@ -12,7 +12,7 @@
         direction: ltr;
         background-color: #e0e0e0;
         overflow: hidden;
-       svg {
+        svg {
             display: block;
             position: relative;
             width: 100%;
@@ -27,70 +27,68 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    .sign-in{
-    &__main{
-        position: relative;
-    background-color: white;
-    width: 400px;
-    margin: 0 auto;
-    box-shadow: 0 8px 24px rgba(21,48,142,0.14);
-    border-radius: 2px;
-    top: 200px;
-    .action-more {
-        display: block;
-        padding: 20px 15px;
-        color: #888;
-        font-size: 0.875em;
-        font-weight: normal;
-        text-align: center;
-    }
-    }
-    }
-    .ant-tabs-nav-wrap{
-        box-shadow: 0 8px 24px rgba(21,48,142,0.14);
-    }
-    .ant-tabs-content-holder {
-        background-color: #fff;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: 24px;
-        box-shadow: none;
-        border-radius: 3px;
-    }
-    .ant-tabs-nav-list{
-        margin: 0px auto;
-    }
-    .ant-tabs-nav{
-            background: #fff;
-            .ant-tabs-tab .ant-tabs-tab-btn{
-                font-size: 14px;
-                color:#000;
+    .sign-in {
+        &__main {
+            position: relative;
+            background-color: white;
+            width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 8px 24px rgba(21, 48, 142, 0.14);
+            border-radius: 2px;
+            top: 200px;
+            .action-more {
+                display: block;
+                padding: 20px 15px;
+                color: #888;
+                font-size: 0.875em;
+                font-weight: normal;
+                text-align: center;
+            }
+            .ant-tabs-nav-wrap {
+                box-shadow: 0 8px 24px rgba(21, 48, 142, 0.14);
+            }
+            .ant-tabs-content-holder {
+                background-color: #fff;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding: 24px;
+                box-shadow: none;
+                border-radius: 3px;
+            }
+            .ant-tabs-nav-list {
+                margin: 0px auto;
+            }
+            .ant-tabs-nav {
+                background: #fff;
+                .ant-tabs-tab .ant-tabs-tab-btn {
+                    font-size: 14px;
+                    color: #000;
+                }
+            }
+            .ant-tabs-nav .ant-tabs-tab-active {
+                background: transparent;
+            }
+            .ant-col {
+                border: none;
+                margin: 0 auto;
+            }
+            .ant-input-prefix {
+                font-size: 12px;
+                color: #8e8e93;
+                margin-right: 10px;
+            }
+            .ant-btn {
+                display: inline-block;
+                background-color: #0190f3;
+                width: 100%;
+                vertical-align: middle;
+                cursor: pointer;
+                white-space: nowrap;
+                color: #fff;
+                font-weight: 500;
+                border: 0 none;
+                border-radius: 5px;
             }
         }
-        .ant-tabs-nav .ant-tabs-tab-active {
-            background: transparent;
-        }
-        .ant-col{
-            border: none;
-            margin: 0 auto;
-        }
-        .ant-input-prefix {
-            font-size: 12px;
-            color: #8E8E93;
-            margin-right: 10px;
-        }
-        .ant-btn{
-            display: inline-block;
-    background-color: #0190f3;
-    width: 100%;
-    vertical-align: middle;
-    cursor: pointer;
-    white-space: nowrap;
-    color: #fff;
-    font-weight: 500;
-    border: 0 none;
-    border-radius: 5px;
-        }
     }
-
-
+}

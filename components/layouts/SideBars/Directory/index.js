@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Collapse, Avatar } from 'antd';
+import { Collapse, Avatar, Tabs } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFriendsContactAction } from 'actions/friendAction';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 
 const { Panel } = Collapse;
-
+const { TabPane } = Tabs;
 const Directory = () => {
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
@@ -36,23 +36,28 @@ const Directory = () => {
     }
     return listFriendContact?.map(elm => {
       return (
-        <div className="userContact" key={elm.id}>
-          <div className="left">
-            {elm.avatar === null || elm.avatar === '' ? (
-              <Avatar
-                size="large"
-                icon={<UserOutlined />}
-                style={{ marginRight: '10px' }}
-              />
-            ) : (
-              <img src={elm.avatar} alt="avatar" />
-            )}
-            <span>{elm.name}</span>
-          </div>
-          <span className="right">
-            <EllipsisOutlined />
-          </span>
-        </div>
+        <TabPane
+          key={elm.id}
+          tab={
+            <div className="userContact" key={elm.id}>
+              <div className="left">
+                {elm.avatar === null || elm.avatar === '' ? (
+                  <Avatar
+                    size="large"
+                    icon={<UserOutlined />}
+                    style={{ marginRight: '10px' }}
+                  />
+                ) : (
+                  <img src={elm.avatar} alt="avatar" />
+                )}
+                <span>{elm.name}</span>
+              </div>
+              <span className="right">
+                <EllipsisOutlined />
+              </span>
+            </div>
+          }
+        ></TabPane>
       );
     });
   };
@@ -77,7 +82,7 @@ const Directory = () => {
           key="1"
           style={{ backgroundColor: 'white' }}
         >
-          {renderListFriend()}
+          <Tabs>{renderListFriend()}</Tabs>
         </Panel>
       </Collapse>
     </div>

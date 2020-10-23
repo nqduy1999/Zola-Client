@@ -78,3 +78,29 @@ export const fetchFriendsRequestAction = id => dispatch => {
       });
     });
 };
+export const searchFriendAction = value => dispatch => {
+  console.log(value);
+  dispatch({
+    type: FRIENDS_TYPE.SEARCH_FRIEND_REQUEST
+  });
+  return friendService
+    .searchFriendByEmailorPhone(value)
+    .then(res => {
+      const { data } = res.data;
+      dispatch({
+        type: FRIENDS_TYPE.SEARCH_FRIEND_SUCCESS
+      });
+      return data;
+    })
+    .catch(err => {
+      console.log(err);
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.SEARCH_FRIEND_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { accountLogout, isTokenExpired } from 'actions/accountAction';
-import logo from 'assets/images/zola-logo.png';
 import avatar from 'assets/images/logo.png';
-import { Button, Col, Dropdown, Input, Menu, Row, Tabs } from 'antd';
+import { Button, Dropdown, Menu, Tabs } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
 import { useRouter } from 'next/router';
 import Directory from './Directory';
 import MessageList from 'components/Message';
+import Header from './Header';
 
 const prefix = 'side-bar';
-const { Search } = Input;
 const c = classPrefixor(prefix);
 
 const Sidebar = () => {
@@ -191,51 +190,7 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-        <div className="right-section">
-          <div className="zola-section">
-            <Row
-              className="zola-header"
-              style={{
-                padding: '20px',
-                width: '110%'
-              }}
-            >
-              <Col
-                span={5}
-                className="logo-header"
-                style={{
-                  display: 'inline-block'
-                }}
-              >
-                <img src={logo} alt="hihi" />
-              </Col>
-              <Col
-                span={8}
-                style={{
-                  display: 'inline-block',
-                  marginTop: '26px',
-                  fontWeight: '350',
-                  fontSize: '14px',
-                  color: '#000'
-                }}
-              >
-                <span>- {userData ? userData.name : ''}</span>
-              </Col>
-            </Row>
-            <Row className="zola-section-mid" style={{ width: '110%' }}>
-              <Col span={15} className="search-zola-message">
-                <Search placeholder="Nhập vào tin nhắn" enterButton />
-              </Col>
-              <Col span={6} className="icon-zola-message">
-                <i
-                  className="fa fa-user-plus"
-                  style={{ marginRight: '20px' }}
-                ></i>
-                <i className="fa fa-plus"></i>
-              </Col>
-            </Row>
-          </div>
-        </div>
+        <Header userData={userData} />
       </div>
       <Update
         cancelAvatar={cancelModal}

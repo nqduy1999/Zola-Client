@@ -29,7 +29,15 @@ const FriendReducer = (state = initialState, action) => {
       const { error, data } = action.payload;
       return { ...state, errorStatus: error, errorData: data };
     }
-
+    case FRIENDS_TYPE.SEARCH_FRIEND_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case FRIENDS_TYPE.SEARCH_FRIEND_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case FRIENDS_TYPE.SEARCH_FRIEND_FAILURE: {
+      return { ...state, loading: false };
+    }
     default:
       return state;
   }

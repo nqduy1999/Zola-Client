@@ -6,6 +6,8 @@
 @import 'components/HomePage/homePage.scss';
 //FriendList Component
 @import 'components/Friend/ListFriendView/listFriendView.scss';
+@import 'components/Friend/AddFriend/addFriend.scss';
+
 //Account Component
 @import 'components/Account/SignIn/signIn.scss';
 @import 'components/Account/SignUp/signUp.scss';
@@ -15,3 +17,4 @@
 //layout
 @import 'components/layouts/layout.scss';
 @import 'components/layouts/SideBars/sideBar.scss';
+
