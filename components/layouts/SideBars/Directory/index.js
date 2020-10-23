@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Collapse, Avatar } from 'antd';
+import { Collapse, Avatar, Tabs, Row } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFriendsContactAction } from 'actions/friendAction';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 
 const { Panel } = Collapse;
+const { TabPane } = Tabs;
 
 const Directory = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,9 @@ const Directory = () => {
 
   const totalFriend = listFriendContact?.length;
 
+  const handleChangeTab = e => {
+    console.log(e);
+  };
   return (
     <div className="content-zola-directory">
       <div className="addFriend">
@@ -67,6 +71,24 @@ const Directory = () => {
           Thêm Bạn Bằng Số Điện Thoại
         </p>
       </div>
+      <Tabs
+        style={{ width: '357px', height: 'auto' }}
+        tabPosition="left"
+        className="tab-message"
+        defaultActiveKey="0"
+        onChange={handleChangeTab}
+      >
+        <TabPane
+          style={{
+            width: '357px',
+            height: 'auto'
+          }}
+          tab={<Row className="message-view">Danh Sách Kết Bạn</Row>}
+          key="1"
+        >
+          ádasdasd
+        </TabPane>
+      </Tabs>
       <Collapse
         defaultActiveKey={['1']}
         bordered={false}
