@@ -30,7 +30,6 @@ const label_user = {
 
 const ViewUserFriend = props => {
   const { userProfile } = useSelector(state => state.userData);
-  console.log(userProfile);
   const { listUserSentReq, listFriendContact } = useSelector(
     state => state.FriendReducer
   );
