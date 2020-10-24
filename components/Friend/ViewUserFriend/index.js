@@ -30,6 +30,7 @@ const label_user = {
 
 const ViewUserFriend = props => {
   const { userProfile } = useSelector(state => state.userData);
+  console.log(userProfile);
   const { listUserSentReq, listFriendContact } = useSelector(
     state => state.FriendReducer
   );
@@ -61,17 +62,15 @@ const ViewUserFriend = props => {
     }
   }, [listUserSentReq, userData?.id]);
   useEffect(() => {
-    if (listFriendContact?.length > 0 && userProfile?.id != userData?.id) {
+    if (listFriendContact?.length > 0) {
       console.log(listFriendContact);
       for (var i = 0; i < listFriendContact.length; i++) {
         if (userData?.id == listFriendContact[i]?.id) {
           setStatusFriend(3);
         }
       }
-    } else {
-      setStatusFriend(4);
     }
-  }, [listFriendContact, userData?.id, userProfile?.id]);
+  }, [listFriendContact, userData?.id]);
   return (
     <Modal
       className={c`main`}

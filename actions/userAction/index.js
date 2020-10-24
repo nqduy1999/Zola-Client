@@ -21,6 +21,7 @@ export const getProfileUser = auth_token => dispatch => {
     value = decoded?.data?.phone || decoded?.data?.email;
   }
   return axiosServices.get(`${prefix}detail?${type}=${value}`).then(res => {
+    console.log(res);
     const { error, data } = res.data;
     if (error) {
       dispatch({
