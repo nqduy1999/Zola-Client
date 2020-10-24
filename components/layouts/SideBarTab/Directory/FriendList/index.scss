@@ -1,0 +1,58 @@
+.listFriend {
+  padding: 15px;
+  &__header {
+    padding: 10px 17px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    img {
+      border-radius: 50%;
+      width: 62px;
+      height: 62px;
+      margin-right: 11px;
+    }
+    span {
+      font-size: 24px;
+      font-weight: normal;
+      color: rgb(17, 17, 17);
+      margin: auto 0px;
+    }
+  }
+  &__content {
+    width: 95%;
+    margin: 0 auto;
+    background-color: #fafafc;
+    height: 100vh;
+    margin-top: 15px;
+    &__inside {
+      padding: 15px;
+      p {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .friendReq {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        padding: 30px 15px;
+        background-color: white;
+        margin-top: 15px;
+        .userInfo{
+          .ant-avatar{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            svg{
+              font-size: 40px;
+              height: -webkit-fill-available;
+            }
+          }
+        }
+        .btn{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

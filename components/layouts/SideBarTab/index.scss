@@ -1,0 +1,129 @@
+.sidebar-tab {
+  &__tabs {
+    display: grid;
+    grid-template-columns: 5% auto;
+    .is-selected {
+      background-color: #0783cc;
+    }
+    &__tablist {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #e3e5e8;
+      height: auto;
+      .tablist__content {
+        background: linear-gradient(#0cb3ff, #0068ff);
+        height: 690px;
+        width: 100%;
+        position: relative;
+        i {
+          font-size: 25px;
+          color: white;
+          padding: 5px;
+        }
+        .avatar {
+          display: block;
+          position: relative;
+          margin-bottom: 30px;
+          margin-top: 10px;
+          margin-left: 3px;
+          .img_avatar {
+            border: 0.5px solid white;
+            height: 56px;
+            width: 56px;
+            display: block;
+            border-radius: 50% !important;
+            background-color: transparent;
+          }
+          .icon-online {
+            position: absolute;
+            top: 80%;
+            left: 65%;
+            width: 10px;
+            height: 10px;
+            background: rgb(98, 203, 0);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: white 0px 0px 0px 1px;
+          }
+        }
+        .sign-out {
+          position: absolute;
+          bottom: 10px;
+          left: 0;
+          button {
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            color: white;
+          }
+        }
+      }
+      li {
+        border: none;
+        &:focus {
+          box-shadow: none;
+          outline: none;
+          border: none;
+        }
+        &::after {
+          display: none;
+        }
+      }
+
+      .zola-section {
+        background-color: white;
+        .zola-header {
+          height: 100px;
+          border-bottom: 2px solid #e3e5e8;
+          width: 100%;
+          .logo-header {
+            margin-left: 15px;
+            img {
+              width: 64px !important;
+            }
+          }
+        }
+        .zola-section-mid {
+          border-bottom: 2px solid #e3e5e8;
+          padding: 20px 0;
+          width: 100%;
+          margin-bottom: 20px;
+          .search-zola-message {
+            margin-left: 10px;
+          }
+          .icon-zola-message {
+            margin-top: 5px;
+            margin-left: 15px;
+            color: #8e8e93;
+            font-size: 14px;
+          }
+        }
+      }
+      .react-tabs__tab--selected {
+        background-color: #e6f0ff;
+        border: none;
+      }
+    }
+  }
+  .react-tabs {
+    display: grid;
+    grid-template-columns: 25% auto;
+  }
+
+  .tab {
+    cursor: pointer;
+    padding: 11px 16px 9px 14px;
+    width: 100%;
+    span {
+      font-size: 16px;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    &:hover {
+      background-color: #f2f5fa;
+    }
+  }
+}

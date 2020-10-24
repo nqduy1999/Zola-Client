@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import Update from 'components/Account/Update';
 import { useRouter } from 'next/router';
-import Directory from './Directory';
 import MessageList from 'components/Message';
 import Header from './Header';
 
@@ -157,9 +156,7 @@ const Sidebar = () => {
               key="2"
               style={{ paddingBottom: '50px', paddingTop: '20px' }}
               tab={<i className="fa fa-address-book"></i>}
-            >
-              <Directory />
-            </TabPane>
+            ></TabPane>
             <TabPane
               key="3"
               style={{ paddingBottom: '50px', paddingTop: '20px' }}

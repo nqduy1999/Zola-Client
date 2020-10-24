@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import Sidebar from './SideBars';
 import PropTypes from 'prop-types';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from 'actions/userAction';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getProfileUser } from 'actions/userAction';
+import SideBarTab from './SideBarTab';
 
 const prefix = 'layout-main';
 const c = classPrefixor(prefix);
@@ -19,7 +17,7 @@ const DefaultLayout = () => {
   return (
     <main aria-hidden="true">
       <div aria-hidden="true" className={c`container`}>
-        <Sidebar />
+        <SideBarTab />
       </div>
     </main>
   );
