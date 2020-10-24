@@ -23,8 +23,8 @@ const Directory = () => {
   } = useSelector(state => state.FriendReducer);
 
   useEffect(() => {
-    if (userProfile.id) {
-      dispatch(fetchFriendsContactAction(userProfile.id));
+    if (userProfile?.id) {
+      dispatch(fetchFriendsContactAction(userProfile?.id));
     }
   }, [userProfile]);
 

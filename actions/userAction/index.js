@@ -9,8 +9,17 @@ export const getProfileUser = auth_token => dispatch => {
   });
   const type = JSON.parse(localStorage.getItem('type'));
   let decoded = null;
+  let value = null;
   if (auth_token) decoded = jwt_decode(auth_token.accessToken);
-  const value = decoded?.data?.phone || decoded?.data?.email;
+  if (decoded?.data?.phone && decoded?.data?.email) {
+    if (type == 'phone') {
+      value = decoded?.data?.phone;
+    } else {
+      value = decoded?.data?.email;
+    }
+  } else {
+    value = decoded?.data?.phone || decoded?.data?.email;
+  }
   return axiosServices.get(`${prefix}detail?${type}=${value}`).then(res => {
     const { error, data } = res.data;
     if (error) {

@@ -23,8 +23,8 @@ const FriendList = () => {
   const { userProfile } = useSelector(state => state.userData);
   let totalFriendRequest = listFriendRequest?.length;
   useEffect(() => {
-    if (userProfile.id) {
-      dispatch(fetchFriendsRequestAction(userProfile.id));
+    if (userProfile?.id) {
+      dispatch(fetchFriendsRequestAction(userProfile?.id));
     }
   }, [userProfile, dispatch]);
 

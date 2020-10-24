@@ -213,3 +213,27 @@ export const changePassword = (push, dataDispatch) => dispatch => {
     }
   });
 };
+export const changePasswordUser = dataDispatch => dispatch => {
+  dispatch({
+    type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST
+  });
+  return accountService.changePasswordService(dataDispatch).then(res => {
+    const { error, data, message } = res.data;
+    if (error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+      return { error, data, message };
+    }
+    if (!error) {
+      dispatch({
+        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS
+      });
+      return { error, data };
+    }
+  });
+};

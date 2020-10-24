@@ -13,10 +13,15 @@ import * as Validator from 'utils/validatorFormat';
 
 const Update = props => {
   const [imageFormData, setImageFormData] = useState();
-  const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
   const [visibleOtp, setVisibleOtp] = useState(false);
-  const { cancelAvatar, visible, setVisible, userProfile } = props;
+  const {
+    cancelAvatar,
+    visible,
+    setVisible,
+    userProfile,
+    setUserProfile
+  } = props;
   const [typeOfsendOtp, setTypeSentOtp] = useState(false);
   const [imageChange, setImageChange] = useState(null);
   const [statusImageChange, setStatusImageChange] = useState(false);
@@ -45,39 +50,39 @@ const Update = props => {
     setStatusImageChange(false);
   };
   const handleOnChange = e => {
-    setUserData({
-      ...userData,
+    setUserProfile({
+      ...userProfile,
       [e.target.name]: e.target.value
     });
   };
-  useEffect(() => {
-    if (userProfile) {
-      setUserData(userProfile);
-    }
-  }, [userProfile]);
   const submitAvatar = () => {
     const formData = new FormData();
     formData.append('avatar', imageFormData);
     if (imageFormData) {
       uploadImgSingle(formData).then(res => {
-        console.log(res);
         const dataUpdate = {
-          name: userData?.name,
-          avatar: res.data
+          name: userProfile?.name,
+          avatar: res.data,
+          phone: userProfile?.phone,
+          email: userProfile?.email
         };
+        console.log(dataUpdate);
         dispatch(updateProfileUser(dataUpdate)).then(() => {
           setVisible(false);
           toast.success('🦄 Update Successful!', {
             position: 'top-right',
             autoClose: 3000
           });
-          setUserData(userProfile);
+          setImageChange(res.data);
+          setStatusImageChange(false);
         });
       });
     } else {
       const dataUpdate = {
-        name: userData?.name,
-        avatar: userData?.avatar
+        name: userProfile?.name,
+        avatar: userProfile?.avatar,
+        phone: userProfile?.phone,
+        email: userProfile?.email
       };
       dispatch(updateProfileUser(dataUpdate)).then(() => {
         setVisible(false);
@@ -85,8 +90,8 @@ const Update = props => {
           position: 'top-right',
           autoClose: 3000
         });
-        setUserData(userProfile);
         setImageChange(userProfile.avatar);
+        setStatusImageChange(false);
       });
     }
   };
@@ -189,7 +194,7 @@ const Update = props => {
           >
             <Input
               name="name"
-              value={userData ? userData.name : ''}
+              value={userProfile ? userProfile.name : ''}
               onChange={handleOnChange}
               onBlur={() => {
                 setChangeName(false);
@@ -205,7 +210,7 @@ const Update = props => {
               paddingLeft: '5em'
             }}
           >
-            {userData ? userData.name : ''}
+            {userProfile ? userProfile.name : ''}
             <Button
               style={{ border: 'none', paddingLeft: '6em' }}
               onClick={() => {
@@ -223,8 +228,8 @@ const Update = props => {
             Validator.required('Phone', 'Không được bỏ trống')
           ]}
         >
-          {userData && userData.email ? (
-            <Input name="email" disabled value={userData.email} />
+          {userProfile && userProfile.email ? (
+            <Input name="email" disabled value={userProfile.email} />
           ) : (
             sendOtpToEmail()
           )}
@@ -239,8 +244,8 @@ const Update = props => {
             Validator.required('Phone', 'Không được bỏ trống')
           ]}
         >
-          {userData && userData.phone ? (
-            <Input name="phone" disabled value={userData.phone} />
+          {userProfile && userProfile.phone ? (
+            <Input name="phone" disabled value={userProfile.phone} />
           ) : (
             sendOtpToPhone()
           )}
@@ -273,11 +278,13 @@ Update.propTypes = {
   cancelAvatar: func,
   userProfile: PropTypes.objectOf(PropTypes.any),
   visible: PropTypes.any,
-  setVisible: PropTypes.func
+  setVisible: PropTypes.func,
+  setUserProfile: func
 };
 Update.defaultProps = {
   children: {},
   cancelAvatar: {},
   visible: {},
-  setVisible: {}
+  setVisible: {},
+  setUserProfile: {}
 };

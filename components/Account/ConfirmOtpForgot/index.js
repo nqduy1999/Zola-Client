@@ -10,6 +10,7 @@ import {
 } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import * as Validator from 'utils/validatorFormat';
 
 const prefix = 'confirm-otp-sign-up';
 const c = classPrefixor(prefix);
@@ -65,8 +66,8 @@ const ConfirmOtpForgot = props => {
           });
         } else {
           const valueChange = {
-            newPassword: value.password,
-            confirmNewPassword: value.passwordConfirm
+            newPassword: value.newPassword,
+            confirmNewPassword: value.confirmNewPassword
           };
           dispatch(changePassword(push, valueChange)).then(res => {
             if (res.error) {
@@ -96,8 +97,8 @@ const ConfirmOtpForgot = props => {
           });
         } else {
           const valueChange = {
-            newPassword: value.password,
-            confirmNewPassword: value.passwordConfirm
+            newPassword: value.newPassword,
+            confirmNewPassword: value.confirmNewPassword
           };
           dispatch(changePassword(push, valueChange)).then(res => {
             if (res.error) {
@@ -147,7 +148,13 @@ const ConfirmOtpForgot = props => {
               </a>
             </p>
           </div>
-          <Form.Item name="password">
+          <Form.Item
+            name="newPassword"
+            rules={[
+              Validator.password('Phone', 'Password không đúng định dạng'),
+              Validator.required('Phone', 'Không được bỏ trống')
+            ]}
+          >
             <div className="line-form">
               <Input.Password
                 placeholder="Nhập mật khẩu"
@@ -155,7 +162,25 @@ const ConfirmOtpForgot = props => {
               />
             </div>
           </Form.Item>
-          <Form.Item name="passwordConfirm">
+          <Form.Item
+            name="confirmNewPassword"
+            rules={
+              ([
+                Validator.password('Phone', 'Mật khẩu không đúng định dạng'),
+                Validator.required('Phone', 'Không được bỏ trống')
+              ],
+              [
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue('newPassword') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject('Mật khẩu không giống');
+                  }
+                })
+              ])
+            }
+          >
             <div className="line-form">
               <Input.Password
                 placeholder="Nhập lại mật khẩu"

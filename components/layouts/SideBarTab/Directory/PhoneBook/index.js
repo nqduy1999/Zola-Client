@@ -23,8 +23,8 @@ const PhoneBook = () => {
   const { userProfile } = useSelector(state => state.userData);
 
   useEffect(() => {
-    if (userProfile.id) {
-      dispatch(fetchFriendsByPhoneBookAction(userProfile.id));
+    if (userProfile?.id) {
+      dispatch(fetchFriendsByPhoneBookAction(userProfile?.id));
     }
   }, [userProfile, dispatch]);
 

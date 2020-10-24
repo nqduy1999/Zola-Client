@@ -13,6 +13,7 @@ import FriendList from './Directory/FriendList';
 import PhoneBook from './Directory/PhoneBook';
 import Update from 'components/Account/Update';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
+import ChangePasswordUser from 'components/Account/ChangePassword';
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 const SubMenu = Menu.SubMenu;
@@ -21,6 +22,7 @@ const SideBarTab = () => {
   const { userProfile, isAuthenticated } = useSelector(state => state.userData);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [visiblePassword, setVisiblePassword] = useState(false);
   const dispatch = useDispatch();
   const { push } = useRouter();
   useEffect(() => {
@@ -38,6 +40,9 @@ const SideBarTab = () => {
   const cancelModal = () => {
     setVisible(false);
     setUserData(userProfile);
+  };
+  const onCancelPassword = () => {
+    setVisiblePassword(false);
   };
   const styleIcon = {
     marginRight: '8px',
@@ -100,7 +105,7 @@ const SideBarTab = () => {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={showModal}
+                        onClick={() => setVisiblePassword(true)}
                         style={{ color: 'black' }}
                       >
                         Đổi mật khẩu
@@ -199,6 +204,12 @@ const SideBarTab = () => {
             visible={visible}
             userProfile={userData}
             setVisible={setVisible}
+            setUserProfile={setUserData}
+          />
+          <ChangePasswordUser
+            visible={visiblePassword}
+            setVisible={setVisiblePassword}
+            cancelPassword={onCancelPassword}
           />
         </section>
       </>
