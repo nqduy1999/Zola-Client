@@ -29,7 +29,7 @@ const FriendList = () => {
   }, [userProfile, dispatch]);
 
   useEffect(() => {
-    if (messageAccept.length > 0) {
+    if (messageAccept?.length > 0) {
       toast.success(`${messageAccept}`, {
         position: 'top-right',
         autoClose: 2000

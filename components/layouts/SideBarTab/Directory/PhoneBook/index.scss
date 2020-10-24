@@ -1,0 +1,70 @@
+.phoneBook {
+  padding: 15px;
+  &__header {
+    padding: 10px 17px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    img {
+      border-radius: 50%;
+      width: 62px;
+      height: 62px;
+      margin-right: 11px;
+    }
+    span {
+      font-size: 24px;
+      font-weight: normal;
+      color: rgb(17, 17, 17);
+      margin: auto 0px;
+    }
+  }
+  &__content {
+    width: 95%;
+    margin: 0 auto;
+    background-color: #fafafc;
+    height: auto;
+    &__inside {
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      .friend-center-item-v2 {
+        width: 250px;
+        height: 250px;
+        background: white;
+        text-align: center;
+        margin-right: 20px;
+        margin-top: 30px;
+        border: 2px solid rgba(0,0,0,.1);
+        .avatar {
+          width: 104px;
+          height: 104px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin: 5px auto 0px;
+          .ant-avatar {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            margin: 20px 0;
+            svg {
+              font-size: 60px;
+              height: -webkit-fill-available;
+            }
+          }
+          img {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            margin: 20px 0;
+          }
+        }
+        .truncate {
+          font-size: 16px;
+          margin-top: 25px;
+          font-weight: 600;
+          padding: 0 15px;
+          height: 25px;
+        }
+      }
+    }
+  }
+}

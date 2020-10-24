@@ -10,11 +10,19 @@ const initialState = {
   errorDataRequest: null,
   messageAccept: '',
   messageAvoid: '',
+  messageDeletePhoneBook: '',
+  messageDeletePhoneContact: '',
   loading: false
 };
 
 const FriendReducer = (state = initialState, action) => {
   switch (action.type) {
+    //Get List Friend Phone Book
+    case FRIENDS_TYPE.FETCH_PHONE_BOOK_SUCCESS: {
+      return { ...state, listFriendPhoneBook: action.payload };
+    }
+
+    // Get List Friend Contact
     case FRIENDS_TYPE.FETCH_FRIEND_CONTACT_SUCCESS: {
       return { ...state, listFriendContact: action.payload };
     }
@@ -24,6 +32,7 @@ const FriendReducer = (state = initialState, action) => {
       return { ...state, errorStatus: error, errorData: data };
     }
 
+    //Get List Friend Request
     case FRIENDS_TYPE.FETCH_FRIEND_REQUEST_SUCCESS: {
       return { ...state, listFriendRequest: action.payload };
     }
@@ -33,12 +42,24 @@ const FriendReducer = (state = initialState, action) => {
       return { ...state, errorStatusRequest: error, errorDataRequest: data };
     }
 
+    //ACCEPT Friend Request
     case FRIENDS_TYPE.ACCEPT_FRIEND_SUCCESS: {
       return { ...state, messageAccept: action.payload };
     }
 
+    //AVOID Friend request
     case FRIENDS_TYPE.AVOID_FRIEND_SUCCESS: {
       return { ...state, messageAvoid: action.payload };
+    }
+
+    // DELETE Friend Phone Book
+    case FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_SUCCESS: {
+      return { ...state, messageDeletePhoneBook: action.payload };
+    }
+
+    //DELETE friend Contact
+    case FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS: {
+      return { ...state, messageDeletePhoneContact: action.payload };
     }
 
     case 'DEFAULT_ACTION': {
@@ -50,6 +71,8 @@ const FriendReducer = (state = initialState, action) => {
         errorDataRequest: null,
         messageAccept: '',
         messageAvoid: '',
+        messageDeletePhoneBook: '',
+        messageDeletePhoneContact: '',
         loading: false
       };
     }

@@ -136,6 +136,66 @@ export const avoidFriendRequestAcion = (
     });
 };
 
+export const deleteFriendByPhoneBookAction = (
+  userID,
+  userIDWantDelete
+) => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_REQUEST
+  });
+  friendService
+    .deleteFriendByPhoneBook(userID, userIDWantDelete)
+    .then(res => {
+      const { error, message } = res.data;
+      if (!error) {
+        dispatch({
+          type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_SUCCESS,
+          payload: message
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
+export const deleteFriendContactAction = (
+  userID,
+  userIDWantDelete
+) => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_REQUEST
+  });
+  friendService
+    .deleteFriendContact(userID, userIDWantDelete)
+    .then(res => {
+      const { error, message } = res.data;
+      if (!error) {
+        dispatch({
+          type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS,
+          payload: message
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
 export const dispatchDefaultAction = () => ({
   type: 'DEFAULT_ACTION'
 });

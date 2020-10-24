@@ -11,6 +11,7 @@ import SearchComponent from './Search';
 import HomePage from 'components/HomePage';
 import Directory from './Directory';
 import FriendList from './Directory/FriendList';
+import PhoneBook from './Directory/PhoneBook';
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 
@@ -76,9 +77,9 @@ const SideBarTab = () => {
                   <HomePage />
                 </TabPanel>
                 <TabPanel>
-                  <p>Wife of Homer; mother of Bart, Lisa, and Maggie.</p>
+                  <p style={{ fontSize: '20px' }}>Vợ Của Nam</p>
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Marge_Simpson.png/220px-Marge_Simpson.png"
+                    src="https://icdn.dantri.com.vn/thumb_w/640/2018/12/2/huong-uyen-1-1543765883437106382136.jpg"
                     alt="Marge Simpson"
                   />
                 </TabPanel>
@@ -95,10 +96,20 @@ const SideBarTab = () => {
                     />
                     <span>Danh Sách Kết Bạn</span>
                   </Tab>
+                  <Tab className="tab">
+                    <img
+                      src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
+                      alt="imgAddF"
+                    />
+                    <span>Danh Bạ Bạn Bè</span>
+                  </Tab>
                   <Directory />
                 </TabList>
                 <TabPanel>
                   <FriendList />
+                </TabPanel>
+                <TabPanel>
+                  <PhoneBook />
                 </TabPanel>
               </Tabs>
             </TabPanel>
