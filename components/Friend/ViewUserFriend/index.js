@@ -1,10 +1,10 @@
 import { Button } from 'antd';
 import PropTypes, { func } from 'prop-types';
 import Modal from 'antd/lib/modal/Modal';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Avatar from 'antd/lib/avatar/avatar';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFriendAction } from 'actions/friendAction';
 const prefix = 'view-user-friend';
@@ -30,23 +30,54 @@ const label_user = {
 
 const ViewUserFriend = props => {
   const { userProfile } = useSelector(state => state.userData);
+  const { listUserSentReq, listFriendContact } = useSelector(
+    state => state.FriendReducer
+  );
   const { visible, onCancelModal, userData } = props;
+  const [statusFriend, setStatusFriend] = useState(1);
   const dispatch = useDispatch();
   const OnAddFriend = () => {
     const value = {
-      user_id: userData?.id,
-      user_request_id: userProfile?.id
+      user_id: userProfile?.id,
+      user_request_id: userData?.id
     };
     dispatch(addFriendAction(value)).then(res => {
-      console.log(res);
+      if (!res.error) {
+        setStatusFriend(2);
+      }
     });
   };
+  const closeModalView = () => {
+    onCancelModal();
+    setStatusFriend(1);
+  };
+  useEffect(() => {
+    if (listUserSentReq?.length > 0) {
+      for (var i = 0; i < listUserSentReq.length; i++) {
+        if (userData?.id == listUserSentReq[i]?.id) {
+          setStatusFriend(2);
+        }
+      }
+    }
+  }, [listUserSentReq, userData?.id]);
+  useEffect(() => {
+    if (listFriendContact?.length > 0 && userProfile?.id != userData?.id) {
+      console.log(listFriendContact);
+      for (var i = 0; i < listFriendContact.length; i++) {
+        if (userData?.id == listFriendContact[i]?.id) {
+          setStatusFriend(3);
+        }
+      }
+    } else {
+      setStatusFriend(4);
+    }
+  }, [listFriendContact, userData?.id, userProfile?.id]);
   return (
     <Modal
       className={c`main`}
       visible={visible}
       title="Thông tin người dùng"
-      onCancel={onCancelModal}
+      onCancel={closeModalView}
       footer={null}
       style={{
         marginRight: '32.5%'
@@ -62,7 +93,7 @@ const ViewUserFriend = props => {
         >
           {userData?.avatar == null || userData?.avatar === '' ? (
             <Avatar
-              size={64}
+              size={84}
               icon={<UserOutlined />}
               style={{ marginLeft: '44%' }}
             />
@@ -70,12 +101,12 @@ const ViewUserFriend = props => {
             <img
               className="avatar-img-user"
               style={{
-                marginLeft: '5px',
-                border: '0.5px solid white',
-                height: '56px',
-                width: '56px',
+                margin: '0px auto',
+                border: '0.5px solid #0cb3ff',
+                height: '84px',
+                width: '84px',
                 display: 'block',
-                borderRadius: '50% !important'
+                borderRadius: '50%'
               }}
               src={`https://api-ret.ml/api/v0/images/download/${userData.avatar}`}
               alt="avatar"
@@ -132,13 +163,34 @@ const ViewUserFriend = props => {
       </div>
       <div className="friend-profile__actions friend-profile__actions__header">
         <div style={{ paddingTop: '10px' }}>
-          <Button
-            type="primary"
-            style={{ margin: '0 auto', display: 'block' }}
-            onClick={OnAddFriend}
-          >
-            Kết bạn
-          </Button>
+          {statusFriend == 1 ? (
+            <Button
+              type="primary"
+              style={{ margin: '0 auto', display: 'block' }}
+              onClick={OnAddFriend}
+            >
+              <PlusOutlined />
+              Kết bạn
+            </Button>
+          ) : statusFriend == 2 ? (
+            <Button
+              type="success"
+              style={{ margin: '0 auto', display: 'block' }}
+            >
+              <CheckOutlined />
+              Đã gửi lời mời kết bạn
+            </Button>
+          ) : statusFriend == 3 ? (
+            <Button
+              type="primary"
+              style={{ margin: '0 auto', display: 'block' }}
+            >
+              <CheckOutlined />
+              Bạn bè
+            </Button>
+          ) : (
+            ''
+          )}
         </div>
       </div>
       <div style={inforUser}>

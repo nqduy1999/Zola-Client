@@ -16,13 +16,19 @@ const Update = props => {
   const [userData, setUserData] = useState(null);
   const [changeName, setChangeName] = useState(false);
   const [visibleOtp, setVisibleOtp] = useState(false);
-  const { cancelAvatar, userProfile, visible, setVisible } = props;
+  const { cancelAvatar, visible, setVisible, userProfile } = props;
   const [typeOfsendOtp, setTypeSentOtp] = useState(false);
-  const [imageChange, setImageChange] = useState(userProfile?.avatar);
+  const [imageChange, setImageChange] = useState(null);
+  const [statusImageChange, setStatusImageChange] = useState(false);
   const dispatch = useDispatch();
   const cancelSendOtp = () => {
     setVisibleOtp(false);
   };
+  useEffect(() => {
+    if (userProfile) {
+      setImageChange(userProfile.avatar);
+    }
+  }, [userProfile]);
   const showSendOtpEmail = () => {
     setVisibleOtp(true);
     setTypeSentOtp(true);
@@ -35,8 +41,8 @@ const Update = props => {
     cancelAvatar();
     setChangeName(false);
     setImageFormData(null);
-    setUserData(userProfile);
     setImageChange(userProfile.avatar);
+    setStatusImageChange(false);
   };
   const handleOnChange = e => {
     setUserData({
@@ -100,6 +106,7 @@ const Update = props => {
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImageChange(reader.result);
+        setStatusImageChange(true);
       }
     };
     // if (e.file.status === 'uploading') {
@@ -135,32 +142,7 @@ const Update = props => {
       visible={visible}
       onOk={submitAvatar}
       onCancel={cancelModal}
-      footer={[
-        <Button
-          key="back"
-          onClick={cancelModal}
-          style={{
-            border: 'none',
-            fontSize: '16px',
-            fontWeight: '500'
-          }}
-        >
-          Huỷ
-        </Button>,
-        <Button
-          key="submit"
-          form="updateUser"
-          onClick={submitAvatar}
-          style={{
-            border: 'none',
-            color: '#0068ff',
-            fontSize: '16px',
-            fontWeight: '500'
-          }}
-        >
-          Cập Nhật
-        </Button>
-      ]}
+      footer={null}
       style={{
         width: '150px'
       }}
@@ -176,16 +158,20 @@ const Update = props => {
           onChange={handleChangeFile}
         >
           <div className="avatar" style={{ cursor: 'pointer' }}>
-            {imageChange != null || imageChange != undefined ? (
+            {imageChange ? (
               <img
                 className="img_avatar"
-                src={`https://api-ret.ml/api/v0/images/download/${imageChange}`}
+                src={
+                  statusImageChange
+                    ? imageChange
+                    : `https://api-ret.ml/api/v0/images/download/${imageChange}`
+                }
               />
             ) : (
               <Avatar
-                size={64}
+                size={84}
                 icon={<UserOutlined />}
-                style={{ marginLeft: '44%' }}
+                style={{ marginLeft: '30%' }}
               />
             )}
           </div>
@@ -203,7 +189,7 @@ const Update = props => {
           >
             <Input
               name="name"
-              value={userData ? userData?.name : ''}
+              value={userData ? userData.name : ''}
               onChange={handleOnChange}
               onBlur={() => {
                 setChangeName(false);
@@ -265,6 +251,18 @@ const Update = props => {
           typeOfsendOtp={typeOfsendOtp}
         />
       </Form>
+      <Button
+        type="primary"
+        onClick={submitAvatar}
+        style={{
+          fontSize: '12px',
+          fontWeight: '500',
+          margin: '0px auto',
+          display: 'block'
+        }}
+      >
+        Cập Nhật
+      </Button>
     </Modal>
   );
 };
@@ -280,7 +278,6 @@ Update.propTypes = {
 Update.defaultProps = {
   children: {},
   cancelAvatar: {},
-  userProfile: {},
   visible: {},
   setVisible: {}
 };

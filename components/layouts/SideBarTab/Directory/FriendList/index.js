@@ -21,7 +21,7 @@ const FriendList = () => {
     state => state.FriendReducer
   );
   const { userProfile } = useSelector(state => state.userData);
-
+  let totalFriendRequest = listFriendRequest?.length;
   useEffect(() => {
     if (userProfile.id) {
       dispatch(fetchFriendsRequestAction(userProfile.id));
@@ -54,12 +54,14 @@ const FriendList = () => {
   const handleAcceptFriend = userIDWantAccept => {
     if (userProfile.id) {
       dispatch(acceptFriendAction(userProfile.id, userIDWantAccept));
+      totalFriendRequest -= 1;
     }
   };
 
   const handleAvoidFriendRequest = userIDWantAvoid => {
     if (userProfile.id) {
       dispatch(avoidFriendRequestAcion(userProfile.id, userIDWantAvoid));
+      totalFriendRequest -= 1;
     }
   };
 
@@ -102,8 +104,6 @@ const FriendList = () => {
       );
     });
   };
-
-  const totalFriendRequest = listFriendRequest?.length;
 
   return (
     <section className={prefix}>

@@ -3,34 +3,52 @@ import PropTypes from 'prop-types';
 import Avatar from 'antd/lib/avatar/avatar';
 import { UserOutlined } from '@ant-design/icons';
 import ViewUserFriend from '../ViewUserFriend';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchFriendsContactAction,
+  getUserSentRequestAction
+} from 'actions/friendAction';
 
 const SuggestFriend = props => {
   const { suggestF } = props;
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
+  const { userProfile } = useSelector(state => state.userData);
   useEffect(() => {
     setUserData(suggestF);
   }, [suggestF]);
   const cancelModal = () => {
     setVisible(false);
   };
+  const openModal = () => {
+    dispatch(getUserSentRequestAction());
+    dispatch(fetchFriendsContactAction(userProfile?.id));
+    setVisible(true);
+  };
   return (
     <div className="tabSearchUser" style={{ cursor: 'pointer' }}>
       <div
         className="recent-search-item"
         style={{ display: 'flex', padding: '7px 15px' }}
-        onClick={() => setVisible(true)}
+        onClick={openModal}
       >
         <div className="avatar-img  flx flx-center flx-al-c">
           {suggestF.avatar === null || suggestF.avatar === '' ? (
             <Avatar
-              size="large"
+              size={40}
               icon={<UserOutlined />}
               style={{ marginRight: '10px' }}
             />
           ) : (
             <img
-              className="avatar-img-user"
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                border: '1px solid #0cb3ff',
+                marginRight: '10px'
+              }}
               src={`https://api-ret.ml/api/v0/images/download/${suggestF.avatar}`}
               alt="avatar"
             />

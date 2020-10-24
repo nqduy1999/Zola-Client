@@ -1,5 +1,6 @@
 import { FRIENDS_TYPE } from 'constant/friendType';
 import { friendService } from 'services';
+import axiosApiInstance from 'utils/service/axiosServices';
 
 export const fetchFriendsByPhoneBookAction = id => dispatch => {
   dispatch({
@@ -160,12 +161,22 @@ export const addFriendAction = value => dispatch => {
   dispatch({
     type: FRIENDS_TYPE.ADD_FRIEND_REQUEST
   });
-  return friendService.addFriend(value).then(res => {
-    dispatch({
-      type: FRIENDS_TYPE.ADD_FRIEND_SUCCESS
+  return friendService
+    .addFriend(value)
+    .then(res => {
+      const { data } = res.data;
+      dispatch({
+        type: FRIENDS_TYPE.ADD_FRIEND_SUCCESS
+      });
+      return { data };
+    })
+    .catch(err => {
+      const { error } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.ADD_FRIEND_FAILURE
+      });
+      return { error };
     });
-    return res;
-  });
 };
 export const deleteFriendByPhoneBookAction = (
   userID,
@@ -216,6 +227,7 @@ export const deleteFriendContactAction = (
       }
     })
     .catch(err => {
+      console.log(err);
       const { error, data } = err.response?.data;
       dispatch({
         type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE,
@@ -227,7 +239,29 @@ export const deleteFriendContactAction = (
       return err.response?.data;
     });
 };
-
+export const getUserSentRequestAction = () => dispatch => {
+  dispatch({
+    type: FRIENDS_TYPE.GET_USER_SENT_REQUEST_REQUEST
+  });
+  return axiosApiInstance
+    .get('users/request/sent')
+    .then(res => {
+      const { data } = res.data;
+      console.log(data);
+      dispatch({
+        type: FRIENDS_TYPE.GET_USER_SENT_REQUEST_SUCCESS,
+        payload: data
+      });
+      return data;
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: FRIENDS_TYPE.GET_USER_SENT_REQUEST_FAILURE
+      });
+      return { error, data };
+    });
+};
 export const dispatchDefaultAction = () => ({
   type: 'DEFAULT_ACTION'
 });

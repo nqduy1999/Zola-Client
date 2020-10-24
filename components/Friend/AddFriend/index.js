@@ -1,4 +1,4 @@
-import { Button, Input, Form } from 'antd';
+import { Button, Input, Form, Collapse } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -15,6 +15,8 @@ const c = classPrefixor(prefix);
 const AddFriend = props => {
   const [statusSearch, setStatusSearch] = useState(false);
   const [suggestFriend, setSuggestFriend] = useState(null);
+  const { Panel } = Collapse;
+
   const handleChangeSearch = e => {
     if (e.target.value.length > 0) {
       dispatch(searchFriendAction(e.target.value)).then(res => {
@@ -75,16 +77,25 @@ const AddFriend = props => {
         </Form.Item>
         {statusSearch ? (
           <Form.Item>
-            <div className="ReactVirtualized__Grid__innerScrollContainer">
-              <div className="headerFriendRequest">
-                <div className="contentFriendRequest">
-                  <div>Có thể bạn đang tìm</div>
+            <Collapse
+              defaultActiveKey={['1']}
+              bordered={false}
+              expandIconPosition="right"
+            >
+              <Panel
+                header="Có thể bạn đang tìm"
+                key="1"
+                style={{ backgroundColor: 'white' }}
+              >
+                <div className="scrollable-container">
+                  <div id="overflowTest">
+                    {suggestFriend?.map((value, key) => {
+                      return <SuggestFriend key={key} suggestF={value} />;
+                    })}
+                  </div>
                 </div>
-              </div>
-              {suggestFriend?.map((value, key) => {
-                return <SuggestFriend key={key} suggestF={value} />;
-              })}
-            </div>
+              </Panel>
+            </Collapse>
           </Form.Item>
         ) : (
           ''

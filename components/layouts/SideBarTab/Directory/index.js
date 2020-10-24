@@ -38,10 +38,12 @@ const Directory = () => {
     }
     dispatch(dispatchDefaultAction());
   }, [messageDeletePhoneContact]);
+  let totalFriend = listFriendContact?.length;
 
   const handleDeleteFriend = userIDWantDelete => {
     if (userProfile.id) {
       dispatch(deleteFriendContactAction(userProfile.id, userIDWantDelete));
+      totalFriend -= 1;
     }
   };
 
@@ -99,9 +101,6 @@ const Directory = () => {
       );
     });
   };
-
-  const totalFriend = listFriendContact?.length;
-
   return (
     <div className={prefix}>
       <Collapse

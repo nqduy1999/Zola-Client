@@ -4,6 +4,7 @@ const initialState = {
   listFriendPhoneBook: [],
   listFriendContact: [],
   listFriendRequest: [],
+  listUserSentReq: [],
   errorStatus: null,
   errorStatusRequest: null,
   errorData: null,
@@ -78,7 +79,15 @@ const FriendReducer = (state = initialState, action) => {
     case FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS: {
       return { ...state, messageDeletePhoneContact: action.payload };
     }
-
+    case FRIENDS_TYPE.GET_USER_SENT_REQUEST_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case FRIENDS_TYPE.GET_USER_SENT_REQUEST_SUCCESS: {
+      return { ...state, listUserSentReq: action.payload };
+    }
+    case FRIENDS_TYPE.GET_USER_SENT_REQUEST_FAILURE: {
+      return { ...state, loading: false };
+    }
     case 'DEFAULT_ACTION': {
       return {
         ...state,

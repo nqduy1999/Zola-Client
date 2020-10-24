@@ -9,5 +9,6 @@ export const FRIENDS_TYPE = {
   ...createRequestTypes('FRIENDS', 'AVOID_FRIEND'),
   ...createRequestTypes('FRIENDS', 'ACCEPT_FRIEND'),
   ...createRequestTypes('FRIENDS', 'DELETE_FRIEND_PHONE_BOOK'),
-  ...createRequestTypes('FRIENDS', 'DELETE_FRIEND_PHONE_CONTACT')
+  ...createRequestTypes('FRIENDS', 'DELETE_FRIEND_PHONE_CONTACT'),
+  ...createRequestTypes('FRIENDS', 'GET_USER_SENT_REQUEST')
 };

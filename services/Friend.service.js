@@ -68,9 +68,15 @@ class FriendService {
       method: 'POST',
       url: `users/deletePhoneByIdContact`,
       data: {
-        user_id: userID,
-        user_id_want_delete: userIDWantDelete
+        user_id: String(userID),
+        user_id_want_delete: String(userIDWantDelete)
       }
+    });
+  };
+  getUserSentRequest = () => {
+    return axios.request({
+      method: 'GET',
+      url: `users/request/sent`
     });
   };
 }

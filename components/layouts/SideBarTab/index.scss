@@ -15,6 +15,15 @@
         height: 690px;
         width: 100%;
         position: relative;
+        .ant-menu-submenu-title{
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          left: -16px;
+          .ant-menu-submenu-arrow{
+            display: none;
+          }
+        }
         i {
           font-size: 25px;
           color: white;
@@ -36,14 +45,17 @@
           }
           .icon-online {
             position: absolute;
-            top: 80%;
-            left: 65%;
+            top: 85%;
+            left: 85%;
             width: 10px;
             height: 10px;
             background: rgb(98, 203, 0);
             border-radius: 50%;
             display: inline-block;
             box-shadow: white 0px 0px 0px 1px;
+          }
+          .ant-menu-submenu-arrow{
+            display: none;
           }
         }
         .sign-out {
@@ -127,3 +139,38 @@
     }
   }
 }
+.ant-menu-submenu{
+  .ant-menu{
+    position: absolute;
+    top: 50px;
+    left: -22px;
+    padding: 20px;
+    .ant-menu-item-group-list{
+      width: 150px;
+    }
+  }
+}
+.modalUpdateUser {
+  .ant-modal-content {
+    width: 400px;
+    margin: 0 auto;
+    .ant-upload.ant-upload-select-picture-card {
+      border: none;
+      background-color: white;
+    }
+    .avatar {
+      left: 120%;
+      display: block;
+      position: relative;
+      .img_avatar {
+        margin-left: 5px;
+        height: 84px;
+        width: 84px;
+        display: block;
+        border-radius: 50% !important;
+        border: 0.5px solid #0cb3ff
+      }
+    }
+  }
+}
+
