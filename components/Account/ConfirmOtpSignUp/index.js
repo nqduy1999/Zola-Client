@@ -12,6 +12,7 @@ const prefix = 'confirm-otp-sign-up';
 const c = classPrefixor(prefix);
 
 const ConfirmOtpSignUp = props => {
+  const { NAME_RGX } = Validator.RGX;
   const { valueSent } = props;
   const { push } = useRouter();
   const dispatch = useDispatch();
@@ -150,7 +151,18 @@ const ConfirmOtpSignUp = props => {
           </div>
           <Form.Item
             name="name"
-            rules={[Validator.required('name', 'Không được bỏ trống')]}
+            rules={[
+              { required: true, message: 'Vui lòng nhập tên!' },
+              {
+                max: 32,
+                min: 6,
+                message: 'Tên có ít nhất 6 ký tự và tối đa 32 ký tự'
+              },
+              {
+                pattern: NAME_RGX,
+                message: 'Không chứa ký tự đặc biệt'
+              }
+            ]}
           >
             <div className="line-form">
               <Input

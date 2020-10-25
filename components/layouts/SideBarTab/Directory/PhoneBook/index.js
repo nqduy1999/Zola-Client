@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Avatar, Button, Popconfirm } from 'antd';
+import { Avatar } from 'antd';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  deleteFriendByPhoneBookAction,
   dispatchDefaultAction,
   fetchFriendsByPhoneBookAction
 } from 'actions/friendAction';
@@ -39,11 +38,11 @@ const PhoneBook = () => {
     dispatch(dispatchDefaultAction());
   }, [messageDeletePhoneBook]);
 
-  const confirm = userIdWantDelete => {
-    if (userProfile.id) {
-      dispatch(deleteFriendByPhoneBookAction(userProfile.id, userIdWantDelete));
-    }
-  };
+  // const confirm = userIdWantDelete => {
+  //   if (userProfile.id) {
+  //     dispatch(deleteFriendByPhoneBookAction(userProfile.id, userIdWantDelete));
+  //   }
+  // };
 
   const renderListFriendPhoneBook = () => {
     if (listFriendPhoneBook?.length < 0) return null;
@@ -74,16 +73,6 @@ const PhoneBook = () => {
                 Từ danh bạ của bạn
               </div>
             </div>
-            <Popconfirm
-              title="Bạn muốn hủy kết bạn với người này?"
-              onConfirm={() => confirm(friend.id)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary" danger style={{ marginTop: '15px' }}>
-                Hủy Kết Bạn
-              </Button>
-            </Popconfirm>
           </div>
         </>
       );

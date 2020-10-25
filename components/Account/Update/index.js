@@ -12,6 +12,7 @@ import SendOtp from '../SendOtp';
 import * as Validator from 'utils/validatorFormat';
 
 const Update = props => {
+  const { NAME_RGX } = Validator.RGX;
   const [imageFormData, setImageFormData] = useState();
   const [changeName, setChangeName] = useState(false);
   const [visibleOtp, setVisibleOtp] = useState(false);
@@ -66,7 +67,6 @@ const Update = props => {
           phone: userProfile?.phone,
           email: userProfile?.email
         };
-        console.log(dataUpdate);
         dispatch(updateProfileUser(dataUpdate)).then(() => {
           setVisible(false);
           toast.success('🦄 Update Successful!', {
@@ -186,20 +186,30 @@ const Update = props => {
         layout="vertical"
         id="updateUser"
         name="update"
-        initialValues={{ remember: true }}
+        initialValues={{
+          name: userProfile?.name
+        }}
       >
         {changeName ? (
           <Form.Item
-            rules={[Validator.required('Phone', 'Không được bỏ trống')]}
+            name="name"
+            rules={[
+              { required: true, message: 'Vui lòng nhập tên!' },
+              {
+                max: 32,
+                min: 6,
+                message: 'Tên có ít nhất 6 ký tự và tối đa 32 ký tự'
+              },
+              {
+                pattern: NAME_RGX,
+                message: 'Không chứa ký tự đặc biệt'
+              }
+            ]}
+            onBlur={() => {
+              setChangeName(false);
+            }}
           >
-            <Input
-              name="name"
-              value={userProfile ? userProfile.name : ''}
-              onChange={handleOnChange}
-              onBlur={() => {
-                setChangeName(false);
-              }}
-            />
+            <Input name="name" onChange={handleOnChange} />
           </Form.Item>
         ) : (
           <h1

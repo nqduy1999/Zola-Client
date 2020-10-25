@@ -36,7 +36,8 @@ const SearchComponent = () => {
             style={{
               display: 'block',
               marginTop: '38px',
-              marginLeft: '28px'
+              marginLeft: '28px',
+              width: '150px'
             }}
           >
             - {userData ? userData.name : ''}
