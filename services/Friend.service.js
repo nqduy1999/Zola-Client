@@ -36,8 +36,8 @@ class FriendService {
       method: 'POST',
       url: `users/accepFriend`,
       data: {
-        user_id: userID,
-        user_id_want_accept: userIDWantAccept
+        user_id: String(userID),
+        user_id_want_accept: String(userIDWantAccept)
       }
     });
   };
