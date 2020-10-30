@@ -188,8 +188,17 @@ const ConfirmOtpSignUp = props => {
           <Form.Item
             name="passwordConfirm"
             rules={[
-              Validator.password('name', 'Password không đúng định dạng'),
-              Validator.required('name', 'Không được bỏ trống')
+              ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (value) {
+                    if (getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject('Mật khẩu không giống');
+                  }
+                  return Promise.reject('Không được bỏ trống');
+                }
+              })
             ]}
           >
             <div className="line-form">

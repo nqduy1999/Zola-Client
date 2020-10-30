@@ -164,22 +164,19 @@ const ConfirmOtpForgot = props => {
           </Form.Item>
           <Form.Item
             name="confirmNewPassword"
-            rules={
-              ([
-                Validator.password('Phone', 'Mật khẩu không đúng định dạng'),
-                Validator.required('Phone', 'Không được bỏ trống')
-              ],
-              [
-                ({ getFieldValue }) => ({
-                  validator(rule, value) {
-                    if (!value || getFieldValue('newPassword') === value) {
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (value) {
+                    if (getFieldValue('newPassword') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject('Mật khẩu không giống');
                   }
-                })
-              ])
-            }
+                  return Promise.reject('Không được bỏ trống');
+                }
+              })
+            ]}
           >
             <div className="line-form">
               <Input.Password
