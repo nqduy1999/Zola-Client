@@ -2,7 +2,6 @@ import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import { Form, Input, Button, Tabs } from 'antd';
 import useChangeMeta from 'components/common/hook/useChangeMeta';
-// import logo from 'assets/images/zola-logo.png';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import * as Validator from 'utils/validatorFormat';

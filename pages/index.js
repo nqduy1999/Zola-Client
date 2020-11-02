@@ -1,6 +1,7 @@
 import SignIn from 'components/Account/SignIn';
 import withAuth from 'components/common/withAuth';
 import React, { PureComponent } from 'react';
+import logo from 'assets/images/zola-logo.png';
 
 class Index extends PureComponent {
   render() {
@@ -41,6 +42,11 @@ class Index extends PureComponent {
               d="M1278.31,38.196C1245.81,209.874 1197.22,365.556 1144.82,499.838L1144.82,503.638C1185.82,615.924 1216.41,720.211 1239.11,809.6L1439.7,810L1439.7,256.768C1379.4,158.78 1321.41,86.288 1278.31,38.195L1278.31,38.196z"
             ></path>
           </svg>
+        </div>
+        <div className="logo-zola">
+          <div className="logo">
+            <img src={logo} />
+          </div>
         </div>
         <SignIn />
       </div>

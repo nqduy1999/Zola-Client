@@ -86,7 +86,10 @@ const Directory = () => {
                 style={{ marginRight: '10px' }}
               />
             ) : (
-              <img src={elm.avatar} alt="avatar" />
+              <img
+                src={`https://api-ret.ml/api/v0/images/download/${elm.avatar}`}
+                alt="avatar"
+              />
             )}
             <span>{elm.name}</span>
           </div>

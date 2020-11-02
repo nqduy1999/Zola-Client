@@ -78,7 +78,16 @@ const FriendList = () => {
                 style={{ marginRight: '10px' }}
               />
             ) : (
-              <img src={friendRq.avatar} alt="avatar" />
+              <img
+                style={{
+                  borderRadius: '50%',
+                  width: '62px',
+                  height: '62px',
+                  marginRight: '11px'
+                }}
+                src={`https://api-ret.ml/api/v0/images/download/${friendRq.avatar}`}
+                alt="avatar"
+              />
             )}
             <span>{friendRq.name}</span>
           </div>
