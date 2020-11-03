@@ -6,7 +6,7 @@ import { classPrefixor } from 'utils/classPrefixor';
 import Avatar from 'antd/lib/avatar/avatar';
 import { UserOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFriendAction } from 'actions/friendAction';
+import { acceptFriendAction, addFriendAction } from 'actions/friendAction';
 const prefix = 'view-user-friend';
 const c = classPrefixor(prefix);
 const inforUser = {
@@ -30,10 +30,11 @@ const label_user = {
 
 const ViewUserFriend = props => {
   const { userProfile } = useSelector(state => state.userData);
-  const { listUserSentReq, listFriendContact } = useSelector(
+  const { listUserSentReq, listFriendContact, listFriendRequest } = useSelector(
     state => state.FriendReducer
   );
   const { visible, onCancelModal, userData } = props;
+  const [idAccept, setIdAccept] = useState();
   const [statusFriend, setStatusFriend] = useState(1);
   const dispatch = useDispatch();
   const OnAddFriend = () => {
@@ -49,8 +50,17 @@ const ViewUserFriend = props => {
   };
   const closeModalView = () => {
     onCancelModal();
-    setStatusFriend(1);
   };
+  const AcceptFriend = () => {
+    if (idAccept) {
+      dispatch(acceptFriendAction(userProfile.id, idAccept));
+    }
+  };
+  useEffect(() => {
+    if (userProfile?.id == userData?.id) {
+      setStatusFriend(0);
+    }
+  }, [userData?.id, userProfile?.id]);
   useEffect(() => {
     if (listUserSentReq?.length > 0) {
       for (var i = 0; i < listUserSentReq.length; i++) {
@@ -61,8 +71,26 @@ const ViewUserFriend = props => {
     }
   }, [listUserSentReq, userData?.id]);
   useEffect(() => {
+    if (listUserSentReq?.length > 0) {
+      for (var i = 0; i < listUserSentReq.length; i++) {
+        if (userData?.id == listUserSentReq[i]?.id) {
+          setStatusFriend(2);
+        }
+      }
+    }
+  }, [listUserSentReq, userData?.id]);
+  useEffect(() => {
+    if (listFriendRequest?.length > 0) {
+      for (var i = 0; i < listFriendRequest.length; i++) {
+        if (userData?.id == listFriendRequest[i]?.id) {
+          setStatusFriend(4);
+          setIdAccept(userData.id);
+        }
+      }
+    }
+  }, [listFriendRequest, userData?.id]);
+  useEffect(() => {
     if (listFriendContact?.length > 0) {
-      console.log(listFriendContact);
       for (var i = 0; i < listFriendContact.length; i++) {
         if (userData?.id == listFriendContact[i]?.id) {
           setStatusFriend(3);
@@ -185,6 +213,15 @@ const ViewUserFriend = props => {
             >
               <CheckOutlined />
               Bạn bè
+            </Button>
+          ) : statusFriend == 4 ? (
+            <Button
+              type="success"
+              style={{ margin: '0 auto', display: 'block' }}
+              onClick={AcceptFriend}
+            >
+              <PlusOutlined />
+              Chấp nhận
             </Button>
           ) : (
             ''

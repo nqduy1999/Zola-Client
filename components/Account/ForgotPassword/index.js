@@ -3,18 +3,22 @@ import { classPrefixor } from 'utils/classPrefixor';
 import { Button, Form, Input, Tabs } from 'antd';
 import * as Validator from 'utils/validatorFormat';
 import { PhoneFilled, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendOtpForgot } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import useChangeMeta from 'components/common/hook/useChangeMeta';
 import { Link } from 'core/routes';
 import { urlHelper } from 'utils';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import ConfirmOtpForgot from '../ConfirmOtpForgot';
 const prefix = 'sign-up';
 const c = classPrefixor(prefix);
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector(state => state.accountData);
   const { TabPane } = Tabs;
   useChangeMeta('Quên mật khẩu');
   const [otpSent, setOtpSent] = useState(false);
@@ -109,9 +113,15 @@ const ForgotPassword = () => {
                     </Link>
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Tiếp tục
-                    </Button>
+                    {isLoading ? (
+                      <Button type="primary" disabled>
+                        <Spin indicator={antIcon} style={{ color: 'white' }} />
+                      </Button>
+                    ) : (
+                      <Button type="primary" htmlType="submit">
+                        Tiếp tục
+                      </Button>
+                    )}
                   </Form.Item>
                 </Form>
               </TabPane>
@@ -154,9 +164,15 @@ const ForgotPassword = () => {
                     </Link>
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Tiếp tục
-                    </Button>
+                    {isLoading ? (
+                      <Button type="primary" disabled>
+                        <Spin indicator={antIcon} style={{ color: 'white' }} />
+                      </Button>
+                    ) : (
+                      <Button type="primary" htmlType="submit">
+                        Tiếp tục
+                      </Button>
+                    )}
                   </Form.Item>
                 </Form>
               </TabPane>

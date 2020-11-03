@@ -12,10 +12,10 @@ class FriendService {
       url: `users/getListContactId?userId=${id}`
     });
   };
-  fetchFriendsRequest = id => {
+  fetchFriendsRequest = () => {
     return axios.request({
       method: 'GET',
-      url: `users/getListRequestId?userId=${id}`
+      url: `users/getListRequestId`
     });
   };
   searchFriendByEmailorPhone = value => {

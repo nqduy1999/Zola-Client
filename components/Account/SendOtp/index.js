@@ -7,11 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendOtp } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import { getProfileUser, updateOtpUser } from 'actions/userAction';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 const SendOtpComponent = props => {
   const { cancelModal, visible, typeOfsendOtp } = props;
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState({});
-  const { auth_token } = useSelector(state => state.accountData);
+  const { auth_token, isLoading } = useSelector(state => state.accountData);
   const radioStyle = {
     display: 'block',
     height: '30px',
@@ -134,17 +138,30 @@ const SendOtpComponent = props => {
             <Input placeholder="Nhập mã xác nhận " />
           </Form.Item>
           <FormItem>
-            <Button
-              htmlType="submit"
-              style={{
-                background: '#0068ff',
-                fontSize: '12px',
-                color: 'white',
-                marginLeft: '40%'
-              }}
-            >
-              Cập nhật
-            </Button>
+            {isLoading ? (
+              <Button
+                style={{
+                  background: '#0068ff',
+                  fontSize: '12px',
+                  color: 'white',
+                  marginLeft: '40%'
+                }}
+              >
+                <Spin indicator={antIcon} style={{ color: 'white' }} />
+              </Button>
+            ) : (
+              <Button
+                htmlType="submit"
+                style={{
+                  background: '#0068ff',
+                  fontSize: '12px',
+                  color: 'white',
+                  marginLeft: '40%'
+                }}
+              >
+                Cập nhật
+              </Button>
+            )}
           </FormItem>
         </Form>
       ) : (

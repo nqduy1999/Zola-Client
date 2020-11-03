@@ -28,13 +28,13 @@ export const fetchFriendsByPhoneBookAction = id => dispatch => {
     });
 };
 
-export const fetchFriendsContactAction = id => dispatch => {
+export const fetchFriendsContactAction = () => dispatch => {
   dispatch({
     type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_REQUEST
   });
 
   friendService
-    .fetchFriendsContact(id)
+    .fetchFriendsContact()
     .then(res => {
       const { data } = res.data;
       dispatch({

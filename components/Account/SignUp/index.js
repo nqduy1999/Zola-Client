@@ -3,7 +3,7 @@ import { classPrefixor } from 'utils/classPrefixor';
 import { Button, Form, Input, Tabs } from 'antd';
 import * as Validator from 'utils/validatorFormat';
 import { PhoneFilled, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendOtp } from 'actions/accountAction';
 import ConfirmOtpSignUp from '../ConfirmOtpSignUp';
 import { toast } from 'react-toastify';
@@ -12,8 +12,11 @@ import { Link } from 'core/routes';
 import { urlHelper } from 'utils';
 const prefix = 'sign-up';
 const c = classPrefixor(prefix);
-
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
 const SignUp = () => {
+  const { isLoading } = useSelector(state => state.accountData);
   const dispatch = useDispatch();
   const { TabPane } = Tabs;
   useChangeMeta('Đăng ký');
@@ -107,9 +110,15 @@ const SignUp = () => {
                     </a>
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Nhận mã kích hoạt
-                    </Button>
+                    {isLoading ? (
+                      <Button type="primary">
+                        <Spin indicator={antIcon} style={{ color: 'white' }} />
+                      </Button>
+                    ) : (
+                      <Button type="primary" htmlType="submit">
+                        Nhận mã kích hoạt
+                      </Button>
+                    )}
                   </Form.Item>
                 </Form>
               </TabPane>
@@ -158,9 +167,15 @@ const SignUp = () => {
                     </a>
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Nhận mã kích hoạt
-                    </Button>
+                    {isLoading ? (
+                      <Button type="primary">
+                        <Spin indicator={antIcon} style={{ color: 'white' }} />
+                      </Button>
+                    ) : (
+                      <Button type="primary" htmlType="submit">
+                        Nhận mã kích hoạt
+                      </Button>
+                    )}
                   </Form.Item>
                 </Form>
               </TabPane>

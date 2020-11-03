@@ -3,7 +3,9 @@ import { classPrefixor } from 'utils/classPrefixor';
 import { Form, Input, Button, Tabs } from 'antd';
 import useChangeMeta from 'components/common/hook/useChangeMeta';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import * as Validator from 'utils/validatorFormat';
 import { SignInAccount } from 'actions/accountAction';
 import { toast } from 'react-toastify';
@@ -25,12 +27,13 @@ const tailLayout = {
 };
 
 // Hook
-
+const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
 const prefix = 'sign-in';
 const c = classPrefixor(prefix);
 const { TabPane } = Tabs;
 const SignIn = () => {
   useChangeMeta('Đăng nhập');
+  const { isLoading } = useSelector(state => state.accountData);
   const { push } = useRouter();
   const dispatch = useDispatch();
   const onSignIn = data => {
@@ -109,9 +112,15 @@ const SignIn = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Đăng nhập
-                  </Button>
+                  {isLoading ? (
+                    <Button type="primary">
+                      <Spin indicator={antIcon} style={{ color: 'white' }} />
+                    </Button>
+                  ) : (
+                    <Button type="primary" htmlType="submit">
+                      Đăng nhập
+                    </Button>
+                  )}
                 </Form.Item>
               </Form>
             </TabPane>
@@ -156,9 +165,15 @@ const SignIn = () => {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                  <Button type="primary" htmlType="submit">
-                    Đăng nhập
-                  </Button>
+                  {isLoading ? (
+                    <Button type="primary">
+                      <Spin indicator={antIcon} style={{ color: 'white' }} />
+                    </Button>
+                  ) : (
+                    <Button type="primary" htmlType="submit">
+                      Đăng nhập
+                    </Button>
+                  )}
                 </Form.Item>
               </Form>
             </TabPane>

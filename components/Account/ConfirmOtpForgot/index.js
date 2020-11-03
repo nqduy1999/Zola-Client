@@ -1,8 +1,10 @@
 import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form, Input } from 'antd';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import {
   changePassword,
   sendOtpForgot,
@@ -14,8 +16,10 @@ import * as Validator from 'utils/validatorFormat';
 
 const prefix = 'confirm-otp-sign-up';
 const c = classPrefixor(prefix);
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ConfirmOtpForgot = props => {
+  const { isLoading } = useSelector(state => state.accountData);
   const { valueSent } = props;
   const { push } = useRouter();
   const dispatch = useDispatch();
@@ -143,9 +147,15 @@ const ConfirmOtpForgot = props => {
             </Form.Item>
 
             <p className="textAlign-center">
-              <a className="link-resend " onClick={SendOtpAgain}>
-                Nhận lại mã kích hoạt
-              </a>
+              {isLoading ? (
+                <a className="link-resend ">
+                  <Spin indicator={antIcon} />
+                </a>
+              ) : (
+                <a className="link-resend " onClick={SendOtpAgain}>
+                  Nhận lại mã kích hoạt
+                </a>
+              )}
             </p>
           </div>
           <Form.Item
@@ -187,9 +197,15 @@ const ConfirmOtpForgot = props => {
           </Form.Item>
           <Form.Item name="name">
             <div className="line-form">
-              <Button type="primary" htmlType="submit">
-                Xác nhận
-              </Button>
+              {isLoading ? (
+                <Button type="primary">
+                  <Spin indicator={antIcon} style={{ color: 'white' }} />
+                </Button>
+              ) : (
+                <Button type="primary" htmlType="submit">
+                  Xác nhận
+                </Button>
+              )}
             </div>
           </Form.Item>
         </Form>
