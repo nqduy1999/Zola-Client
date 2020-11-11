@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Collapse, Menu } from 'antd';
+import { Button, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import avatar from 'assets/images/logo.png';
@@ -14,6 +14,7 @@ import PhoneBook from './Directory/PhoneBook';
 import Update from 'components/Account/Update';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
 import ChangePasswordUser from 'components/Account/ChangePassword';
+import MessageRoom from 'components/Chat/MessageRoom';
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 const SubMenu = Menu.SubMenu;
@@ -25,7 +26,6 @@ const SideBarTab = () => {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const dispatch = useDispatch();
   const { push } = useRouter();
-  const { Panel } = Collapse;
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
@@ -156,85 +156,14 @@ const SideBarTab = () => {
               <Tabs forceRenderTabPanel>
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
-                  <Collapse
-                    defaultActiveKey={['1']}
-                    bordered={false}
-                    expandIconPosition="right"
-                  >
-                    <Panel key="1" style={{ backgroundColor: 'white' }}>
-                      <Tab>
-                        <div
-                          style={{
-                            height: '74px',
-                            left: '0px',
-                            position: 'absolute',
-                            top: '0px',
-                            width: '100%'
-                          }}
-                        >
-                          <div draggable="true" className="item rel  pinned">
-                            <div style="position: relative;">
-                              <div
-                                className="avatar avatar--m conversationList__avatar"
-                                title=""
-                              >
-                                <div
-                                  className="avatar-img  outline"
-                                  style='background-image: url("https://s120-ava-talk.zadn.vn/4/d/c/6/29/120/2743b59acfcc5bde9357c52d09a9c305.jpg");'
-                                ></div>
-                                <div className="avatar__oa-verified"></div>
-                              </div>
-                            </div>
-                            <div className="item-content-container flx-center flx flx-col rel">
-                              <div className="item-title flx flx-al-c rel w100">
-                                <div className="item-title-name truncate  ">
-                                  <span style="color: initial;">
-                                    <span data-translate-inner="KEY_NAME_SEND2ME">
-                                      Truyền File
-                                    </span>
-                                  </span>
-                                </div>
-                                <div className="item-timestamp">
-                                  <i className="fa fa-pin func-pinned"></i>{' '}
-                                </div>
-                              </div>
-                              <div className="flx flx-al-c">
-                                <div
-                                  className="item-message truncate "
-                                  style="display: flex; color: rgb(122, 134, 154); line-height: 20px;"
-                                >
-                                  <div className="conv-last-msg">
-                                    <div style="overflow: hidden; text-overflow: ellipsis; line-height: 20px;">
-                                      <span>
-                                        Trao đổi File giữa các thiết bị của bạn
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="item-action">
-                                  <div className="item-action__menu ">
-                                    <i className="fa fa-tab-icon-more func-setting__icon"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flx flx-al-c"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </Tab>
-                      <Tab>Home</Tab>
-                    </Panel>
-                  </Collapse>
+                  <Tab style={{ display: 'none' }}></Tab>
+                  <Tab>Home</Tab>
                 </TabList>
                 <TabPanel>
                   <HomePage />
                 </TabPanel>
                 <TabPanel>
-                  <p style={{ fontSize: '20px' }}>Vợ Của Nam</p>
-                  <img
-                    src="https://icdn.dantri.com.vn/thumb_w/640/2018/12/2/huong-uyen-1-1543765883437106382136.jpg"
-                    alt="Marge Simpson"
-                  />
+                  <MessageRoom />
                 </TabPanel>
               </Tabs>
             </TabPanel>

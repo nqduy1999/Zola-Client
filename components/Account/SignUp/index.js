@@ -184,8 +184,8 @@ const SignUp = () => {
             <ConfirmOtpSignUp valueSent={valueSent} />
           )}
           <p className="action-more">
-            Bạn đã có tài khoản ?{' '}
-            <Link {...urlHelper.getUrlHomePage().route}>Đăng nhập ngay!</Link>
+            Bạn đã có tài khoản ?
+            <Link {...urlHelper.getUrlSignInPage().route}>Đăng nhập ngay!</Link>
           </p>
         </div>
       </div>

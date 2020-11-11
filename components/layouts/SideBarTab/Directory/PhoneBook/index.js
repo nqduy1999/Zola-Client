@@ -86,7 +86,7 @@ const PhoneBook = () => {
           src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
           alt="imgAddF"
         />
-        <span>Danh Bạ Bạn Bè</span>
+        <span></span>
       </div>
       <div className={c`content`}>
         <div className={c`content__inside`}>{renderListFriendPhoneBook()}</div>

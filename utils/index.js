@@ -2,6 +2,13 @@ import DefaultLayout from 'components/layouts';
 import jwt_decode from 'jwt-decode';
 
 export const urlHelper = {
+  getUrlSignInPage: () => ({
+    layout: DefaultLayout,
+    route: {
+      to: '/'
+    },
+    initProps: {}
+  }),
   getUrlHomePage: () => ({
     layout: DefaultLayout,
     route: {

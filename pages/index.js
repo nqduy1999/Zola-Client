@@ -1,7 +1,6 @@
 import SignIn from 'components/Account/SignIn';
 import withAuth from 'components/common/withAuth';
 import React, { PureComponent } from 'react';
-import logo from 'assets/images/zola-logo.png';
 
 class Index extends PureComponent {
   render() {
@@ -45,7 +44,10 @@ class Index extends PureComponent {
         </div>
         <div className="logo-zola">
           <div className="logo">
-            <img src={logo} />
+            <a>Zola</a>
+          </div>
+          <div className="content-logo">
+            <h2>Đăng nhập</h2>
           </div>
         </div>
         <SignIn />
