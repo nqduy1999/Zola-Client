@@ -38,12 +38,6 @@ const PhoneBook = () => {
     dispatch(dispatchDefaultAction());
   }, [messageDeletePhoneBook]);
 
-  // const confirm = userIdWantDelete => {
-  //   if (userProfile.id) {
-  //     dispatch(deleteFriendByPhoneBookAction(userProfile.id, userIdWantDelete));
-  //   }
-  // };
-
   const renderListFriendPhoneBook = () => {
     if (listFriendPhoneBook?.length < 0) return null;
     return listFriendPhoneBook?.map(friend => {
@@ -58,7 +52,10 @@ const PhoneBook = () => {
                   style={{ marginRight: '10px' }}
                 />
               ) : (
-                <img src={friend.avatar} alt="avatar" />
+                <img
+                  src={`https://api-ret.ml/api/v0/images/download/${friend.avatar}`}
+                  alt="avatar"
+                />
               )}
             </div>
             <div className="truncate">{friend.name}</div>
@@ -86,7 +83,7 @@ const PhoneBook = () => {
           src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
           alt="imgAddF"
         />
-        <span></span>
+        <span>Danh Bạ Bạn Bè</span>
       </div>
       <div className={c`content`}>
         <div className={c`content__inside`}>{renderListFriendPhoneBook()}</div>

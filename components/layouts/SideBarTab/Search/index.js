@@ -3,6 +3,8 @@ import { Row, Col, Input } from 'antd';
 import { useSelector } from 'react-redux';
 import logo from 'assets/images/zola-logo.png';
 import AddFriend from 'components/Friend/AddFriend';
+import { UsergroupAddOutlined } from '@ant-design/icons';
+import AddGroup from './AddGroup';
 
 const { Search } = Input;
 
@@ -10,6 +12,8 @@ const SearchComponent = () => {
   const { userProfile } = useSelector(state => state.userData);
   const [userData, setUserData] = useState(null);
   const [visibleModalSearch, setVisibleModalSearch] = useState(false);
+
+  const [showModalAddGroup, setShowModalAddGroup] = useState(false);
 
   useEffect(() => {
     if (userProfile) {
@@ -54,13 +58,23 @@ const SearchComponent = () => {
             style={{ marginRight: '20px', cursor: 'pointer' }}
             onClick={() => setVisibleModalSearch(true)}
           ></i>
-          <i className="fa fa-plus"></i>
+          <UsergroupAddOutlined
+            style={{ fontSize: '18px', cursor: 'pointer' }}
+            onClick={() => setShowModalAddGroup(true)}
+          />
         </Col>
       </Row>
       <AddFriend
         visible={visibleModalSearch}
         setVisible={setVisibleModalSearch}
       />
+
+      {showModalAddGroup && (
+        <AddGroup
+          showModalAddGroup={showModalAddGroup}
+          closeModalAddGroup={setShowModalAddGroup}
+        />
+      )}
     </div>
   );
 };
