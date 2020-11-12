@@ -1,6 +1,7 @@
 import { MESSAGE_TYPE } from 'constant/messageType';
 
 const initialState = {
+  paginator: null,
   messageRooms: [],
   loading: false
 };
@@ -12,7 +13,11 @@ const messageReducer = (state = initialState, action) => {
       return { ...state, loading: true };
     }
     case MESSAGE_TYPE.FETCH_LIST_MESSAGE_SUCCESS: {
-      return { ...state, messageRooms: action.payload };
+      return {
+        ...state,
+        messageRooms: action.payload.messageRooms,
+        paginator: action.payload.paginator
+      };
     }
     case MESSAGE_TYPE.FETCH_LIST_MESSAGE_FAILURE: {
       return { ...state, loading: false };

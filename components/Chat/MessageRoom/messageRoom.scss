@@ -1,26 +1,39 @@
 .message-room {
-    padding: 15px;
     &__header {
       padding: 10px 17px;
       background: #fff;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      img {
-        border-radius: 50%;
-        width: 62px;
-        height: 62px;
-        margin-right: 11px;
-      }
-      span {
-        font-size: 24px;
-        font-weight: normal;
-        color: rgb(17, 17, 17);
-        margin: auto 0px;
+      .info_room{
+        width: 100%;
+        img {
+          border-radius: 50%;
+          width: 70px;
+          height: 70px;
+          margin-right: 11px;
+        }
+        .content_room{
+          position: absolute;
+          display: inline-block;
+          width: 50%;
+        }
+        .action{
+          top:20px;
+          right: -150px;
+          width: 20%;
+          position: absolute;
+          button{
+            background-color: transparent;
+            border: none;
+            font-size: 30px;
+            color: #767676;
+          }
+        }
       }
     }
     &__content {
       width: 100%;
       margin: 0 auto;
-      height: 77vh;
+      height: 70vh;
       margin-top: 10px;
       &__inside {
         p {
@@ -43,7 +56,6 @@
               border-radius: 50%;
               svg{
                 font-size: 40px;
-                height: -webkit-fill-available;
               }
             }
           }
@@ -53,8 +65,42 @@
         }
       }
     }
-    &__chat_tab{
+    &__icon_chat_tab{
         border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom:1px solid #0068ff ;
+        height: 5.5vh;
+        .content__inside{
+            padding: 5px;
+            padding-left: 15px;
+            button{
+              padding-bottom: 10px;
+              background-color: transparent;
+                border:none;
+                padding-left: 15px;
+                i{
+                font-size:20.5px;
+                color: #767676
+            }
+        }
+        }
+    }
+    &__chat_tab{
+        height: 8.5vh;
+        input{
+            height: 100%;
+            border: none;
+            width: 85%;
+        }
+        .icon{
+            display: inline-block;
+            margin-left: 10px;
+            width: 12%;
+            button{
+              border: none;
+              font-size: 20.5px;
+              color: #0068ff;
+            }
+        }
     }
   }
   

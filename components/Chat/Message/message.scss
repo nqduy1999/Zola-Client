@@ -1,0 +1,50 @@
+.message {
+    &__header {
+      background: transparent;
+      .info_room{
+        width: 100%;
+        img {
+          border-radius: 50%;
+          width: 56px;
+          height: 56px;
+          margin-right: 11px;
+        }
+        .content_room{
+          top: 14px;
+          position: absolute;
+          display: inline-block;
+          width: 50%;
+        }
+        .action{
+          top:14px;
+          right: 0px;
+          width: 20%;
+          position: absolute;
+          button{
+            background-color: transparent;
+            border: none;
+            font-size: 30px;
+            color: #767676;
+            display: none;
+            .dot{
+                margin-left:1px;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                border: 1px solid #767676;
+                color: white;
+            }
+          }
+        }
+        &:hover{
+            .action {
+                
+                button{
+                    display: block;
+                }
+            }
+        }
+      }
+    }
+  }
+  

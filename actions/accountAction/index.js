@@ -146,7 +146,6 @@ export const sendOtpForgot = value => dispatch => {
   return accountService
     .sendOtpForgotService(value)
     .then(res => {
-      console.log(res);
       const { error, message } = res.data;
       if (!error) {
         dispatch({
