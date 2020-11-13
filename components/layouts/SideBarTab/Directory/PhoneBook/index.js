@@ -79,10 +79,17 @@ const PhoneBook = () => {
   return (
     <section className={prefix}>
       <div className={c`header`}>
-        <img
-          src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
-          alt="imgAddF"
-        />
+        <i
+          className="fa fa-address-book"
+          style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            fontSize: '50px',
+            color: 'cornflowerblue',
+            marginRight: '10px'
+          }}
+        ></i>
         <span>Danh Bạ Bạn Bè</span>
       </div>
       <div className={c`content`}>

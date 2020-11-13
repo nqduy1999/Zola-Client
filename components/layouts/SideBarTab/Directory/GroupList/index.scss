@@ -1,11 +1,9 @@
-.phoneBook {
+.groupList {
   padding: 15px;
   &__header {
     padding: 10px 17px;
     background: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
     img {
       border-radius: 50%;
       width: 62px;
@@ -27,7 +25,8 @@
     &__inside {
       padding: 0 20px;
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: auto auto auto auto;
+      cursor: pointer;
       .friend-center-item-v2 {
         width: 250px;
         height: 250px;
@@ -35,28 +34,20 @@
         text-align: center;
         margin-right: 20px;
         margin-top: 30px;
-        border: 2px solid rgba(0,0,0,.1);
+        border: 2px solid rgba(0, 0, 0, 0.1);
         .avatar {
-          width: 104px;
-          height: 104px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin: 5px auto 0px;
-          .ant-avatar {
-            width: 104px;
-            height: 104px;
-            border-radius: 50%;
-            margin: 20px 0;
-            svg {
-              font-size: 60px;
-              height: -webkit-fill-available;
-            }
-          }
+          display: grid;
+          grid-template-columns: auto auto;
+          gap: 5px;
+          height: 100px;
+          width: 80%;
+          margin: 0 auto;
+          justify-content: center;
+          padding: 5px;
           img {
-            width: 104px;
-            height: 104px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            margin: 20px 0;
           }
         }
         .truncate {

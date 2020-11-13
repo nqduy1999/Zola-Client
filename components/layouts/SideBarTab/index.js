@@ -17,6 +17,7 @@ import ChangePasswordUser from 'components/Account/ChangePassword';
 import MessageRoom from 'components/Chat/MessageRoom';
 import Message from 'components/Chat/Message';
 import { getListMessage } from 'actions/messageAction';
+import GroupList from './Directory/GroupList';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -212,12 +213,32 @@ const SideBarTab = () => {
                     />
                     <span>Danh Sách Kết Bạn</span>
                   </Tab>
+
+                  <Tab className="tab">
+                    <i
+                      className="fa fa-address-book"
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        fontSize: '50px',
+                        color: 'cornflowerblue',
+                        marginRight: '10px'
+                      }}
+                    ></i>
+                    <span>Danh Bạ Bạn Bè</span>
+                  </Tab>
                   <Tab className="tab">
                     <img
                       src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
                       alt="imgAddF"
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%'
+                      }}
                     />
-                    <span>Danh Bạ Bạn Bè</span>
+                    <span>Danh Sách Nhóm</span>
                   </Tab>
                   <Directory />
                 </TabList>
@@ -226,6 +247,9 @@ const SideBarTab = () => {
                 </TabPanel>
                 <TabPanel>
                   <PhoneBook />
+                </TabPanel>
+                <TabPanel>
+                  <GroupList />
                 </TabPanel>
               </Tabs>
             </TabPanel>

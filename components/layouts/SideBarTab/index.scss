@@ -10,18 +10,18 @@
       flex-direction: column;
       border-right: 1px solid #e3e5e8;
       height: 100vh;
-      margin-bottom: 0px ;
+      margin-bottom: 0px;
       .tablist__content {
         background: linear-gradient(#0cb3ff, #0068ff);
         height: 100%;
         width: 100%;
         position: relative;
-        .ant-menu-submenu-title{
+        .ant-menu-submenu-title {
           width: 100px;
           height: 100px;
           position: absolute;
           left: -16px;
-          .ant-menu-submenu-arrow{
+          .ant-menu-submenu-arrow {
             display: none;
           }
         }
@@ -55,7 +55,7 @@
             display: inline-block;
             box-shadow: white 0px 0px 0px 1px;
           }
-          .ant-menu-submenu-arrow{
+          .ant-menu-submenu-arrow {
             display: none;
           }
         }
@@ -127,6 +127,8 @@
     cursor: pointer;
     padding: 11px 16px 9px 14px;
     width: 100%;
+    display: flex;
+    align-items: center;
     span {
       font-size: 16px;
     }
@@ -140,13 +142,13 @@
     }
   }
 }
-.ant-menu-submenu{
-  .ant-menu{
+.ant-menu-submenu {
+  .ant-menu {
     position: absolute;
     top: 50px;
     left: -22px;
     padding: 20px;
-    .ant-menu-item-group-list{
+    .ant-menu-item-group-list {
       width: 150px;
     }
   }
@@ -169,9 +171,8 @@
         width: 84px;
         display: block;
         border-radius: 50% !important;
-        border: 0.5px solid #0cb3ff
+        border: 0.5px solid #0cb3ff;
       }
     }
   }
 }
-

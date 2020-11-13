@@ -11,6 +11,12 @@ class GroupChatService {
       }
     });
   };
+  exitGroupChat = id => {
+    return axios.request({
+      method: 'PUT',
+      url: `https://api-chat.ga/api/v0/rooms/exit?id=${id}`
+    });
+  };
 }
 
 export default GroupChatService;
