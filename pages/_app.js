@@ -11,8 +11,17 @@ import 'assets/styles/main.scss';
 import GlobalProvider from 'components/common/context/GlobalContext';
 
 const store = configStore();
+// import useSocket from 'use-socket.io-client';
+
+// const ENDPOINT =
+//   'https://api-chat.ga?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJuYW1lIjoiVGFvIGxhIGFkbWluIiwicGhvbmUiOiIwMzIzNDU2Nzg5IiwiZW1haWwiOiJkbG10cnVvbmcxNjA5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiJ9LCJpYXQiOjE2MDUyODM0ODEsImV4cCI6MTYwNTM2OTg4MX0.bsxTZPzhYDMFw0T5vPQQBJgKSk4dJd5BiGP7jWvbx3A';
 
 const MyApp = ({ Component, pageProps }) => {
+  // const [socket] = useSocket(ENDPOINT);
+  // useEffect(() => {
+  //   socket.connect();
+  //   console.log('avca\n\n\n\n\n\n\n\n\n\n\n\n\n\nawgwag', socket);
+  // }, []);
   return (
     <Provider store={store}>
       <GlobalProvider>

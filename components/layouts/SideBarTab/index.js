@@ -192,8 +192,10 @@ const SideBarTab = () => {
               <Tabs forceRenderTabPanel>
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
-                  <Tab style={{ display: 'none' }}></Tab>
-                  {messageRoom && renderListRoom()}
+                  <div className="scrollCustom">
+                    <Tab style={{ display: 'none' }}></Tab>
+                    {messageRoom && renderListRoom()}
+                  </div>
                 </TabList>
                 <TabPanel>
                   <HomePage />
