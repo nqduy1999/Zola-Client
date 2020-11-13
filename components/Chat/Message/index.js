@@ -36,7 +36,7 @@ const Message = props => {
   const renderMessageRecent = (
     <div className="list_user_room">
       <span className="messageRecent">
-        {data?.messages[data?.messages?.length - 1].content}
+        {data?.messages[data?.messages?.length - 1]?.content}
       </span>
     </div>
   );
