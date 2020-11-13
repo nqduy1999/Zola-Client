@@ -169,8 +169,7 @@ const SideBarTab = () => {
             <TabPanel>
               <Tabs forceRenderTabPanel>
                 <TabList className={c`tabs__tablist`}>
-                  <SearchComponent />
-                  <Tab style={{ display: 'none' }}></Tab>
+                  <SearchComponent /> <Tab style={{ display: 'none' }}></Tab>
                   {messageRoom &&
                     messageRoom.map((value, key) => {
                       return (
@@ -183,9 +182,14 @@ const SideBarTab = () => {
                 <TabPanel>
                   <HomePage />
                 </TabPanel>
-                <TabPanel>
-                  <MessageRoom />
-                </TabPanel>
+                {messageRoom &&
+                  messageRoom.map((value, key) => {
+                    return (
+                      <TabPanel key={key}>
+                        <MessageRoom value={value} />
+                      </TabPanel>
+                    );
+                  })}
               </Tabs>
             </TabPanel>
             <TabPanel>
