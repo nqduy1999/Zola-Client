@@ -90,7 +90,7 @@
   }
   .react-tabs {
     display: grid;
-    grid-template-columns: 25% auto;
+    grid-template-columns: 20% auto;
   }
 
   .tab {
@@ -149,6 +149,7 @@
 
 .scrollCustom {
   overflow-y: hidden!important;
+  transition: opacity 1s;
   &:hover {
     overflow-y: scroll!important;
   }

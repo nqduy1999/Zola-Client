@@ -99,7 +99,7 @@ const GroupList = () => {
           />
           <span>Danh Sách Nhóm</span>
         </div>
-        <div className={c`content`}>
+        <div className={c`content`} style={{ paddingLeft: '100px' }}>
           <div className={c`content__inside`}>{renderListGroup()}</div>
         </div>
       </section>
