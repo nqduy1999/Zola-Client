@@ -197,9 +197,14 @@ const SideBarTab = () => {
                 <TabPanel>
                   <HomePage />
                 </TabPanel>
-                <TabPanel>
-                  <MessageRoom />
-                </TabPanel>
+                {messageRoom &&
+                  messageRoom.map((value, key) => {
+                    return (
+                      <TabPanel key={key}>
+                        <MessageRoom value={value} />
+                      </TabPanel>
+                    );
+                  })}
               </Tabs>
             </TabPanel>
             <TabPanel>

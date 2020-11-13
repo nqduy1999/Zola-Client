@@ -7,7 +7,7 @@ import { UsergroupAddOutlined } from '@ant-design/icons';
 import AddGroup from './AddGroup';
 
 const { Search } = Input;
-
+const prefix = 'search-bar';
 const SearchComponent = () => {
   const { userProfile } = useSelector(state => state.userData);
   const [userData, setUserData] = useState(null);
@@ -20,28 +20,17 @@ const SearchComponent = () => {
       setUserData(userProfile);
     }
   }, [userProfile]);
-
   return (
-    <div className="zola-section">
-      <Row className="zola-header">
-        <Col
-          span={5}
-          className="logo-header"
-          style={{
-            display: 'inline-block',
-            paddingTop: '30px',
-            paddingLeft: '20px'
-          }}
-        >
-          <img src={logo} alt="hihi" />
-        </Col>
-        <Col span={8}>
-          <span
+    <div className={prefix}>
+      <div className="zola-section">
+        <Row className="zola-header">
+          <Col
+            span={5}
+            className="logo-header"
             style={{
-              display: 'block',
-              marginTop: '38px',
-              marginLeft: '28px',
-              width: '150px'
+              display: 'inline-block',
+              paddingTop: '30px',
+              paddingLeft: '20px'
             }}
           >
             - {userData ? userData.name : ''}
