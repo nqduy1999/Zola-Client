@@ -11,7 +11,6 @@ export const getListMessage = page => dispatch => {
     .get(`${prefix}currentPage=${page}&perPage=9`)
     .then(res => {
       const { error, data } = res.data;
-      console.log(data);
       if (!error) {
         dispatch({
           type: MESSAGE_TYPE.FETCH_LIST_MESSAGE_SUCCESS,

@@ -31,27 +31,32 @@ const SideBarTab = () => {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const dispatch = useDispatch();
   const { push } = useRouter();
+
   useEffect(() => {
     if (userProfile) {
       setUserData(userProfile);
     }
   }, [userProfile]);
+
   useEffect(() => {
     if (messageRooms) {
       setMessageRoom(messageRooms);
     }
   }, [messageRooms]);
+
   useEffect(() => {
     if (!isAuthenticated) dispatch(isTokenExpired());
   }, [isAuthenticated, dispatch]);
+
   useEffect(() => {
     dispatch(getListMessage(1));
   }, [dispatch]);
+
   const showModal = () => {
     setVisible(true);
     setUserData(userProfile);
   };
-  console.log(messageRooms);
+
   const cancelModal = () => {
     setVisible(false);
     setUserData(userProfile);
@@ -59,6 +64,21 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
+
+  const renderListRoom = () => {
+    return messageRoom?.map((value, key) => {
+      return (
+        <>
+          {!value?.group && (
+            <Tab key={key}>
+              <Message data={value} />
+            </Tab>
+          )}
+        </>
+      );
+    });
+  };
+
   const styleIcon = {
     marginRight: '8px',
     color: '#99a4b0'
@@ -171,14 +191,7 @@ const SideBarTab = () => {
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
                   <Tab style={{ display: 'none' }}></Tab>
-                  {messageRoom &&
-                    messageRoom.map((value, key) => {
-                      return (
-                        <Tab key={key}>
-                          <Message data={value} />
-                        </Tab>
-                      );
-                    })}
+                  {messageRoom && renderListRoom()}
                 </TabList>
                 <TabPanel>
                   <HomePage />

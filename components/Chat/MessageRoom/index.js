@@ -7,9 +7,11 @@ const c = classPrefixor(prefix);
 
 const MessageRoom = () => {
   const [message, SetMessege] = useState();
+
   const onHandleChangeMessage = e => {
     SetMessege(e.target.value);
   };
+
   return (
     <section className={prefix}>
       <div className={c`header`}>
@@ -38,11 +40,6 @@ const MessageRoom = () => {
               </span>
             </div>
           </div>
-          <div className="action">
-            <Button>
-              <i className="fa fa-video"></i>
-            </Button>
-          </div>
         </div>
       </div>
       <div className={c`content`}>
@@ -59,7 +56,11 @@ const MessageRoom = () => {
         </div>
       </div>
       <div className={c`chat_tab`}>
-        <Input onChange={onHandleChangeMessage} value={message} />
+        <Input
+          onChange={onHandleChangeMessage}
+          value={message}
+          placeholder="Nhập tin nhắn của bạn"
+        />
         <div className="icon">
           <Button>
             <SmileOutlined style={{ color: '#767676' }} />

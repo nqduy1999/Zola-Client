@@ -1,106 +1,108 @@
 .message-room {
-    &__header {
-      padding: 10px 17px;
-      background: #fff;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      .info_room{
-        width: 100%;
-        img {
-          border-radius: 50%;
-          width: 70px;
-          height: 70px;
-          margin-right: 11px;
-        }
-        .content_room{
-          position: absolute;
-          display: inline-block;
-          width: 50%;
-        }
-        .action{
-          top:20px;
-          right: -150px;
-          width: 20%;
-          position: absolute;
-          button{
-            background-color: transparent;
-            border: none;
-            font-size: 30px;
-            color: #767676;
-          }
-        }
-      }
-    }
-    &__content {
+  &__header {
+    padding: 10px 17px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    .info_room {
       width: 100%;
-      margin: 0 auto;
-      height: 70vh;
-      margin-top: 10px;
-      &__inside {
-        p {
-          font-size: 16px;
-          font-weight: 600;
-        }
-        .friendReq {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 3px;
-          padding: 30px 15px;
-          background-color: white;
-          margin-top: 15px;
-          .userInfo{
-            .ant-avatar{
-              width: 60px;
-              height: 60px;
-              border-radius: 50%;
-              svg{
-                font-size: 40px;
-              }
-            }
-          }
-          .btn{
-            margin-right: 5px;
-          }
+      img {
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin-right: 11px;
+      }
+      .content_room {
+        position: absolute;
+        display: inline-block;
+        width: 50%;
+      }
+      .action {
+        top: 20px;
+        right: -150px;
+        width: 20%;
+        position: absolute;
+        button {
+          background-color: transparent;
+          border: none;
+          font-size: 30px;
+          color: #767676;
         }
       }
-    }
-    &__icon_chat_tab{
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-bottom:1px solid #0068ff ;
-        height: 5.5vh;
-        .content__inside{
-            padding: 5px;
-            padding-left: 15px;
-            button{
-              padding-bottom: 10px;
-              background-color: transparent;
-                border:none;
-                padding-left: 15px;
-                i{
-                font-size:20.5px;
-                color: #767676
-            }
-        }
-        }
-    }
-    &__chat_tab{
-        height: 8.5vh;
-        input{
-            height: 100%;
-            border: none;
-            width: 85%;
-        }
-        .icon{
-            display: inline-block;
-            margin-left: 10px;
-            width: 12%;
-            button{
-              border: none;
-              font-size: 20.5px;
-              color: #0068ff;
-            }
-        }
     }
   }
-  
+  &__content {
+    width: 100%;
+    margin: 0 auto;
+    height: 70vh;
+    margin-top: 10px;
+    background-color: #e2e3e0;
+    &__inside {
+      p {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .friendReq {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        padding: 30px 15px;
+        background-color: white;
+        margin-top: 15px;
+        .userInfo {
+          .ant-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            svg {
+              font-size: 40px;
+            }
+          }
+        }
+        .btn {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  &__icon_chat_tab {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #f9f9fd;
+    background-color: #f9f9fd;
+    height: 5.5vh;
+    .content__inside {
+      padding: 5px;
+      padding-left: 15px;
+      button {
+        padding-bottom: 10px;
+        background-color: transparent;
+        border: none;
+        padding-left: 15px;
+        i {
+          font-size: 20.5px;
+          color: #767676;
+        }
+      }
+    }
+  }
+  &__chat_tab {
+    height: 8.5vh;
+    input {
+      height: 100%;
+      border: none;
+      width: 85%;
+      border-top: 0.5px solid #72808e;
+    }
+    .icon {
+      display: inline-block;
+      margin-left: 10px;
+      width: 12%;
+      button {
+        border: none;
+        font-size: 20.5px;
+        color: #0068ff;
+      }
+    }
+  }
+}

@@ -1,5 +1,7 @@
-import { Button } from 'antd';
+// import useSocket from 'use-socket.io-client';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { classPrefixor } from 'utils/classPrefixor';
 import PropTypes from 'prop-types';
 
@@ -7,40 +9,45 @@ const prefix = 'message';
 const c = classPrefixor(prefix);
 
 const Message = props => {
+  const { userProfile } = useSelector(state => state.userData);
+
+  const { data } = props;
+
+  const renderNameListRoom = () => {
+    return data?.users?.map(user => {
+      return (
+        <>
+          {user?.id !== userProfile.id && (
+            <div className="list_user_room">
+              <img
+                src={`https://api-ret.ml/api/v0/images/download/${user.avatar}`}
+              />
+
+              <div className="info_user_room">
+                <h1>{user.name}</h1>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    });
+  };
+
+  const renderMessageRecent = (
+    <div className="list_user_room">
+      <span className="messageRecent">
+        {data?.messages[data?.messages?.length - 1].content}
+      </span>
+    </div>
+  );
+
   return (
     <div className={c`header`}>
       <div className="info_room">
-        <img src="https://kenhcine.cgv.vn/media/catalog/product/s/e/secret-life-of-pets-snowball-spicypulp.jpg" />
-        <div className="content_room">
-          <h1
-            style={{
-              fontSize: '17px',
-              lineHeight: 1,
-              color: '#222',
-              paddingLeft: 0,
-              fontWeight: 350,
-              left: '8px',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              minWidth: 0,
-              cursor: 'default'
-            }}
-          >
-            {props.data?.users[1]?.name}
-          </h1>
-          <div className="info_user_room">
-            <span style={{ fontSize: '14px', color: '#99a4b0' }}>
-              a nho em nhiu lam
-            </span>
-          </div>
-        </div>
-        <div className="action">
-          <Button>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-          </Button>
-        </div>
+        <>
+          {renderNameListRoom()}
+          {renderMessageRecent}
+        </>
       </div>
     </div>
   );

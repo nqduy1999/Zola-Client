@@ -11,15 +11,16 @@ const c = classPrefixor(prefix);
 
 const DefaultLayout = () => {
   const { auth_token } = useSelector(state => state.accountData);
-  const { messageRooms } = useSelector(state => state.messageData);
   const dispatch = useDispatch();
+
   useEffect(() => {
     auth_token && dispatch(getProfileUser(auth_token));
   }, [auth_token, dispatch]);
-  console.log(messageRooms);
+
   useEffect(() => {
     dispatch(getListMessage(1));
   }, [dispatch]);
+
   return (
     <main aria-hidden="true">
       <div aria-hidden="true" className={c`container`}>
