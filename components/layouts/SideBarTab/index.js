@@ -94,6 +94,7 @@ const SideBarTab = () => {
   const styleMenuItem = {
     padding: '10px 20px'
   };
+
   const renderData = () => {
     return (
       <>
@@ -211,41 +212,43 @@ const SideBarTab = () => {
               <Tabs forceRenderTabPanel>
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
-                  <Tab className="tab">
-                    <img
-                      src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
-                      alt="imgAddF"
-                    />
-                    <span>Danh Sách Kết Bạn</span>
-                  </Tab>
+                  <div className="scrollCustom">
+                    <Tab className="tab">
+                      <img
+                        src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
+                        alt="imgAddF"
+                      />
+                      <span>Danh Sách Kết Bạn</span>
+                    </Tab>
 
-                  <Tab className="tab">
-                    <i
-                      className="fa fa-address-book"
-                      style={{
-                        width: '50px',
-                        height: '50px',
-                        borderRadius: '50%',
-                        fontSize: '50px',
-                        color: 'cornflowerblue',
-                        marginRight: '10px'
-                      }}
-                    ></i>
-                    <span>Danh Bạ Bạn Bè</span>
-                  </Tab>
-                  <Tab className="tab">
-                    <img
-                      src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
-                      alt="imgAddF"
-                      style={{
-                        width: '50px',
-                        height: '50px',
-                        borderRadius: '50%'
-                      }}
-                    />
-                    <span>Danh Sách Nhóm</span>
-                  </Tab>
-                  <Directory />
+                    <Tab className="tab">
+                      <i
+                        className="fa fa-address-book"
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          borderRadius: '50%',
+                          fontSize: '50px',
+                          color: 'cornflowerblue',
+                          marginRight: '10px'
+                        }}
+                      ></i>
+                      <span>Danh Bạ Bạn Bè</span>
+                    </Tab>
+                    <Tab className="tab">
+                      <img
+                        src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
+                        alt="imgAddF"
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          borderRadius: '50%'
+                        }}
+                      />
+                      <span>Danh Sách Nhóm</span>
+                    </Tab>
+                    <Directory />
+                  </div>
                 </TabList>
                 <TabPanel>
                   <FriendList />

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Input } from 'antd';
+import { Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
 import AddFriend from 'components/Friend/AddFriend';
 import { UsergroupAddOutlined } from '@ant-design/icons';
 import AddGroup from './AddGroup';
 
-const { Search } = Input;
 const prefix = 'search-bar';
 const SearchComponent = () => {
   const { userProfile } = useSelector(state => state.userData);
@@ -24,7 +23,7 @@ const SearchComponent = () => {
       <div className="zola-section">
         <Row className="zola-header">
           <Col
-            span={5}
+            span={24}
             className="logo-header"
             style={{
               display: 'inline-block',
@@ -32,19 +31,32 @@ const SearchComponent = () => {
               paddingLeft: '20px'
             }}
           >
-            - {userData ? userData.name : ''}
+            <p style={{ fontSize: '17px', fontWeight: 'bold' }}>
+              Zola - {userData ? userData.name : ''}
+            </p>
           </Col>
         </Row>
+        <hr></hr>
         <Row className="zola-section-mid">
-          <Col span={15} className="search-zola-message">
-            <Search placeholder="Nhập vào tin nhắn" enterButton />
-          </Col>
-          <Col span={6} className="icon-zola-message">
-            <i
-              className="fa fa-user-plus"
-              style={{ marginRight: '20px', cursor: 'pointer' }}
+          <Col span={24}>
+            <span
               onClick={() => setVisibleModalSearch(true)}
-            ></i>
+              style={{
+                cursor: 'pointer',
+                marginRight: '10px',
+                fontWeight: 'bold'
+              }}
+            >
+              <span
+                style={{
+                  marginLeft: '20px',
+                  marginRight: '10px'
+                }}
+              >
+                Thêm bạn bè
+              </span>
+              <i className="fa fa-user-plus"></i>
+            </span>
             <UsergroupAddOutlined
               style={{ fontSize: '18px', cursor: 'pointer' }}
               onClick={() => setShowModalAddGroup(true)}
@@ -55,7 +67,7 @@ const SearchComponent = () => {
           visible={visibleModalSearch}
           setVisible={setVisibleModalSearch}
         />
-
+        <hr></hr>
         {showModalAddGroup && (
           <AddGroup
             showModalAddGroup={showModalAddGroup}

@@ -116,8 +116,8 @@ const Directory = () => {
           key="1"
           style={{ backgroundColor: 'white' }}
         >
-          <div className="scrollable-container">
-            <div id="overflowTest">{renderListFriend()}</div>
+          <div>
+            <div>{renderListFriend()}</div>
           </div>
         </Panel>
       </Collapse>
