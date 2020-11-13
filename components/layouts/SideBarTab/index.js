@@ -15,12 +15,17 @@ import Update from 'components/Account/Update';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
 import ChangePasswordUser from 'components/Account/ChangePassword';
 import MessageRoom from 'components/Chat/MessageRoom';
+import Message from 'components/Chat/Message';
+import { getListMessage } from 'actions/messageAction';
+
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const SideBarTab = () => {
   const { userProfile, isAuthenticated } = useSelector(state => state.userData);
+  const { messageRooms } = useSelector(state => state.messageData);
+  const [messageRoom, setMessageRoom] = useState([]);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState(null);
   const [visiblePassword, setVisiblePassword] = useState(false);
@@ -32,12 +37,21 @@ const SideBarTab = () => {
     }
   }, [userProfile]);
   useEffect(() => {
+    if (messageRooms) {
+      setMessageRoom(messageRooms);
+    }
+  }, [messageRooms]);
+  useEffect(() => {
     if (!isAuthenticated) dispatch(isTokenExpired());
   }, [isAuthenticated, dispatch]);
+  useEffect(() => {
+    dispatch(getListMessage(1));
+  }, [dispatch]);
   const showModal = () => {
     setVisible(true);
     setUserData(userProfile);
   };
+  console.log(messageRooms);
   const cancelModal = () => {
     setVisible(false);
     setUserData(userProfile);
@@ -157,7 +171,14 @@ const SideBarTab = () => {
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
                   <Tab style={{ display: 'none' }}></Tab>
-                  <Tab>Home</Tab>
+                  {messageRoom &&
+                    messageRoom.map((value, key) => {
+                      return (
+                        <Tab key={key}>
+                          <Message data={value} />
+                        </Tab>
+                      );
+                    })}
                 </TabList>
                 <TabPanel>
                   <HomePage />

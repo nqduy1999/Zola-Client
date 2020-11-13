@@ -1,7 +1,7 @@
 import { MESSAGE_TYPE } from 'constant/messageType';
 import axiosServices from 'utils/service/axiosServices';
 
-const prefix = 'rooms/';
+const prefix = 'rooms?';
 
 export const getListMessage = page => dispatch => {
   dispatch({
@@ -15,7 +15,10 @@ export const getListMessage = page => dispatch => {
       if (!error) {
         dispatch({
           type: MESSAGE_TYPE.FETCH_LIST_MESSAGE_SUCCESS,
-          payload: data
+          payload: {
+            messageRooms: data.itemsList,
+            paginator: data.paginator
+          }
         });
       }
     })
