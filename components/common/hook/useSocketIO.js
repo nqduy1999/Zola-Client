@@ -1,33 +1,27 @@
-// import { useEffect, useState } from 'react';
-// import useSocket from 'use-socket.io-client';
-// import CookiesService from 'utils/service/cookiesServices';
+import { useEffect, useState } from 'react';
+import useSocket from 'use-socket.io-client';
+import CookiesService from 'utils/service/cookiesServices';
 
-// const ENDPOINT = `https://api-chat.ga?token=${CookiesService.getAccessToken()}`;
+const ENDPOINT = `https://api-chat.ga?token=${CookiesService.getAccessToken()}`;
 
-// const useSocketIO = () => {
-//   // const [token , setToken] = useState("")
-//   const [socket] = useSocket(ENDPOINT, {
-//     transports: ['polling'],
-//     autoConnect: false
-//   });
-//   const [listRoom, setListRoom] = useState([]);
+const useSocketIO = () => {
+  const [socket] = useSocket(ENDPOINT, {
+    transports: ['polling'],
+    autoConnect: false
+  });
+  const [listRoom, setListRoom] = useState([]);
 
-//   useEffect(() => {
-//     socket.connect();
+  useEffect(() => {
+    socket.connect();
 
-//     socket.emit('rooms_request', 19);
+    socket.emit('rooms_request', 19);
 
-//     socket.on('load_rooms', rooms => {
-//       setListRoom(rooms);
-//     });
-//   }, [socket]);
+    socket.on('load_rooms', rooms => {
+      setListRoom(rooms);
+    });
+  }, [socket]);
 
-//   // useEffect(() => {
-//   //   const data = CookiesService.getAccessToken();
-//   //   setToken(data);
-//   // }, []);
+  return { listRoom };
+};
 
-//   return { ENDPOINT, listRoom };
-// };
-
-// export default useSocketIO;
+export default useSocketIO;
