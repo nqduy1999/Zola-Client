@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from 'actions/userAction';
 import SideBarTab from './SideBarTab';
 import { getListMessage } from 'actions/messageAction';
-
 const prefix = 'layout-main';
 const c = classPrefixor(prefix);
 
