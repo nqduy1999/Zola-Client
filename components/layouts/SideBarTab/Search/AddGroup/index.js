@@ -13,7 +13,7 @@ const { Option } = Select;
 const AddGroup = ({ ...props }) => {
   const { showModalAddGroup, closeModalAddGroup } = props;
 
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const { listFriendContact } = useSelector(state => state.FriendReducer);
 
   const handleCancel = bool => {
@@ -21,7 +21,7 @@ const AddGroup = ({ ...props }) => {
   };
 
   const onFinish = values => {
-    disptach(createGroupChatAction(values));
+    dispatch(createGroupChatAction(values));
     closeModalAddGroup(false);
   };
 

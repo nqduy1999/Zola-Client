@@ -26,7 +26,7 @@
       padding: 0 20px;
       display: grid;
       grid-template-columns: auto auto auto auto;
-      cursor: pointer;
+
       .friend-center-item-v2 {
         width: 250px;
         height: 250px;
@@ -35,6 +35,7 @@
         margin-right: 20px;
         margin-top: 30px;
         border: 2px solid rgba(0, 0, 0, 0.1);
+        cursor: pointer;
         .avatar {
           display: grid;
           grid-template-columns: auto auto;

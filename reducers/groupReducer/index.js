@@ -20,7 +20,7 @@ const GroupReducer = (state = initialState, action) => {
     }
 
     case 'DEFAULT_ACTION': {
-      return { ...state, messageExitGroup: '' };
+      return { ...state, messageExitGroup: '', idGroup: '', nameGroup: '' };
     }
     default:
       return state;

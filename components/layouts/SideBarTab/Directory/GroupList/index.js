@@ -16,8 +16,11 @@ const c = classPrefixor(prefix);
 const GroupList = () => {
   const dispatch = useDispatch();
   const { messageRooms } = useSelector(state => state.messageData);
-  const { messageExitGroup } = useSelector(state => state.GroupReducer);
+  const { messageExitGroup, idGroup } = useSelector(
+    state => state.GroupReducer
+  );
 
+  console.log(idGroup);
   const handleExitGroup = id => {
     dispatch(exitGroupChatAction(id));
   };
@@ -32,6 +35,10 @@ const GroupList = () => {
     }
     dispatch(dispatchDefaultAction());
   }, [messageExitGroup]);
+
+  useEffect(() => {
+    dispatch(getListMessage(1));
+  }, [idGroup]);
 
   const renderAvatarUserGroup = item => {
     const arrayImage = item?.users?.slice(0, 4);
