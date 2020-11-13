@@ -70,11 +70,11 @@ const SideBarTab = () => {
     return messageRoom?.map((value, key) => {
       return (
         <>
-          {
+          {!value?.group && (
             <Tab key={key}>
               <Message data={value} />
             </Tab>
-          }
+          )}
         </>
       );
     });
