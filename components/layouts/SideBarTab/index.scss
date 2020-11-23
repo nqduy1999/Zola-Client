@@ -16,6 +16,12 @@
         height: 100%;
         width: 100%;
         position: relative;
+        .ant-menu {
+          height: 100px;
+          width: 64px;
+          margin-top: 7px;
+          font-size: 14px;
+          background-color: transparent;
         .ant-menu-submenu-title {
           width: 100px;
           height: 100px;
@@ -25,6 +31,7 @@
             display: none;
           }
         }
+      }
         i {
           font-size: 25px;
           color: white;
@@ -106,15 +113,23 @@
     }
   }
 }
+// overlay user profile
 .ant-menu-submenu {
   .ant-menu {
     position: absolute;
     top: 50px;
     left: -22px;
     padding: 20px;
+    .ant-menu-item-group{
+      padding: 10px 20px;
     .ant-menu-item-group-list {
       width: 150px;
+      span{
+        margin-right: 8px;
+        color: #99a4b0;
+      }
     }
+  }
   }
 }
 .modalUpdateUser {

@@ -65,22 +65,15 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
-
-  const styleIcon = {
-    marginRight: '8px',
-    color: '#99a4b0'
+  const handleAllChat = () => {
+    console.log('All chat');
   };
-  const menuUser = {
-    height: '100px',
-    width: ' 64px',
-    marginTop: '7px',
-    fontSize: '14px',
-    backgroundColor: 'transparent'
+  const handleGroupChat = () => {
+    console.log('Group chat');
   };
-  const styleMenuItem = {
-    padding: '10px 20px'
+  const handleUserChat = () => {
+    console.log('User chat');
   };
-
   const renderData = () => {
     return (
       <>
@@ -93,16 +86,14 @@ const SideBarTab = () => {
           >
             <TabList className={c`tabs__tablist`}>
               <div className="tablist__content">
-                <Menu style={menuUser}>
+                <Menu>
                   <SubMenu
                     className="Submenu"
                     title={
                       <div className="avatar" style={{ cursor: 'pointer' }}>
                         <img
                           src={
-                            userProfile?.avatar
-                              ? `https://minhtruong.s3.ap-southeast-1.amazonaws.com/94b1d77c-daef-4056-af0e-271ddd5c0c1a`
-                              : avatar
+                            userProfile?.avatar ? userProfile?.avatar : avatar
                           }
                           className="img_avatar"
                           data-reactid="23"
@@ -112,8 +103,8 @@ const SideBarTab = () => {
                       </div>
                     }
                   >
-                    <MenuItemGroup style={styleMenuItem}>
-                      <EditOutlined style={styleIcon} />
+                    <MenuItemGroup>
+                      <EditOutlined />
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
@@ -123,8 +114,8 @@ const SideBarTab = () => {
                         Cập nhật thông tin
                       </a>
                     </MenuItemGroup>
-                    <MenuItemGroup style={styleMenuItem}>
-                      <KeyOutlined style={styleIcon} />
+                    <MenuItemGroup>
+                      <KeyOutlined />
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
@@ -191,9 +182,15 @@ const SideBarTab = () => {
                         </span>
                       }
                     >
-                      <Menu.Item key="1">Tất cả tin nhắn</Menu.Item>
-                      <Menu.Item key="2">Tin nhắn nhóm</Menu.Item>
-                      <Menu.Item key="3">Tin nhắn cá nhân</Menu.Item>
+                      <Menu.Item key="1" onClick={handleAllChat}>
+                        Tất cả tin nhắn
+                      </Menu.Item>
+                      <Menu.Item key="2" onClick={handleGroupChat}>
+                        Tin nhắn nhóm
+                      </Menu.Item>
+                      <Menu.Item key="3" onClick={handleUserChat}>
+                        Tin nhắn cá nhân
+                      </Menu.Item>
                     </SubMenu>
                   </Menu>
                   <div className="scrollCustom">
