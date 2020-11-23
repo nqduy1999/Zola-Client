@@ -23,10 +23,10 @@
 //layout
 @import 'components/layouts/layout.scss';
 @import 'components/layouts/SideBarTab/index.scss';
-@import 'components/layouts/SideBarTab/Directory/index.scss';
-@import 'components/layouts/SideBarTab/Directory/FriendList/index.scss';
-@import 'components/layouts/SideBarTab/Directory/PhoneBook/index.scss';
-@import 'components/layouts/SideBarTab/Directory/GroupList/index.scss';
+@import 'components//Directory/index.scss';
+@import 'components/Directory/FriendList/index.scss';
+@import 'components/Directory/PhoneBook/index.scss';
+@import 'components/Directory/GroupList/index.scss';
 
-@import 'components/layouts/SideBarTab/Search/AddGroup/index.scss';
-@import 'components/layouts/SideBarTab/Search/index.scss';
+@import 'components/Search/AddGroup/index.scss';
+@import 'components/Search/index.scss';

@@ -20,9 +20,11 @@ const DefaultLayout = () => {
     upgrade: false,
     rejectUnauthorized: false
   });
+
   useEffect(() => {
     console.log(socket);
   }, [socket]);
+
   useEffect(() => {
     auth_token && dispatch(getProfileUser(auth_token));
 

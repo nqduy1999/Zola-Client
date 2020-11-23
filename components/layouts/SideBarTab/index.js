@@ -3,21 +3,21 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import avatar from 'assets/images/logo.png';
+// import avatar from 'assets/images/logo.png';
 import { classPrefixor } from 'utils/classPrefixor';
 import { accountLogout, isTokenExpired } from 'actions/accountAction';
-import SearchComponent from './Search';
+import SearchComponent from '../../Search';
 import HomePage from 'components/HomePage';
-import Directory from './Directory';
-import FriendList from './Directory/FriendList';
-import PhoneBook from './Directory/PhoneBook';
+import Directory from '../../Directory';
+import FriendList from '../../Directory/FriendList';
+import PhoneBook from '../../Directory/PhoneBook';
 import Update from 'components/Account/Update';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
 import ChangePasswordUser from 'components/Account/ChangePassword';
 import MessageRoom from 'components/Chat/MessageRoom';
-import Message from 'components/Chat/Message';
+// import Message from 'components/Chat/Message';
 import { getListMessage } from 'actions/messageAction';
-import GroupList from './Directory/GroupList';
+import GroupList from '../../Directory/GroupList';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -66,6 +66,27 @@ const SideBarTab = () => {
     setVisiblePassword(false);
   };
 
+  const renderNameListRoom = () => {
+    return messageRooms?.map((group, key) => {
+      return (
+        <>
+          <Tab>
+            <div className="message_tab_chat" key={key}>
+              {group.group && (
+                <div className="list_user_room">
+                  {/* <img src={user && user.avatar ? user?.avatar : avatar} /> */}
+                  <div className="info_user_room">
+                    <p className="group__name">{group.name}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        </>
+      );
+    });
+  };
+
   const styleIcon = {
     marginRight: '8px',
     color: '#99a4b0'
@@ -99,11 +120,7 @@ const SideBarTab = () => {
                     title={
                       <div className="avatar" style={{ cursor: 'pointer' }}>
                         <img
-                          src={
-                            userProfile?.avatar
-                              ? `https://minhtruong.s3.ap-southeast-1.amazonaws.com/94b1d77c-daef-4056-af0e-271ddd5c0c1a`
-                              : avatar
-                          }
+                          src={userProfile?.avatar}
                           className="img_avatar"
                           data-reactid="23"
                         />
@@ -183,7 +200,7 @@ const SideBarTab = () => {
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                   >
-                    <SubMenu
+                    {/* <SubMenu
                       key="sub1"
                       title={
                         <span>
@@ -194,18 +211,11 @@ const SideBarTab = () => {
                       <Menu.Item key="1">Tất cả tin nhắn</Menu.Item>
                       <Menu.Item key="2">Tin nhắn nhóm</Menu.Item>
                       <Menu.Item key="3">Tin nhắn cá nhân</Menu.Item>
-                    </SubMenu>
+                    </SubMenu> */}
                   </Menu>
                   <div className="scrollCustom">
                     <Tab style={{ display: 'none' }}></Tab>
-                    {messageRoom &&
-                      messageRoom?.map((value, key) => {
-                        return (
-                          <Tab key={key}>
-                            <Message data={value} />
-                          </Tab>
-                        );
-                      })}
+                    {renderNameListRoom()}
                   </div>
                 </TabList>
                 <TabPanel>

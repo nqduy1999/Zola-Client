@@ -2,13 +2,14 @@
 import React, { useEffect } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Avatar } from 'antd';
 import {
   dispatchDefaultAction,
   exitGroupChatAction
 } from 'actions/groupAction';
 import { getListMessage } from 'actions/messageAction';
 import { toast } from 'react-toastify';
+import { UserOutlined } from '@ant-design/icons';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
@@ -20,7 +21,6 @@ const GroupList = () => {
     state => state.GroupReducer
   );
 
-  console.log(idGroup);
   const handleExitGroup = id => {
     dispatch(exitGroupChatAction(id));
   };
@@ -47,10 +47,26 @@ const GroupList = () => {
         {arrayImage.map(user => {
           return (
             <>
-              <img
-                src={`https://api-ret.ml/api/v0/images/download/${user.avatar}`}
-                alt="avatar"
-              />
+              <div className="userInfo">
+                {user.avatar === null || user.avatar === '' ? (
+                  <Avatar
+                    size="large"
+                    icon={<UserOutlined />}
+                    style={{ marginRight: '10px' }}
+                  />
+                ) : (
+                  <img
+                    style={{
+                      borderRadius: '50%',
+                      width: '62px',
+                      height: '62px',
+                      marginRight: '11px'
+                    }}
+                    src={`https://minhtruong.s3.ap-southeast-1.amazonaws.com/${user.avatar}`}
+                    alt="avatar"
+                  />
+                )}
+              </div>
             </>
           );
         })}
