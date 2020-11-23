@@ -66,20 +66,6 @@ const SideBarTab = () => {
     setVisiblePassword(false);
   };
 
-  const renderListRoom = () => {
-    return messageRoom?.map((value, key) => {
-      return (
-        <>
-          {!value?.group && (
-            <Tab key={key}>
-              <Message data={value} />
-            </Tab>
-          )}
-        </>
-      );
-    });
-  };
-
   const styleIcon = {
     marginRight: '8px',
     color: '#99a4b0'
@@ -115,7 +101,7 @@ const SideBarTab = () => {
                         <img
                           src={
                             userProfile?.avatar
-                              ? `https://api-ret.ml/api/v0/images/download/${userProfile?.avatar}`
+                              ? `https://minhtruong.s3.ap-southeast-1.amazonaws.com/94b1d77c-daef-4056-af0e-271ddd5c0c1a`
                               : avatar
                           }
                           className="img_avatar"
@@ -168,10 +154,10 @@ const SideBarTab = () => {
                     </MenuItemGroup>
                   </SubMenu>
                 </Menu>
-                <Tab style={{ padding: '25%' }}>
+                <Tab style={{ padding: '24.5%' }}>
                   <i className="fa fa-comment" style={{ fontSize: '20px' }}></i>
                 </Tab>
-                <Tab style={{ padding: '25%', paddingLeft: '29%' }}>
+                <Tab style={{ padding: '24.5%', paddingLeft: '29%' }}>
                   <i
                     className="fa fa-address-book"
                     style={{ fontSize: '20px' }}
@@ -192,9 +178,34 @@ const SideBarTab = () => {
               <Tabs forceRenderTabPanel>
                 <TabList className={c`tabs__tablist`}>
                   <SearchComponent />
+                  <Menu
+                    style={{ border: 'none' }}
+                    defaultSelectedKeys={['1']}
+                    defaultOpenKeys={['sub1']}
+                  >
+                    <SubMenu
+                      key="sub1"
+                      title={
+                        <span>
+                          <span>Tin nhắn</span>
+                        </span>
+                      }
+                    >
+                      <Menu.Item key="1">Tất cả tin nhắn</Menu.Item>
+                      <Menu.Item key="2">Tin nhắn nhóm</Menu.Item>
+                      <Menu.Item key="3">Tin nhắn cá nhân</Menu.Item>
+                    </SubMenu>
+                  </Menu>
                   <div className="scrollCustom">
                     <Tab style={{ display: 'none' }}></Tab>
-                    {messageRoom && renderListRoom()}
+                    {messageRoom &&
+                      messageRoom?.map((value, key) => {
+                        return (
+                          <Tab key={key}>
+                            <Message data={value} />
+                          </Tab>
+                        );
+                      })}
                   </div>
                 </TabList>
                 <TabPanel>

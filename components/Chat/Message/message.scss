@@ -3,12 +3,14 @@
     background: transparent;
     .info_room {
       width: 100%;
-
+      .message_tab_chat{
+        padding: 10px 0;
+        width: 320px;
+      }
       h1 {
         font-size: 17px;
         line-height: 1;
         color: #222;
-        padding-left: 0;
         font-weight: 350;
         left: 8px;
         overflow: hidden;
@@ -16,6 +18,8 @@
         min-width: 0;
       }
       .list_user_room {
+        top:-10px;
+        padding-left: 15px;
         display: flex;
         align-items: center;
         position: relative;

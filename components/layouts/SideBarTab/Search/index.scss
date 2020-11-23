@@ -2,21 +2,24 @@
       .zola-section {
         background-color: white;
         .zola-header {
-          height: 100px;
-          border-bottom: 2px solid #e3e5e8;
+          height: 91px;
+          border-bottom: 1px solid #e3e5e8;
           width: 100%;
           .logo-header {
-            margin-left: 15px;
-            img {
-              width: 64px !important;
+            p {
+              font-size: 32px;
+              color: #1890ff;
+              font-weight: 520;
+              text-align: center;
             }
           }
         }
         .zola-section-mid {
-          border-bottom: 2px solid #e3e5e8;
-          padding: 20px 0;
+          border-bottom: 1px solid #e3e5e8;
+          padding-top: 17%;
+          padding-bottom: 8%;
+          padding-left: 10%;
           width: 100%;
-          margin-bottom: 20px;
           .search-zola-message {
             margin-left: 10px;
           }

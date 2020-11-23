@@ -18,24 +18,9 @@ const MessageRoom = () => {
         <div className="info_room">
           <img src="https://kenhcine.cgv.vn/media/catalog/product/s/e/secret-life-of-pets-snowball-spicypulp.jpg" />
           <div className="content_room">
-            <h1
-              style={{
-                fontSize: '24px',
-                lineHeight: 1.4,
-                color: '#222',
-                paddingLeft: 0,
-                left: '8px',
-                fontWeight: 500,
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                minWidth: 0,
-                cursor: 'default'
-              }}
-            >
-              Ngoc Mai
-            </h1>
+            <h1>Ngoc Mai</h1>
             <div className="info_user_room">
-              <span style={{ fontSize: '14px', color: '#99a4b0' }}>
+              <span style={{ fontSize: '13px', color: '#99a4b0' }}>
                 Truy cập 2h trước
               </span>
             </div>
@@ -43,92 +28,7 @@ const MessageRoom = () => {
         </div>
       </div>
       <div className={c`content`}>
-        <div className="scroll-chat">
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-          <p>lawglawn</p>
-        </div>
+        <div className="scroll-chat"></div>
       </div>
       <div className={c`icon_chat_tab`}>
         <div className={`content__inside`}>
@@ -140,6 +40,7 @@ const MessageRoom = () => {
           </Button>
         </div>
       </div>
+      <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
       <div className={c`chat_tab`}>
         <Input
           onChange={onHandleChangeMessage}
