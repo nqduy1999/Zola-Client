@@ -40,7 +40,7 @@ const Message = () => {
     <div className={c`header`}>
       <div className="info_room">
         <>
-          {renderNameListRoom()}
+          {/* {renderNameListRoom()} */}
           {/* {renderMessageRecent} */}
         </>
       </div>

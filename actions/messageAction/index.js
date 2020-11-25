@@ -29,3 +29,26 @@ export const getListMessage = page => dispatch => {
       return error;
     });
 };
+export const getDetailMesage = id => dispatch => {
+  dispatch({
+    type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_REQUEST
+  });
+  return axiosServices
+    .get(`${prefix}detail?id=${id}`)
+    .then(res => {
+      const { error, data } = res.data;
+      if (!error) {
+        dispatch({
+          type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_SUCCESS,
+          payload: data
+        });
+      }
+    })
+    .catch(err => {
+      const { error } = err.response.data;
+      dispatch({
+        type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_FAILURE
+      });
+      return error;
+    });
+};

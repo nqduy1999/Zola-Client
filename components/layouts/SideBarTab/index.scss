@@ -16,13 +16,24 @@
         height: 100%;
         width: 100%;
         position: relative;
-        .ant-menu-submenu-title {
-          width: 100px;
+        .ant-menu {
           height: 100px;
-          position: absolute;
-          left: -16px;
-          .ant-menu-submenu-arrow {
-            display: none;
+          width: 64px;
+          margin-top: 7px;
+          font-size: 14px;
+          background-color: transparent;
+          .ant-menu-submenu-title {
+            width: 90px;
+            height: 90px;
+            position: absolute;
+            left: -16px;
+            .ant-menu-submenu-arrow {
+              display: none;
+            }
+            &:active {
+              background-color: transparent;
+              color: transparent;
+            }
           }
         }
         i {
@@ -114,14 +125,22 @@
     }
   }
 }
+// overlay user profile
 .ant-menu-submenu {
   .ant-menu {
     position: absolute;
     top: 50px;
     left: -22px;
     padding: 20px;
-    .ant-menu-item-group-list {
-      width: 150px;
+    .ant-menu-item-group {
+      padding: 10px 20px;
+      .ant-menu-item-group-list {
+        width: 150px;
+        span {
+          margin-right: 8px;
+          color: #99a4b0;
+        }
+      }
     }
   }
 }
@@ -179,3 +198,24 @@
   border-radius: 10px;
   background-color: #f5f5f5;
 }
+
+.styleIcon {
+  margin-right: 8px;
+  color: #99a4b0;
+}
+.menuUser {
+  height: 100px;
+  width: 64px;
+  margin-top: 7px;
+  font-size: 14px;
+  background-color: transparent;
+}
+.styleMenuItem {
+  padding: 10px 20px;
+}
+
+// .react-tabs__tab {
+//   .is-selected {
+
+//   }
+// }

@@ -1,4 +1,3 @@
-import useChangeMeta from 'components/common/hook/useChangeMeta';
 import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import logo from 'assets/images/zola-logo.png';
@@ -7,6 +6,8 @@ import carousel1 from 'assets/images/carousel-home-1.jpg';
 import carousel2 from 'assets/images/carousel-home-2.jpg';
 import carousel3 from 'assets/images/carousel-home-3.jpg';
 import carousel4 from 'assets/images/carousel-home-4.jpg';
+import useChangeMeta from 'components/common/hook/useChangeMeta';
+
 const prefix = 'homePage';
 const c = classPrefixor(prefix);
 

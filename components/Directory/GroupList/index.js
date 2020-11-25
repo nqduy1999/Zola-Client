@@ -2,24 +2,24 @@
 import React, { useEffect } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Avatar } from 'antd';
+import { Button } from 'antd';
 import {
   dispatchDefaultAction,
   exitGroupChatAction
 } from 'actions/groupAction';
 import { getListMessage } from 'actions/messageAction';
 import { toast } from 'react-toastify';
-import { UserOutlined } from '@ant-design/icons';
+import avatar from 'assets/images/avatar.jpg';
+import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
 
 const GroupList = () => {
   const dispatch = useDispatch();
-  const { messageRooms } = useSelector(state => state.messageData);
-  const { messageExitGroup, idGroup } = useSelector(
-    state => state.GroupReducer
-  );
+  const { messageExitGroup } = useSelector(state => state.GroupReducer);
+
+  const { listGroup } = useFetchAllGroup();
 
   const handleExitGroup = id => {
     dispatch(exitGroupChatAction(id));
@@ -36,23 +36,24 @@ const GroupList = () => {
     dispatch(dispatchDefaultAction());
   }, [messageExitGroup]);
 
-  useEffect(() => {
-    dispatch(getListMessage(1));
-  }, [idGroup]);
-
   const renderAvatarUserGroup = item => {
     const arrayImage = item?.users?.slice(0, 4);
     return (
       <>
-        {arrayImage.map(user => {
+        {arrayImage?.map(user => {
           return (
             <>
               <div className="userInfo">
                 {user.avatar === null || user.avatar === '' ? (
-                  <Avatar
-                    size="large"
-                    icon={<UserOutlined />}
-                    style={{ marginRight: '10px' }}
+                  <img
+                    style={{
+                      borderRadius: '50%',
+                      width: '62px',
+                      height: '62px',
+                      marginRight: '11px'
+                    }}
+                    src={avatar}
+                    alt="avatar"
                   />
                 ) : (
                   <img
@@ -62,7 +63,7 @@ const GroupList = () => {
                       height: '62px',
                       marginRight: '11px'
                     }}
-                    src={`https://minhtruong.s3.ap-southeast-1.amazonaws.com/${user.avatar}`}
+                    src={user.avatar}
                     alt="avatar"
                   />
                 )}
@@ -74,7 +75,7 @@ const GroupList = () => {
     );
   };
   const renderListGroup = () => {
-    return messageRooms?.map(item => {
+    return listGroup?.map(item => {
       return (
         <>
           {item.group && (

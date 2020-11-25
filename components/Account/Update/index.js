@@ -58,12 +58,12 @@ const Update = props => {
   };
   const submitAvatar = () => {
     const formData = new FormData();
-    formData.append('avatar', imageFormData);
+    formData.append('files', imageFormData);
     if (imageFormData) {
       uploadImgSingle(formData).then(res => {
         const dataUpdate = {
           name: userProfile?.name,
-          avatar: res.data,
+          avatar: res.data[0],
           phone: userProfile?.phone,
           email: userProfile?.email
         };
@@ -114,9 +114,6 @@ const Update = props => {
         setStatusImageChange(true);
       }
     };
-    // if (e.file.status === 'uploading') {
-    //   setLoading(true);
-    // }
     if (e.file.originFileObj) {
       reader.readAsDataURL(e.file.originFileObj);
       setImageFormData(e.file.originFileObj);
@@ -166,11 +163,7 @@ const Update = props => {
             {imageChange ? (
               <img
                 className="img_avatar"
-                src={
-                  statusImageChange
-                    ? imageChange
-                    : `https://api-ret.ml/api/v0/images/download/${imageChange}`
-                }
+                src={statusImageChange ? imageChange : userProfile?.avatar}
               />
             ) : (
               <Avatar
