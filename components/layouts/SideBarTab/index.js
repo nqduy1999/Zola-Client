@@ -73,13 +73,10 @@ const SideBarTab = () => {
     return listGroup?.map((group, key) => {
       return (
         <>
-          <Tab>
+          <Tab onClick={() => setInfoGroup(group)}>
             <div className="message_tab_chat" key={key}>
               {group.group && (
-                <div
-                  className="list_user_room"
-                  onClick={() => setInfoGroup(group)}
-                >
+                <div className="list_user_room">
                   <div className="info_user_room">
                     <p className="group__name">{group.name}</p>
                   </div>
