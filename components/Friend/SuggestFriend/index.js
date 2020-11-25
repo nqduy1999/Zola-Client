@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Avatar from 'antd/lib/avatar/avatar';
-import { UserOutlined } from '@ant-design/icons';
+import Avatar from 'react-avatar';
 import ViewUserFriend from '../ViewUserFriend';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -38,9 +37,9 @@ const SuggestFriend = props => {
         <div className="avatar-img  flx flx-center flx-al-c">
           {suggestF.avatar === null || suggestF.avatar === '' ? (
             <Avatar
-              size={40}
-              icon={<UserOutlined />}
-              style={{ marginRight: '10px' }}
+              size="40px"
+              name={suggestF.name}
+              className="avatar-suggest"
             />
           ) : (
             <img

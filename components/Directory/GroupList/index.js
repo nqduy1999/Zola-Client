@@ -9,8 +9,8 @@ import {
 } from 'actions/groupAction';
 import { getListMessage } from 'actions/messageAction';
 import { toast } from 'react-toastify';
-import avatar from 'assets/images/avatar.jpg';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
+import Avatar from 'react-avatar';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
@@ -45,15 +45,10 @@ const GroupList = () => {
             <>
               <div className="userInfo">
                 {user.avatar === null || user.avatar === '' ? (
-                  <img
-                    style={{
-                      borderRadius: '50%',
-                      width: '62px',
-                      height: '62px',
-                      marginRight: '11px'
-                    }}
-                    src={avatar}
-                    alt="avatar"
+                  <Avatar
+                    className="avatar-user"
+                    size="64px"
+                    name={user.name}
                   />
                 ) : (
                   <img
@@ -116,8 +111,10 @@ const GroupList = () => {
           />
           <span>Danh Sách Nhóm</span>
         </div>
-        <div className={c`content`} style={{ paddingLeft: '100px' }}>
-          <div className={c`content__inside`}>{renderListGroup()}</div>
+        <div className={c`content`}>
+          <div className={c`content__inside`}>
+            <div className="scroll-list">{renderListGroup()}</div>
+          </div>
         </div>
       </section>
     </>

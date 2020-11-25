@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Avatar } from 'antd';
+import Avatar from 'react-avatar';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -8,8 +7,6 @@ import {
   fetchFriendsByPhoneBookAction
 } from 'actions/friendAction';
 import { toast } from 'react-toastify';
-
-import { UserOutlined } from '@ant-design/icons';
 
 const prefix = 'phoneBook';
 const c = classPrefixor(prefix);
@@ -36,7 +33,7 @@ const PhoneBook = () => {
       dispatch(fetchFriendsByPhoneBookAction(userProfile.id));
     }
     dispatch(dispatchDefaultAction());
-  }, [messageDeletePhoneBook]);
+  }, [dispatch, messageDeletePhoneBook, userProfile.id]);
 
   const renderListFriendPhoneBook = () => {
     if (listFriendPhoneBook?.length < 0) return null;
@@ -46,11 +43,7 @@ const PhoneBook = () => {
           <div className="friend-center-item-v2">
             <div className="avatar avatar--huge">
               {friend.avatar === null || friend.avatar === '' ? (
-                <Avatar
-                  size="large"
-                  icon={<UserOutlined />}
-                  style={{ marginRight: '10px' }}
-                />
+                <Avatar size="108px" className="avatar" name={friend.name} />
               ) : (
                 <img src={friend.avatar} alt="avatar" />
               )}

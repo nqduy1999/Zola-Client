@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Collapse, Avatar, Dropdown, Menu, Popconfirm } from 'antd';
+import { Collapse, Dropdown, Menu, Popconfirm } from 'antd';
+import Avatar from 'react-avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteFriendContactAction,
   dispatchDefaultAction,
   fetchFriendsContactAction
 } from 'actions/friendAction';
-import { UserOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
 const prefix = 'directory';
@@ -80,11 +81,7 @@ const Directory = () => {
         <div className="userContact" key={elm.id}>
           <div className="left">
             {elm.avatar === null || elm.avatar === '' ? (
-              <Avatar
-                size="large"
-                icon={<UserOutlined />}
-                style={{ marginRight: '10px' }}
-              />
+              <Avatar className="avatar-contact" name={elm.name} size="64px" />
             ) : (
               <img src={elm.avatar} alt="avatar" />
             )}

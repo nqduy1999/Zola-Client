@@ -13,8 +13,6 @@ const MessageRoom = ({ ...props }) => {
     SetMessege(e.target.value);
   };
 
-  // console.log('infoGroup', infoGroup);
-
   return (
     <section className={prefix}>
       <div className={c`header`}>
