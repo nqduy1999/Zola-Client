@@ -37,10 +37,7 @@ const AddGroup = ({ ...props }) => {
                 style={{ marginRight: '10px' }}
               />
             ) : (
-              <img
-                src={`https://api-ret.ml/api/v0/images/download/${friend.avatar}`}
-                alt="avatar"
-              />
+              <img src={friend.avatar} alt="avatar" />
             )}
             <span>{friend.name}</span>
           </div>

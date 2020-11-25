@@ -85,7 +85,7 @@ const FriendList = () => {
                   height: '62px',
                   marginRight: '11px'
                 }}
-                src={`https://api-ret.ml/api/v0/images/download/${friendRq.avatar}`}
+                src={friendRq.avatar}
                 alt="avatar"
               />
             )}

@@ -9,18 +9,18 @@ import {
 } from 'actions/groupAction';
 import { getListMessage } from 'actions/messageAction';
 import { toast } from 'react-toastify';
+import avatar from 'assets/images/avatar.jpg';
+import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
 
 const GroupList = () => {
   const dispatch = useDispatch();
-  const { messageRooms } = useSelector(state => state.messageData);
-  const { messageExitGroup, idGroup } = useSelector(
-    state => state.GroupReducer
-  );
+  const { messageExitGroup } = useSelector(state => state.GroupReducer);
 
-  console.log(idGroup);
+  const { listGroup } = useFetchAllGroup();
+
   const handleExitGroup = id => {
     dispatch(exitGroupChatAction(id));
   };
@@ -36,21 +36,38 @@ const GroupList = () => {
     dispatch(dispatchDefaultAction());
   }, [messageExitGroup]);
 
-  useEffect(() => {
-    dispatch(getListMessage(1));
-  }, [idGroup]);
-
   const renderAvatarUserGroup = item => {
     const arrayImage = item?.users?.slice(0, 4);
     return (
       <>
-        {arrayImage.map(user => {
+        {arrayImage?.map(user => {
           return (
             <>
-              <img
-                src={`https://api-ret.ml/api/v0/images/download/${user.avatar}`}
-                alt="avatar"
-              />
+              <div className="userInfo">
+                {user.avatar === null || user.avatar === '' ? (
+                  <img
+                    style={{
+                      borderRadius: '50%',
+                      width: '62px',
+                      height: '62px',
+                      marginRight: '11px'
+                    }}
+                    src={avatar}
+                    alt="avatar"
+                  />
+                ) : (
+                  <img
+                    style={{
+                      borderRadius: '50%',
+                      width: '62px',
+                      height: '62px',
+                      marginRight: '11px'
+                    }}
+                    src={user.avatar}
+                    alt="avatar"
+                  />
+                )}
+              </div>
             </>
           );
         })}
@@ -58,7 +75,7 @@ const GroupList = () => {
     );
   };
   const renderListGroup = () => {
-    return messageRooms?.map(item => {
+    return listGroup?.map(item => {
       return (
         <>
           {item.group && (

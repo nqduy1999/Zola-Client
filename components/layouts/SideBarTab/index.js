@@ -1,57 +1,48 @@
-import React, { useEffect, useState } from 'react';
+// React Libary
+import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import avatar from 'assets/images/logo.png';
-import { classPrefixor } from 'utils/classPrefixor';
-import { accountLogout, isTokenExpired } from 'actions/accountAction';
-import SearchComponent from './Search';
-import HomePage from 'components/HomePage';
-import Directory from './Directory';
-import FriendList from './Directory/FriendList';
-import PhoneBook from './Directory/PhoneBook';
-import Update from 'components/Account/Update';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
-import ChangePasswordUser from 'components/Account/ChangePassword';
-import MessageRoom from 'components/Chat/MessageRoom';
-import Message from 'components/Chat/Message';
-import { getListMessage } from 'actions/messageAction';
-import GroupList from './Directory/GroupList';
+
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { accountLogout } from 'actions/accountAction';
+
+// NextJS
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+
+//Component
+const HomePage = dynamic(() => import('components/HomePage'));
+const MessageRoom = dynamic(() => import('components/Chat/MessageRoom'));
+const Directory = dynamic(() => import('components/Directory'));
+const FriendList = dynamic(() => import('components/Directory/FriendList'));
+const PhoneBook = dynamic(() => import('components/Directory/PhoneBook'));
+const SearchComponent = dynamic(() => import('components/Search'));
+const Update = dynamic(() => import('components/Account/Update'));
+const GroupList = dynamic(() => import('components/Directory/GroupList'));
+const ChangePasswordUser = dynamic(() =>
+  import('components/Account/ChangePassword')
+);
+
+// Common
+import { classPrefixor } from 'utils/classPrefixor';
+import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+
 const SideBarTab = () => {
-  const { userProfile, isAuthenticated } = useSelector(state => state.userData);
-  const { messageRooms } = useSelector(state => state.messageData);
-  const [messageRoom, setMessageRoom] = useState([]);
+  const [infoGroup, setInfoGroup] = useState({});
   const [visible, setVisible] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
   const dispatch = useDispatch();
   const { push } = useRouter();
-
-  useEffect(() => {
-    if (userProfile) {
-      setUserData(userProfile);
-    }
-  }, [userProfile]);
-
-  useEffect(() => {
-    if (messageRooms) {
-      setMessageRoom(messageRooms);
-    }
-  }, [messageRooms]);
-
-  useEffect(() => {
-    if (!isAuthenticated) dispatch(isTokenExpired());
-  }, [isAuthenticated, dispatch]);
-
-  useEffect(() => {
-    dispatch(getListMessage(1));
-  }, [dispatch]);
+  const { userProfile } = useSelector(state => state.userData);
+  const { listGroup } = useFetchAllGroup();
 
   const showModal = () => {
     setVisible(true);
@@ -65,19 +56,43 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
-  const handleAllChat = () => {
-    console.log('All chat');
+
+  const renderRooms = () => {
+    return listGroup?.map((_, key) => {
+      return (
+        <>
+          <TabPanel key={key}>
+            <MessageRoom infoGroup={infoGroup} />
+          </TabPanel>
+        </>
+      );
+    });
   };
-  const handleGroupChat = () => {
-    console.log('Group chat');
+
+  const renderNameListRoom = () => {
+    return listGroup?.map((group, key) => {
+      return (
+        <>
+          <Tab onClick={() => setInfoGroup(group)}>
+            <div className="message_tab_chat" key={key}>
+              {group.group && (
+                <div className="list_user_room">
+                  <div className="info_user_room">
+                    <p className="group__name">{group.name}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Tab>
+        </>
+      );
+    });
   };
-  const handleUserChat = () => {
-    console.log('User chat');
-  };
+
   const renderData = () => {
     return (
       <>
-        <section className={prefix}>
+        <secion className={prefix}>
           <Tabs
             forceRenderTabPanel
             defaultIndex={0}
@@ -86,15 +101,13 @@ const SideBarTab = () => {
           >
             <TabList className={c`tabs__tablist`}>
               <div className="tablist__content">
-                <Menu>
+                <Menu className="menuUser">
                   <SubMenu
                     className="Submenu"
                     title={
                       <div className="avatar" style={{ cursor: 'pointer' }}>
                         <img
-                          src={
-                            userProfile?.avatar ? userProfile?.avatar : avatar
-                          }
+                          src={userProfile?.avatar}
                           className="img_avatar"
                           data-reactid="23"
                         />
@@ -103,8 +116,8 @@ const SideBarTab = () => {
                       </div>
                     }
                   >
-                    <MenuItemGroup>
-                      <EditOutlined />
+                    <MenuItemGroup className="styleMenuItem">
+                      <EditOutlined className="styleIcon" />
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
@@ -114,8 +127,8 @@ const SideBarTab = () => {
                         Cập nhật thông tin
                       </a>
                     </MenuItemGroup>
-                    <MenuItemGroup>
-                      <KeyOutlined />
+                    <MenuItemGroup className="styleMenuItem">
+                      <KeyOutlined className="styleIcon" />
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
@@ -173,49 +186,16 @@ const SideBarTab = () => {
                     style={{ border: 'none' }}
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
-                  >
-                    <SubMenu
-                      key="sub1"
-                      title={
-                        <span>
-                          <span>Tin nhắn</span>
-                        </span>
-                      }
-                    >
-                      <Menu.Item key="1" onClick={handleAllChat}>
-                        Tất cả tin nhắn
-                      </Menu.Item>
-                      <Menu.Item key="2" onClick={handleGroupChat}>
-                        Tin nhắn nhóm
-                      </Menu.Item>
-                      <Menu.Item key="3" onClick={handleUserChat}>
-                        Tin nhắn cá nhân
-                      </Menu.Item>
-                    </SubMenu>
-                  </Menu>
+                  ></Menu>
                   <div className="scrollCustom">
                     <Tab style={{ display: 'none' }}></Tab>
-                    {messageRoom &&
-                      messageRoom?.map((value, key) => {
-                        return (
-                          <Tab key={key}>
-                            <Message data={value} />
-                          </Tab>
-                        );
-                      })}
+                    {renderNameListRoom()}
                   </div>
                 </TabList>
                 <TabPanel>
                   <HomePage />
                 </TabPanel>
-                {messageRoom &&
-                  messageRoom.map((value, key) => {
-                    return (
-                      <TabPanel key={key}>
-                        <MessageRoom value={value} />
-                      </TabPanel>
-                    );
-                  })}
+                {renderRooms()}
               </Tabs>
             </TabPanel>
             <TabPanel>
@@ -284,7 +264,7 @@ const SideBarTab = () => {
             setVisible={setVisiblePassword}
             cancelPassword={onCancelPassword}
           />
-        </section>
+        </secion>
       </>
     );
   };

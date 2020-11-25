@@ -99,7 +99,6 @@ export const sendOtp = apiDefault => dispatch => {
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
   return accountService.sendOtpService(apiDefault).then(res => {
-    console.log(res);
     const { error, data, message } = res.data;
     if (error) {
       dispatch({

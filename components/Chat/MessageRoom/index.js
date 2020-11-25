@@ -5,12 +5,15 @@ import { SendOutlined, SmileOutlined, LikeOutlined } from '@ant-design/icons';
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
 
-const MessageRoom = () => {
+const MessageRoom = ({ ...props }) => {
+  const { infoGroup } = props;
   const [message, SetMessege] = useState();
 
   const onHandleChangeMessage = e => {
     SetMessege(e.target.value);
   };
+
+  // console.log('infoGroup', infoGroup);
 
   return (
     <section className={prefix}>
@@ -18,10 +21,10 @@ const MessageRoom = () => {
         <div className="info_room">
           <img src="https://kenhcine.cgv.vn/media/catalog/product/s/e/secret-life-of-pets-snowball-spicypulp.jpg" />
           <div className="content_room">
-            <h1>Ngoc Mai</h1>
+            <h1>{infoGroup?.name}</h1>
             <div className="info_user_room">
               <span style={{ fontSize: '13px', color: '#99a4b0' }}>
-                Truy cập 2h trước
+                Có người {infoGroup?.users?.length} tham gia cuộc trò chuyện
               </span>
             </div>
           </div>

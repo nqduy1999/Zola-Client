@@ -52,10 +52,7 @@ const PhoneBook = () => {
                   style={{ marginRight: '10px' }}
                 />
               ) : (
-                <img
-                  src={`https://api-ret.ml/api/v0/images/download/${friend.avatar}`}
-                  alt="avatar"
-                />
+                <img src={friend.avatar} alt="avatar" />
               )}
             </div>
             <div className="truncate">{friend.name}</div>

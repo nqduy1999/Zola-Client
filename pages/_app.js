@@ -9,14 +9,17 @@ import 'nprogress/nprogress.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'assets/styles/main.scss';
 import GlobalProvider from 'components/common/context/GlobalContext';
+import { SocketIOProvider } from 'components/common/context/SocketIOContext';
 const store = configStore();
 
 const MyApp = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
       <GlobalProvider>
-        <Component {...pageProps} />
-        <ToastContainer limit={3} />
+        <SocketIOProvider>
+          <Component {...pageProps} />
+          <ToastContainer limit={3} />
+        </SocketIOProvider>
       </GlobalProvider>
     </Provider>
   );
