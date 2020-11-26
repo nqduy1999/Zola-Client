@@ -6,7 +6,7 @@ const prefix = 'message-room';
 const c = classPrefixor(prefix);
 
 const MessageRoom = ({ ...props }) => {
-  const { infoGroup } = props;
+  const { infoRoom } = props;
   const [message, SetMessege] = useState();
 
   const onHandleChangeMessage = e => {
@@ -18,14 +18,21 @@ const MessageRoom = ({ ...props }) => {
       <div className={c`header`}>
         <div className="info_room">
           <img src="https://kenhcine.cgv.vn/media/catalog/product/s/e/secret-life-of-pets-snowball-spicypulp.jpg" />
-          <div className="content_room">
-            <h1>{infoGroup?.name}</h1>
-            <div className="info_user_room">
-              <span style={{ fontSize: '13px', color: '#99a4b0' }}>
-                Có người {infoGroup?.users?.length} tham gia cuộc trò chuyện
-              </span>
+          {infoRoom.group ? (
+            <div className="content_room">
+              <h1>{infoRoom?.name}</h1>
+              <div className="info_user_room">
+                <span style={{ fontSize: '13px', color: '#99a4b0' }}>
+                  Có người {infoRoom?.users?.length} tham gia cuộc trò chuyện
+                </span>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="content_room">
+              <h1>{infoRoom?.users[1]?.name}</h1>
+              <div className="info_user_room"></div>
+            </div>
+          )}
         </div>
       </div>
       <div className={c`content`}>

@@ -1,4 +1,4 @@
-import { Button, Input, Form, Collapse } from 'antd';
+import { Input, Form, Collapse } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -45,24 +45,7 @@ const AddFriend = props => {
       title="Thêm bạn"
       visible={visible}
       onCancel={cancelAddFriend}
-      footer={
-        statusSearch
-          ? [
-              <Button
-                key="submit"
-                form="searchUser"
-                style={{
-                  border: 'none',
-                  color: '#0068ff',
-                  fontSize: '16px',
-                  fontWeight: '500'
-                }}
-              >
-                Tìm kiếm
-              </Button>
-            ]
-          : null
-      }
+      footer={null}
       style={{
         width: '150px'
       }}
@@ -88,7 +71,7 @@ const AddFriend = props => {
                 style={{ backgroundColor: 'white' }}
               >
                 <div className="scrollable-container">
-                  <div id="overflowTest">
+                  <div>
                     {suggestFriend?.map((value, key) => {
                       return <SuggestFriend key={key} suggestF={value} />;
                     })}

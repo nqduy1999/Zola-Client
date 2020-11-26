@@ -3,20 +3,12 @@ import PropTypes, { func } from 'prop-types';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useEffect, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
-import Avatar from 'antd/lib/avatar/avatar';
-import { UserOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import Avatar from 'react-avatar';
+import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { acceptFriendAction, addFriendAction } from 'actions/friendAction';
 const prefix = 'view-user-friend';
 const c = classPrefixor(prefix);
-const inforUser = {
-  position: 'relative',
-  overflow: 'hidden',
-  width: '360px',
-  height: '219px',
-  maxHeight: '261px',
-  minHeight: '120px'
-};
 const user_profile_line = {
   display: 'flex',
   marginBottom: '14px'
@@ -105,121 +97,52 @@ const ViewUserFriend = props => {
       title="Thông tin người dùng"
       onCancel={closeModalView}
       footer={null}
-      style={{
-        marginRight: '32.5%'
-      }}
     >
       <div className="avatar-uploader">
-        <div
-          style={{
-            display: 'block',
-            position: 'relative',
-            paddingBottom: '20px'
-          }}
-        >
+        <div>
           {userData?.avatar == null || userData?.avatar === '' ? (
             <Avatar
-              size={84}
-              icon={<UserOutlined />}
-              style={{ marginLeft: '44%' }}
+              name={userData?.name}
+              size="84px"
+              className="avatar-friend-request"
             />
           ) : (
             <img
               className="avatar-img-user"
-              style={{
-                margin: '0px auto',
-                border: '0.5px solid #0cb3ff',
-                height: '84px',
-                width: '84px',
-                display: 'block',
-                borderRadius: '50%'
-              }}
-              src={`https://api-ret.ml/api/v0/images/download/${userData.avatar}`}
+              src={userData.avatar}
               alt="avatar"
             />
           )}
         </div>
       </div>
-      <div
-        style={{
-          marginTop: '0',
-          height: '50px',
-          textAlign: 'center',
-          marginBottom: '-15px',
-          color: 'black',
-          position: 'relative',
-          display: 'flex',
-          paddingBottom: '20px'
-        }}
-      >
-        <div
-          style={{
-            margin: '0 auto',
-            fontSize: '14px',
-            color: 'black',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            zIndex: '1'
-          }}
-        >
-          <div
-            style={{
-              fontSize: '20px',
-              marginBottom: 0,
-              paddingRight: '3px',
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            <div
-              className="truncate"
-              style={{
-                display: 'inline-block',
-                margin: '0px auto',
-                maxWidth: '100%',
-                marginBottom: '-4px'
-              }}
-            >
+      <div className="content-name-user">
+        <div className="name-user">
+          <div className="name-user-div">
+            <div className="truncate">
               {userData?.name ? userData.name : ''}
             </div>
           </div>
         </div>
       </div>
       <div className="friend-profile__actions friend-profile__actions__header">
-        <div style={{ paddingTop: '10px' }}>
+        <div>
           {statusFriend == 1 ? (
-            <Button
-              type="primary"
-              style={{ margin: '0 auto', display: 'block' }}
-              onClick={OnAddFriend}
-            >
+            <Button type="primary" onClick={OnAddFriend}>
               <PlusOutlined />
               Kết bạn
             </Button>
           ) : statusFriend == 2 ? (
-            <Button
-              type="success"
-              style={{ margin: '0 auto', display: 'block' }}
-            >
+            <Button type="success">
               <CheckOutlined />
               Đã gửi lời mời kết bạn
             </Button>
           ) : statusFriend == 3 ? (
-            <Button
-              type="primary"
-              style={{ margin: '0 auto', display: 'block' }}
-            >
+            <Button type="primary">
               <CheckOutlined />
               Bạn bè
             </Button>
           ) : statusFriend == 4 ? (
-            <Button
-              type="success"
-              style={{ margin: '0 auto', display: 'block' }}
-              onClick={AcceptFriend}
-            >
+            <Button type="success" onClick={AcceptFriend}>
               <PlusOutlined />
               Chấp nhận
             </Button>
@@ -228,7 +151,7 @@ const ViewUserFriend = props => {
           )}
         </div>
       </div>
-      <div style={inforUser}>
+      <div className="info-user">
         <div style={{ paddingLeft: '20px' }}>
           <div style={{ margin: '20px' }}>
             <div style={user_profile_line}>

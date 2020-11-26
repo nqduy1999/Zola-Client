@@ -1,0 +1,76 @@
+.view-user-friend {
+    margin-right: 32.5%;
+    &__main {
+        .avatar-uploader {
+            display: block;
+            position: relative;
+            padding-bottom: 20px;
+            .avatar-friend-request {
+                margin-left: 35%;
+                display: block;
+                border-radius: 50%;
+                span {
+                    font-size: 32px;
+                }
+            }
+            .avatar-img-user {
+                margin: 0px auto;
+                border: 0.5px solid #0cb3ff;
+                height: 84px;
+                width: 84px;
+                display: block;
+                border-radius: 50%;
+            }
+        }
+        .content-name-user {
+            margin-top: 0;
+            height: 50px;
+            text-align: center;
+            margin-bottom: -15px;
+            color: black;
+            position: relative;
+            display: flex;
+            padding-bottom: 20px;
+            .name-user {
+                margin: 0 auto;
+                font-size: 14px;
+                color: black;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                z-index: 1;
+                .name-user-div {
+                    font-size: 20px;
+                    margin-bottom: 0;
+                    padding-right: 3px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    .truncate {
+                        display: inline-block;
+                        margin: 0px auto;
+                        max-width: 100%;
+                        margin-bottom: -4px;
+                    }
+                }
+            }
+        }
+        .friend-profile__actions {
+            div {
+                padding-top: 10px;
+                button {
+                    margin: 0 auto;
+                    display: block;
+                }
+            }
+        }
+        .info-user{
+            position: relative;
+            overflow: hidden;
+            width: 360px;
+            height: 219px;
+            max-height: 261px;
+            min-height: 120px;
+        }
+    }
+}

@@ -35,7 +35,7 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const SideBarTab = () => {
-  const [infoGroup, setInfoGroup] = useState({});
+  const [infoRoom, setInfoRoom] = useState({});
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
@@ -62,26 +62,30 @@ const SideBarTab = () => {
       return (
         <>
           <TabPanel key={key}>
-            <MessageRoom infoGroup={infoGroup} />
+            <MessageRoom infoRoom={infoRoom} />
           </TabPanel>
         </>
       );
     });
   };
-
+  const handleClickRoom = value => {
+    setInfoRoom(value);
+  };
   const renderNameListRoom = () => {
-    return listGroup?.map((group, key) => {
+    return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab onClick={() => setInfoGroup(group)}>
+          <Tab onClick={() => handleClickRoom(room)}>
             <div className="message_tab_chat" key={key}>
-              {group.group && (
-                <div className="list_user_room">
-                  <div className="info_user_room">
-                    <p className="group__name">{group.name}</p>
-                  </div>
+              <div className="list_user_room">
+                <div className="info_user_room">
+                  {room.group ? (
+                    <p className="group__name">{room.name}</p>
+                  ) : (
+                    <p className="group__name">{room?.users[1]?.name}</p>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </Tab>
         </>

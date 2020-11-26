@@ -42,17 +42,7 @@ const SuggestFriend = props => {
               className="avatar-suggest"
             />
           ) : (
-            <img
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                border: '1px solid #0cb3ff',
-                marginRight: '10px'
-              }}
-              src={`https://api-ret.ml/api/v0/images/download/${suggestF.avatar}`}
-              alt="avatar"
-            />
+            <img src={suggestF.avatar} alt="avatar" className="img-avatar" />
           )}
         </div>
         <div className="recent-search-content" style={{ width: '300px' }}>
