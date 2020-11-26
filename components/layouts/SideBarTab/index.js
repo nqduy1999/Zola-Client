@@ -28,6 +28,7 @@ const ChangePasswordUser = dynamic(() =>
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
+import { findUserByIdAction } from 'actions/userAction';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -36,9 +37,11 @@ const MenuItemGroup = Menu.ItemGroup;
 
 const SideBarTab = () => {
   const [infoRoom, setInfoRoom] = useState({});
+  const [statusRoom, setStatusRoom] = useState(false);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { push } = useRouter();
   const { userProfile } = useSelector(state => state.userData);
@@ -62,14 +65,27 @@ const SideBarTab = () => {
       return (
         <>
           <TabPanel key={key}>
-            <MessageRoom infoRoom={infoRoom} />
+            <MessageRoom
+              infoRoom={infoRoom}
+              statusRoom={statusRoom}
+              loading={loading}
+            />
           </TabPanel>
         </>
       );
     });
   };
   const handleClickRoom = value => {
+    setLoading(true);
     setInfoRoom(value);
+    if (!value.group) {
+      dispatch(findUserByIdAction(value?.users[1]?.id));
+      setStatusRoom(false);
+      setLoading(false);
+    } else {
+      setStatusRoom(true);
+      setLoading(false);
+    }
   };
   const renderNameListRoom = () => {
     return listGroup?.map((room, key) => {

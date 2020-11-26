@@ -21,7 +21,6 @@ export const getProfileUser = auth_token => dispatch => {
     value = decoded?.data?.phone || decoded?.data?.email;
   }
   return axiosServices.get(`${prefix}detail?${type}=${value}`).then(res => {
-    console.log(res);
     const { error, data } = res.data;
     if (error) {
       dispatch({
@@ -79,6 +78,30 @@ export const updateOtpUser = dataDispatch => dispatch => {
       const { error, data, message } = err.response?.data;
       dispatch({
         type: USER_TYPE.UPDATE_USER_FAILURE
+      });
+      return { error, data, message };
+    });
+};
+export const findUserByIdAction = id => dispatch => {
+  dispatch({
+    type: USER_TYPE.FIND_USER_REQUEST
+  });
+  return userService
+    .findUserById(id)
+    .then(res => {
+      const { error, data } = res.data;
+      if (!error) {
+        dispatch({
+          type: USER_TYPE.FIND_USER_SUCCESS,
+          payload: data
+        });
+      }
+      return { data };
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: USER_TYPE.FIND_USER_FAILURE
       });
       return { error, data, message };
     });

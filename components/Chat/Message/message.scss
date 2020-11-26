@@ -3,6 +3,7 @@
     background: transparent;
     .info_room {
       width: 100%;
+
       .message_tab_chat{
         padding: 10px 0;
         width: 320px;
@@ -41,6 +42,9 @@
         position: absolute;
         display: inline-block;
         width: 50%;
+        h1{
+          font-weight: 300;
+        }
       }
       .action {
         top: 14px;

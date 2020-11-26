@@ -4,6 +4,7 @@ const initialState = {
   imageChangedDefault: null,
   userProfile: {},
   isLoading: false,
+  userFind: {},
   error: null
 };
 const userReducers = (state = initialState, action) => {
@@ -41,6 +42,22 @@ const userReducers = (state = initialState, action) => {
         isLoading: false
       };
     case USER_TYPE.UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case USER_TYPE.FIND_USER_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case USER_TYPE.FIND_USER_SUCCESS:
+      return {
+        ...state,
+        userFind: action.payload,
+        isLoading: false
+      };
+    case USER_TYPE.FIND_USER_FAILURE:
       return {
         ...state,
         isLoading: false

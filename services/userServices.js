@@ -16,5 +16,11 @@ class UserServices {
       data: data
     });
   };
+  findUserById = id => {
+    return axios.request({
+      method: 'GET',
+      url: `${prefix}detail?id=${id}`
+    });
+  };
 }
 export default UserServices;
