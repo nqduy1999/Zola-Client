@@ -3,54 +3,69 @@ import React from 'react';
 
 import { classPrefixor } from 'utils/classPrefixor';
 import PropTypes from 'prop-types';
+import Avatar from 'react-avatar';
+import { useSelector } from 'react-redux';
+import { Button } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 // import avatar from 'assets/images/avatar.jpg';
 const prefix = 'message';
 const c = classPrefixor(prefix);
 
-const Message = () => {
-  // const { userProfile } = useSelector(state => state.userData);
-  // const { messageRooms } = useSelector(state => state.messageData);
+const Message = ({ ...props }) => {
+  const { infoRoom, message } = props;
+  const { userFind, userProfile } = useSelector(state => state.userData);
 
-  // const renderNameListRoom = () => {
-  //   return messageRooms?.map((group, key) => {
-  //     return (
-  //       <div className="message_tab_chat" key={key}>
-  //         {group && (
-  //           <div className="list_user_room">
-  //             {/* <img src={user && user.avatar ? user?.avatar : avatar} /> */}
-  //             <div className="info_user_room">
-  //               <h1>{group.name}</h1>
-  //             </div>
-  //           </div>
-  //         )}
-  //       </div>
-  //     );
-  //   });
-  // };
-
-  // const renderMessageRecent = (
-  //   <div className="list_user_room">
-  //     <span className="messageRecent">
-  //       {data?.messages[data?.messages?.length - 1]?.content}
-  //     </span>
-  //   </div>
-  // );
-
-  return (
-    <div className={c`header`}>
-      <div className="info_room">
-        <>
-          {/* {renderNameListRoom()} */}
-          {/* {renderMessageRecent} */}
-        </>
+  const renderSingleChat = () => {
+    return message?.user.id == userProfile?.id ? (
+      <div className="info_message_user_sent">
+        <div className="message_content_user">
+          <div className="content_message">{message.content}</div>
+        </div>
+        <div className="action">
+          <Button icon={<EllipsisOutlined />}></Button>
+        </div>
       </div>
-    </div>
+    ) : (
+      <div className="info_message_user_receive">
+        {userFind.avatar === null || userFind.avatar === '' ? (
+          <Avatar size="43px" className="avatar-chat" name={userFind?.name} />
+        ) : (
+          <img
+            style={{
+              borderRadius: '50%',
+              width: '43px',
+              height: '43px',
+              marginRight: '11px'
+            }}
+            src={userFind.avatar}
+            alt="avatar"
+          />
+        )}
+        <div className="message_content_user">
+          <span
+            className="name_user"
+            style={{ fontSize: '13px', color: '#99a4b0' }}
+          >
+            {userFind?.name}
+          </span>
+          <div className="content_message">{message.content}</div>
+        </div>
+        <div className="action">
+          <Button icon={<EllipsisOutlined />}></Button>
+        </div>
+      </div>
+    );
+  };
+  return (
+    <div className={c`main`}>{infoRoom.group ? '' : renderSingleChat()}</div>
   );
 };
 export default Message;
 Message.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  data: PropTypes.any
+  data: PropTypes.any,
+  infoRoom: PropTypes.any,
+  message: PropTypes.any
 };
 
 Message.defaultProps = {

@@ -1,11 +1,17 @@
 import { Button, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
-import { SendOutlined, SmileOutlined, LikeOutlined } from '@ant-design/icons';
+import {
+  SendOutlined,
+  SmileOutlined,
+  LikeOutlined,
+  EllipsisOutlined
+} from '@ant-design/icons';
 import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import Message from '../Message';
 
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
@@ -80,6 +86,9 @@ const MessageRoom = ({ ...props }) => {
                 </span>
               </div>
             </div>
+            <div className="action">
+              <Button icon={<EllipsisOutlined />}></Button>
+            </div>
           </div>
         ) : (
           <div className="info_room">
@@ -109,13 +118,18 @@ const MessageRoom = ({ ...props }) => {
                 </span>
               </div>
             </div>
+            <div className="action">
+              <Button icon={<EllipsisOutlined />}></Button>
+            </div>
           </div>
         )}
       </div>
       <div className={c`content`}>
         <div className="scroll-chat">
           {messageList.map((mess, key) => {
-            return <div key={key}>{mess.content}</div>;
+            return (
+              <Message key={key} message={mess} infoRoom={infoRoom}></Message>
+            );
           })}
         </div>
       </div>

@@ -93,15 +93,19 @@
         }
       }
       .action {
-        top: 20px;
-        right: -150px;
+        top: 10px;
         width: 20%;
-        position: absolute;
-        button {
+        display: inline-block;
+        padding-left: 80%;
+        position: relative;
+            button {
           background-color: transparent;
           border: none;
           font-size: 30px;
           color: #767676;
+          span{
+            font-size: 30px;
+          }
         }
       }
     }
