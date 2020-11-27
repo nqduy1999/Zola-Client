@@ -85,9 +85,9 @@ const MessageRoom = ({ ...props }) => {
                   Có người {infoRoom?.users?.length} tham gia cuộc trò chuyện
                 </span>
               </div>
-            </div>
-            <div className="action">
-              <Button icon={<EllipsisOutlined />}></Button>
+              <div className="action">
+                <Button icon={<EllipsisOutlined />}></Button>
+              </div>
             </div>
           </div>
         ) : (
@@ -117,9 +117,9 @@ const MessageRoom = ({ ...props }) => {
                   Các bạn là bạn bè trên Zola
                 </span>
               </div>
-            </div>
-            <div className="action">
-              <Button icon={<EllipsisOutlined />}></Button>
+              <div className="action">
+                <Button icon={<EllipsisOutlined />}></Button>
+              </div>
             </div>
           </div>
         )}

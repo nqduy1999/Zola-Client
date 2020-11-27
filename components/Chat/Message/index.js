@@ -14,15 +14,21 @@ const c = classPrefixor(prefix);
 const Message = ({ ...props }) => {
   const { infoRoom, message } = props;
   const { userFind, userProfile } = useSelector(state => state.userData);
-
+  console.log(message);
   const renderSingleChat = () => {
+    const getTimeMessage = message?.createdAt?.slice(0, 10);
     return message?.user.id == userProfile?.id ? (
       <div className="info_message_user_sent">
-        <div className="message_content_user">
+        <div className="message_content_user_sent">
           <div className="content_message">{message.content}</div>
-        </div>
-        <div className="action">
-          <Button icon={<EllipsisOutlined />}></Button>
+          <div className="message-time">
+            <span style={{ fontSize: '11px', color: '#99a4b0' }}>
+              {getTimeMessage}
+            </span>
+          </div>
+          <div className="action">
+            <Button icon={<EllipsisOutlined />}></Button>
+          </div>
         </div>
       </div>
     ) : (
@@ -41,7 +47,7 @@ const Message = ({ ...props }) => {
             alt="avatar"
           />
         )}
-        <div className="message_content_user">
+        <div className="message_content_user_received">
           <span
             className="name_user"
             style={{ fontSize: '13px', color: '#99a4b0' }}
@@ -49,9 +55,11 @@ const Message = ({ ...props }) => {
             {userFind?.name}
           </span>
           <div className="content_message">{message.content}</div>
-        </div>
-        <div className="action">
-          <Button icon={<EllipsisOutlined />}></Button>
+          <div className="message-time">
+            <span style={{ fontSize: '11px', color: '#99a4b0' }}>
+              {getTimeMessage}
+            </span>
+          </div>
         </div>
       </div>
     );

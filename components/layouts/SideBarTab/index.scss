@@ -86,17 +86,32 @@
         width: 100%;
         padding: 5px;
       }
+
       .message_tab_chat {
         padding: 10px;
         .group__name {
           font-size: 15px;
-          font-weight: 600;
+          font-weight: 540;
+          line-height: 1.5px;
+        }
+        .avatar-chat{
+          border-radius: 50%;
+          margin-right: 11px;
+        }
+      }
+      .message_tab_chat:hover{
+        cursor: pointer;
+        .edit{
+          display: inline-block;
         }
       }
       .react-tabs__tab--selected {
         border: none;
         .message_tab_chat {
           background: #e6f0ff;
+          .group__name {
+            font-weight: 550;
+          }
         }
       }
     }

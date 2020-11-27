@@ -64,6 +64,22 @@
             display: contents;
           }
         }
+        .action {
+          top: -60px;
+          width: 20%;
+          display: inline-block;
+          padding-left: 750px;
+          position: relative;
+              button {
+            background-color: transparent;
+            border: none;
+            font-size: 30px;
+            color: #767676;
+            span{
+              font-size: 30px;
+            }
+          }
+        }
       }
       .content_room {
         position: absolute;
@@ -91,20 +107,20 @@
             display: contents;
           }
         }
-      }
-      .action {
-        top: 10px;
-        width: 20%;
-        display: inline-block;
-        padding-left: 80%;
-        position: relative;
-            button {
-          background-color: transparent;
-          border: none;
-          font-size: 30px;
-          color: #767676;
-          span{
+        .action {
+          top: -60px;
+          width: 20%;
+          display: inline-block;
+          padding-left: 750px;
+          position: relative;
+              button {
+            background-color: transparent;
+            border: none;
             font-size: 30px;
+            color: #767676;
+            span{
+              font-size: 30px;
+            }
           }
         }
       }

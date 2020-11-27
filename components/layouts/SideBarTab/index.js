@@ -2,7 +2,12 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
-import { EditOutlined, KeyOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  KeyOutlined,
+  TeamOutlined
+} from '@ant-design/icons';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +34,7 @@ const ChangePasswordUser = dynamic(() =>
 import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 import { findUserByIdAction } from 'actions/userAction';
+import Avatar from 'react-avatar';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -96,9 +102,64 @@ const SideBarTab = () => {
               <div className="list_user_room">
                 <div className="info_user_room">
                   {room.group ? (
-                    <p className="group__name">{room.name}</p>
+                    <div className="tab_room">
+                      <Avatar
+                        size="64px"
+                        className="avatar-chat"
+                        name={room?.name}
+                      />
+                      <div
+                        className="content-tab-chat"
+                        style={{ display: 'inline-block' }}
+                      >
+                        <p className="group__name">{room.name}</p>
+                      </div>
+                      <div
+                        style={{ display: 'inline-block', paddingLeft: '10px' }}
+                      >
+                        <TeamOutlined />
+                      </div>
+                      <div
+                        className="edit"
+                        style={{ display: 'inline-block', paddingLeft: '20px' }}
+                      >
+                        <EllipsisOutlined />
+                      </div>
+                    </div>
                   ) : (
-                    <p className="group__name">{room?.users[1]?.name}</p>
+                    <div className="tab_room">
+                      {room?.users[1]?.avatar === null ||
+                      room?.users[1]?.avatar === '' ? (
+                        <Avatar
+                          size="64px"
+                          className="avatar-chat"
+                          name={room?.users[1]?.name}
+                        />
+                      ) : (
+                        <img
+                          style={{
+                            borderRadius: '50%',
+                            width: '64px',
+                            height: '64px',
+                            marginRight: '11px'
+                          }}
+                          src={room?.users[1]?.avatar}
+                          alt="avatar"
+                        />
+                      )}
+                      <div
+                        className="content-tab-chat"
+                        style={{ display: 'inline-block' }}
+                      >
+                        <p className="group__name">{room?.users[1]?.name}</p>
+                      </div>
+                      <div
+                        className="edit"
+                        style={{ display: 'inline-block', paddingLeft: '40px' }}
+                      >
+                        <EllipsisOutlined />
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
