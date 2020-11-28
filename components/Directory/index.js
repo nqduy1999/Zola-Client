@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Collapse, Dropdown, Menu, Popconfirm } from 'antd';
 import Avatar from 'react-avatar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import {
 } from 'actions/friendAction';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import { findUserByIdAction } from 'actions/userAction';
+import ViewUserFriendByID from 'components/Friend/ViewUserById';
 
 const prefix = 'directory';
 const { Panel } = Collapse;
@@ -17,12 +19,16 @@ const { Panel } = Collapse;
 const Directory = () => {
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
+  const [visible, setVisible] = useState(false);
+  const [userData, setUserData] = useState();
   const {
     errorData,
     listFriendContact,
     messageDeletePhoneContact
   } = useSelector(state => state.FriendReducer);
-
+  const cancelModal = () => {
+    setVisible(false);
+  };
   useEffect(() => {
     if (userProfile?.id) {
       dispatch(fetchFriendsContactAction(userProfile?.id));
@@ -47,10 +53,17 @@ const Directory = () => {
       totalFriend -= 1;
     }
   };
-
+  const getUserById = id => {
+    dispatch(findUserByIdAction(id)).then(res => {
+      setUserData(res.data);
+      setVisible(true);
+    });
+  };
   const menu = id => (
     <Menu>
-      <Menu.Item key="0">Xem Thông Tin</Menu.Item>
+      <Menu.Item key="0" onClick={() => getUserById(id)}>
+        Xem Thông Tin
+      </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="1">
         <Popconfirm
@@ -115,6 +128,11 @@ const Directory = () => {
           </div>
         </Panel>
       </Collapse>
+      <ViewUserFriendByID
+        userData={userData}
+        visible={visible}
+        onCancelModal={cancelModal}
+      />
     </div>
   );
 };
