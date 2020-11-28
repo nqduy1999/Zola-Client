@@ -104,7 +104,7 @@ const SignUp = () => {
                       textAlign: 'center'
                     }}
                   >
-                    Bằng cách bấm vào nút đăng ký, bạn đã đồng ý với
+                    Bằng cách bấm vào nút đăng ký, bạn đã đồng ý với{''}
                     <a href="https://zalo.me/zalo/dieukhoan/">
                       các điều khoản sử dụng của Zola
                     </a>

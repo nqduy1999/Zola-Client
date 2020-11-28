@@ -9,9 +9,9 @@ import {
   fetchFriendsContactAction,
   fetchFriendsRequestAction
 } from 'actions/friendAction';
-import { Avatar, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { toast } from 'react-toastify';
+import Avatar from 'react-avatar';
 
 const prefix = 'listFriend';
 const c = classPrefixor(prefix);
@@ -73,9 +73,9 @@ const FriendList = () => {
           <div className="userInfo">
             {friendRq.avatar === null || friendRq.avatar === '' ? (
               <Avatar
-                size="large"
-                icon={<UserOutlined />}
-                style={{ marginRight: '10px' }}
+                size="62px"
+                className="avatar-request-friend"
+                name={friendRq.name}
               />
             ) : (
               <img

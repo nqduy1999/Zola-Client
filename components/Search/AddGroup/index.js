@@ -1,10 +1,10 @@
 import React from 'react';
-import { Modal, Select, Avatar } from 'antd';
+import { Modal, Select } from 'antd';
 import { classPrefixor } from 'utils/classPrefixor';
 import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserOutlined } from '@ant-design/icons';
 import { createGroupChatAction } from 'actions/groupAction';
+import Avatar from 'react-avatar';
 
 const prefix = 'addGroup';
 const c = classPrefixor(prefix);
@@ -32,9 +32,9 @@ const AddGroup = ({ ...props }) => {
           <div className="select--info">
             {friend.avatar === null || friend.avatar === '' ? (
               <Avatar
-                size="large"
-                icon={<UserOutlined />}
-                style={{ marginRight: '10px' }}
+                size="38px"
+                className="avatar-create-group"
+                name={friend.name}
               />
             ) : (
               <img src={friend.avatar} alt="avatar" />

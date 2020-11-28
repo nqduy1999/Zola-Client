@@ -119,104 +119,100 @@ const ConfirmOtpSignUp = props => {
     }
   };
   return (
-    <div>
-      <div className="wrapper_signup">
-        <Form className={c`form-signup`} onFinish={submit}>
-          <div className="box-au">
-            <p>
-              Mã kích hoạt đã được gửi đến {''}
-              {valueSent?.email ? 'email' : 'số điện thoại'}:
-            </p>
-            <p>
-              <span className="number-phone">
-                {valueSent?.email ? valueSent?.email : valueSent?.phone}
-              </span>
-            </p>
-            <Form.Item
-              name="code"
-              rules={[
-                { required: true, message: 'Mã otp không được bỏ trống' }
-              ]}
-            >
-              <div className="line-form custom_code_input_container">
-                <Input placeholder="Nhập mã kích hoạt" />
-              </div>
-            </Form.Item>
+    <div className="wrapper_signup">
+      <Form className={c`form-signup`} onFinish={submit}>
+        <div className="box-au">
+          <p>
+            Mã kích hoạt đã được gửi đến {''}
+            {valueSent?.email ? 'email' : 'số điện thoại'}:
+          </p>
+          <p>
+            <span className="number-phone">
+              {valueSent?.email ? valueSent?.email : valueSent?.phone}
+            </span>
+          </p>
+          <Form.Item
+            name="code"
+            rules={[{ required: true, message: 'Mã otp không được bỏ trống' }]}
+          >
+            <div className="line-form custom_code_input_container">
+              <Input placeholder="Nhập mã kích hoạt" />
+            </div>
+          </Form.Item>
 
-            <p className="textAlign-center">
-              <a className="link-resend " onClick={SendOtpAgain}>
-                Nhận lại mã kích hoạt
-              </a>
-            </p>
+          <p className="textAlign-center">
+            <a className="link-resend " onClick={SendOtpAgain}>
+              Nhận lại mã kích hoạt
+            </a>
+          </p>
+        </div>
+        <Form.Item
+          name="name"
+          rules={[
+            { required: true, message: 'Vui lòng nhập tên!' },
+            {
+              max: 32,
+              min: 6,
+              message: 'Tên có ít nhất 6 ký tự và tối đa 32 ký tự'
+            },
+            {
+              pattern: NAME_RGX,
+              message: 'Không chứa ký tự đặc biệt'
+            }
+          ]}
+        >
+          <div className="line-form">
+            <Input
+              placeholder="Nhập tên bạn muốn hiển thị"
+              style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
+            />
           </div>
-          <Form.Item
-            name="name"
-            rules={[
-              { required: true, message: 'Vui lòng nhập tên!' },
-              {
-                max: 32,
-                min: 6,
-                message: 'Tên có ít nhất 6 ký tự và tối đa 32 ký tự'
-              },
-              {
-                pattern: NAME_RGX,
-                message: 'Không chứa ký tự đặc biệt'
-              }
-            ]}
-          >
-            <div className="line-form">
-              <Input
-                placeholder="Nhập tên bạn muốn hiển thị"
-                style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              Validator.password('name', 'Password không đúng định dạng'),
-              Validator.required('name', 'Không được bỏ trống')
-            ]}
-          >
-            <div className="line-form">
-              <Input.Password
-                placeholder="Nhập mật khẩu"
-                style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item
-            name="passwordConfirm"
-            rules={[
-              ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (value) {
-                    if (getFieldValue('password') === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject('Mật khẩu không giống');
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            Validator.password('name', 'Password không đúng định dạng'),
+            Validator.required('name', 'Không được bỏ trống')
+          ]}
+        >
+          <div className="line-form">
+            <Input.Password
+              placeholder="Nhập mật khẩu"
+              style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item
+          name="passwordConfirm"
+          rules={[
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (value) {
+                  if (getFieldValue('password') === value) {
+                    return Promise.resolve();
                   }
-                  return Promise.reject('Không được bỏ trống');
+                  return Promise.reject('Mật khẩu không giống');
                 }
-              })
-            ]}
-          >
-            <div className="line-form">
-              <Input.Password
-                placeholder="Nhập lại mật khẩu"
-                style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item name="name">
-            <div className="line-form">
-              <Button type="primary" htmlType="submit">
-                Đăng ký
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
-      </div>
+                return Promise.reject('Không được bỏ trống');
+              }
+            })
+          ]}
+        >
+          <div className="line-form">
+            <Input.Password
+              placeholder="Nhập lại mật khẩu"
+              style={{ border: 'none', borderBottom: '1px solid #ecedf0' }}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item name="name">
+          <div className="line-form">
+            <Button type="primary" htmlType="submit">
+              Đăng ký
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
