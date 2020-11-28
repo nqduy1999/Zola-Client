@@ -124,9 +124,12 @@ const FriendList = () => {
         <span>Danh Sách Kết Bạn</span>
       </div>
       <div className={c`content`}>
-        <div className={c`content__inside`}>
-          <p>Lời mời kết bạn ({totalFriendRequest})</p>
-          {renderListFriendRequest()}
+        <div className="scroll-chat">
+          <div className={c`content__inside`}>
+            <p>Lời mời kết bạn ({totalFriendRequest})</p>
+
+            {renderListFriendRequest()}
+          </div>
         </div>
       </div>
     </section>
