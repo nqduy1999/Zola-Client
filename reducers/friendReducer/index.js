@@ -57,7 +57,12 @@ const FriendReducer = (state = initialState, action) => {
 
     case FRIENDS_TYPE.FETCH_FRIEND_REQUEST_FAILURE: {
       const { error, data } = action.payload;
-      return { ...state, errorStatusRequest: error, errorDataRequest: data };
+      return {
+        ...state,
+        errorStatusRequest: error,
+        errorDataRequest: data,
+        listFriendRequest: []
+      };
     }
 
     //ACCEPT Friend Request
@@ -78,6 +83,9 @@ const FriendReducer = (state = initialState, action) => {
     //DELETE friend Contact
     case FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS: {
       return { ...state, messageDeletePhoneContact: action.payload };
+    }
+    case FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE: {
+      return { ...state, listFriendContact: [] };
     }
     case FRIENDS_TYPE.GET_USER_SENT_REQUEST_REQUEST: {
       return { ...state, loading: true };

@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unreachable */
 import React, { useEffect } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,11 +18,14 @@ const prefix = 'listFriend';
 const c = classPrefixor(prefix);
 const FriendList = () => {
   const dispatch = useDispatch();
-  const { listFriendRequest, messageAccept, messageAvoid } = useSelector(
-    state => state.FriendReducer
-  );
+  const {
+    listFriendRequest,
+    messageAccept,
+    messageAvoid,
+    errorDataRequest
+  } = useSelector(state => state.FriendReducer);
   const { userProfile } = useSelector(state => state.userData);
-  let totalFriendRequest = listFriendRequest?.length;
+
   useEffect(() => {
     if (userProfile?.id) {
       dispatch(fetchFriendsRequestAction(userProfile?.id));
@@ -39,6 +43,7 @@ const FriendList = () => {
     }
     dispatch(dispatchDefaultAction());
   }, [messageAccept]);
+  let totalFriendRequest = listFriendRequest?.length;
 
   useEffect(() => {
     if (messageAvoid.length > 0) {
@@ -64,9 +69,16 @@ const FriendList = () => {
       totalFriendRequest -= 1;
     }
   };
-
   const renderListFriendRequest = () => {
-    if (listFriendRequest?.length < 0) return null;
+    if (errorDataRequest && errorDataRequest.length > 0) {
+      return errorDataRequest?.map((err, index) => {
+        return (
+          <p style={{ color: 'red' }} key={index}>
+            {err?.msg}
+          </p>
+        );
+      });
+    }
     return listFriendRequest?.map(friendRq => {
       return (
         <div key={friendRq.id} className="friendReq">

@@ -62,11 +62,13 @@ export const fetchFriendsRequestAction = id => dispatch => {
   friendService
     .fetchFriendsRequest(id)
     .then(res => {
-      const { data } = res.data;
-      dispatch({
-        type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_SUCCESS,
-        payload: data
-      });
+      const { error, data } = res.data;
+      if (!error) {
+        dispatch({
+          type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_SUCCESS,
+          payload: data
+        });
+      }
     })
     .catch(err => {
       const { error, data } = err.response?.data;
@@ -227,7 +229,6 @@ export const deleteFriendContactAction = (
       }
     })
     .catch(err => {
-      console.log(err);
       const { error, data } = err.response?.data;
       dispatch({
         type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE,
@@ -262,6 +263,11 @@ export const getUserSentRequestAction = () => dispatch => {
       return { error, data };
     });
 };
+
 export const dispatchDefaultAction = () => ({
   type: 'DEFAULT_ACTION'
+});
+
+export const fetchFriendsRequestActionDefault = () => ({
+  type: 'DEFAULT_LISTFRIEND_REQUEST'
 });

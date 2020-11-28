@@ -19,7 +19,6 @@ const label_user = {
 
 const ViewUserFriendByID = ({ ...props }) => {
   const { visible, onCancelModal, userData } = props;
-  console.log(userData);
   const closeModalView = () => {
     onCancelModal();
   };
