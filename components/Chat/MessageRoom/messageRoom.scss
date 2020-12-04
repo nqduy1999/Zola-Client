@@ -2,6 +2,7 @@
   &__header {
     padding: 10px 17px;
     background: #fff;
+    height: 91px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     .info_room {
       width: 100%;
@@ -185,9 +186,8 @@
   &__chat_tab {
     height: 8.5vh;
     input {
-      height: 100%;
       border: none;
-      width: 85%;
+      width: 100%;
     }
     .icon {
       display: inline-block;

@@ -1,17 +1,13 @@
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
-import {
-  SendOutlined,
-  SmileOutlined,
-  LikeOutlined,
-  EllipsisOutlined
-} from '@ant-design/icons';
+import { EllipsisOutlined } from '@ant-design/icons';
 import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import Message from '../Message';
+import InputChat from './InputChat';
 
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
@@ -19,11 +15,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
 const MessageRoom = ({ ...props }) => {
   const { infoRoom, statusRoom } = props;
-  const [message, SetMessege] = useState();
   const [messageList, setMessageList] = useState([]);
-  const onHandleChangeMessage = e => {
-    SetMessege(e.target.value);
-  };
   useEffect(() => {
     if (infoRoom?.messages) {
       setMessageList(infoRoom.messages);
@@ -144,27 +136,7 @@ const MessageRoom = ({ ...props }) => {
         </div>
       </div>
       <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
-      <div className={c`chat_tab`}>
-        <Input
-          onChange={onHandleChangeMessage}
-          value={message}
-          placeholder="Nhập tin nhắn của bạn"
-        />
-        <div className="icon">
-          <Button>
-            <SmileOutlined style={{ color: '#767676' }} />
-          </Button>
-          {message ? (
-            <Button>
-              <SendOutlined />
-            </Button>
-          ) : (
-            <Button>
-              <LikeOutlined />
-            </Button>
-          )}
-        </div>
-      </div>
+      <InputChat />
     </section>
   );
 };

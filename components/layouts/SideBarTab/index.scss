@@ -89,19 +89,34 @@
 
       .message_tab_chat {
         padding: 10px;
+        .tab_room{
+        .avatar-group-vip-pro {
+          display: grid;
+          grid-template-columns: auto auto;
+          width: 74px;
+          height: 64px;
+          .avatar-group {
+            .userInfoSideBar {
+              .avatar-user {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+      }
         .group__name {
           font-size: 15px;
           font-weight: 540;
           line-height: 1.5px;
         }
-        .avatar-chat{
+        .avatar-chat {
           border-radius: 50%;
-          margin-right: 11px;
+          margin-right: 10%;
         }
       }
-      .message_tab_chat:hover{
+      .message_tab_chat:hover {
         cursor: pointer;
-        .edit{
+        .edit {
           display: inline-block;
         }
       }
@@ -109,6 +124,10 @@
         border: none;
         .message_tab_chat {
           background: #e6f0ff;
+          .group__name_group{
+            font-weight: 550;
+
+          }
           .group__name {
             font-weight: 550;
           }
@@ -118,7 +137,7 @@
   }
   .react-tabs {
     display: grid;
-    grid-template-columns: 320px  auto;
+    grid-template-columns: 320px auto;
   }
 
   .tab {

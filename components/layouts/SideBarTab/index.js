@@ -2,12 +2,7 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  KeyOutlined,
-  TeamOutlined
-} from '@ant-design/icons';
+import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,6 +76,41 @@ const SideBarTab = () => {
       );
     });
   };
+  const renderAvatarUserGroup = group => {
+    const arrayImage = group?.users?.slice(0, 4);
+    return (
+      <>
+        {arrayImage?.map((user, key) => {
+          return (
+            <div className="avatar-group" key={key}>
+              <div className="userInfoSideBar">
+                {user.avatar === null || user.avatar === '' ? (
+                  <Avatar
+                    className="avatar-user"
+                    name={user.name}
+                    size="32px"
+                    round={true}
+                    maxInitials={4}
+                  />
+                ) : (
+                  <img
+                    src={user.avatar}
+                    alt="avatar"
+                    style={{
+                      borderRadius: '50%',
+                      width: '32px',
+                      height: '32px',
+                      marginRight: '5px'
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  };
   const handleClickRoom = value => {
     setLoading(true);
     setInfoRoom(value);
@@ -103,21 +133,16 @@ const SideBarTab = () => {
                 <div className="info_user_room">
                   {room.group ? (
                     <div className="tab_room">
-                      <Avatar
-                        size="64px"
-                        className="avatar-chat"
-                        name={room?.name}
-                      />
-                      <div
-                        className="content-tab-chat"
-                        style={{ display: 'inline-block' }}
-                      >
-                        <p className="group__name">{room.name}</p>
+                      <div style={{ display: 'inline-block' }}>
+                        <div className="avatar-group-vip-pro">
+                          {renderAvatarUserGroup(room)}
+                        </div>
                       </div>
                       <div
-                        style={{ display: 'inline-block', paddingLeft: '10px' }}
+                        className="content-tab-chat_group"
+                        style={{ display: 'inline-block' }}
                       >
-                        <TeamOutlined />
+                        <p className="group__name_group">{room.name}</p>
                       </div>
                       <div
                         className="edit"
@@ -128,25 +153,27 @@ const SideBarTab = () => {
                     </div>
                   ) : (
                     <div className="tab_room">
-                      {room?.users[1]?.avatar === null ||
-                      room?.users[1]?.avatar === '' ? (
-                        <Avatar
-                          size="64px"
-                          className="avatar-chat"
-                          name={room?.users[1]?.name}
-                        />
-                      ) : (
-                        <img
-                          style={{
-                            borderRadius: '50%',
-                            width: '64px',
-                            height: '64px',
-                            marginRight: '11px'
-                          }}
-                          src={room?.users[1]?.avatar}
-                          alt="avatar"
-                        />
-                      )}
+                      <div style={{ width: '74px', display: 'inline-block' }}>
+                        {room?.users[1]?.avatar === null ||
+                        room?.users[1]?.avatar === '' ? (
+                          <Avatar
+                            size="64px"
+                            className="avatar-chat"
+                            name={room?.users[1]?.name}
+                          />
+                        ) : (
+                          <img
+                            style={{
+                              borderRadius: '50%',
+                              width: '64px',
+                              height: '64px',
+                              marginRight: '11px'
+                            }}
+                            src={room?.users[1]?.avatar}
+                            alt="avatar"
+                          />
+                        )}
+                      </div>
                       <div
                         className="content-tab-chat"
                         style={{ display: 'inline-block' }}
