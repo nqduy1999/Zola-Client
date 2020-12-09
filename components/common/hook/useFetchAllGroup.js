@@ -32,6 +32,7 @@ const useFetchAllGroup = () => {
   const { userProfile } = useSelector(state => state.userData);
 
   const { socket } = useContext(SocketIOContext);
+  console.log(socket);
   useEffect(() => {
     const list_user = [
       {
