@@ -89,21 +89,21 @@
 
       .message_tab_chat {
         padding: 10px;
-        .tab_room{
-        .avatar-group-vip-pro {
-          display: grid;
-          grid-template-columns: auto auto;
-          width: 74px;
-          height: 64px;
-          .avatar-group {
-            .userInfoSideBar {
-              .avatar-user {
-                margin-right: 5px;
-              }
-            }
+        .tab_room {
+          .avatar-group-vip-pro {
+            display: grid;
+            grid-template-columns: auto auto;
+            width: 74px;
+            height: 64px;
+            // .avatar-group {
+            //   .userInfoSideBar {
+            //     // .avatar-user {
+            //     //   margin-right: 5px;
+            //     // }
+            //   }
+            // }
           }
         }
-      }
         .group__name {
           font-size: 15px;
           font-weight: 540;
@@ -124,14 +124,21 @@
         border: none;
         .message_tab_chat {
           background: #e6f0ff;
-          .group__name_group{
+          .group__name_group {
             font-weight: 550;
-
           }
           .group__name {
             font-weight: 550;
           }
         }
+      }
+      .fa-address-book {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 50px;
+        color: cornflowerblue;
+        margin-right: 10px;
       }
     }
   }

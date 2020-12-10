@@ -1,16 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// React Libary
 import React, { useEffect } from 'react';
-import { classPrefixor } from 'utils/classPrefixor';
-import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'antd';
+import { toast } from 'react-toastify';
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
 import {
   dispatchDefaultAction,
   exitGroupChatAction
 } from 'actions/groupAction';
 import { getListMessage } from 'actions/messageAction';
-import { toast } from 'react-toastify';
+
+// Common
+import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
-import Avatar from 'react-avatar';
+import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
@@ -36,46 +41,27 @@ const GroupList = () => {
     dispatch(dispatchDefaultAction());
   }, [messageExitGroup]);
 
-  const renderAvatarUserGroup = item => {
-    const arrayImage = item?.users?.slice(0, 4);
-    return (
-      <>
-        {arrayImage?.map(user => {
-          return (
-            <>
-              <div className="userInfo">
-                {user.avatar === null || user.avatar === '' ? (
-                  <Avatar
-                    className="avatar-user"
-                    size="64px"
-                    name={user.name}
-                  />
-                ) : (
-                  <img
-                    style={{
-                      borderRadius: '50%',
-                      width: '62px',
-                      height: '62px',
-                      marginRight: '11px'
-                    }}
-                    src={user.avatar}
-                    alt="avatar"
-                  />
-                )}
-              </div>
-            </>
-          );
-        })}
-      </>
+  const RenderAvatarUserGroup = group => {
+    const [renderAvatarUserGroup] = useRenderAvatar(
+      group,
+      {
+        borderRadius: '50%',
+        width: '62px',
+        height: '62px',
+        marginRight: '11px'
+      },
+      '62px'
     );
+    return renderAvatarUserGroup();
   };
+
   const renderListGroup = () => {
     return listGroup?.map(item => {
       return (
         <>
           {item.group && (
             <div className="friend-center-item-v2">
-              <div className="avatar">{renderAvatarUserGroup(item)}</div>
+              <div className="avatar">{RenderAvatarUserGroup(item)}</div>
               <div className="truncate">{item.name}</div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div

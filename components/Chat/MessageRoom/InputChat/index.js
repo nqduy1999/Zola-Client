@@ -12,6 +12,7 @@ const InputChat = () => {
   };
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
+
   const onFinish = values => {
     socket.emit('send_and_recive', {
       message: values.chatting,
@@ -30,6 +31,7 @@ const InputChat = () => {
           onChange={onHandleChangeMessage}
           value={message}
           placeholder="Nhập tin nhắn của bạn"
+          autoFocus
         />
       </Form.Item>
       <div className="icon">

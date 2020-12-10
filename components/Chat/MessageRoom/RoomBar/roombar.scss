@@ -1,0 +1,136 @@
+.room_bar {
+  padding: 10px 17px;
+  background: #fff;
+  height: 91px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  .info_room {
+    width: 100%;
+    .friend-center-item-v2 {
+      width: 10%;
+      .avatar {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 5px;
+        justify-content: left;
+
+        .userInfo {
+          .avatar-user {
+            border-radius: 50%;
+            width: 62px;
+            height: 62px;
+            margin-right: 11px;
+          }
+        }
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+    }
+    .avatar-chat {
+      border-radius: 50%;
+      margin-right: 11px;
+    }
+    img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      margin-right: 11px;
+    }
+    .content_group_room {
+      position: absolute;
+      display: block;
+      top: 9px;
+      left: 490px;
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+        color: #222;
+        left: 8px;
+        font-weight: 520;
+        letter-spacing: 0.75px;
+      }
+      .info_user_room {
+        span {
+          font-weight: 300;
+          min-width: 110px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          background-color: rgba(249, 249, 253, 0.7);
+          box-shadow: 0 0 13px 1px #f2f5fa;
+          display: contents;
+        }
+      }
+      .action {
+        top: -60px;
+        width: 20%;
+        display: inline-block;
+        padding-left: 750px;
+        position: relative;
+        button {
+          background-color: transparent;
+          border: none;
+          font-size: 30px;
+          color: #767676;
+          span {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+    .content_room {
+      position: absolute;
+      display: inline-block;
+      width: 50%;
+      font-family: Segoe UI, SegoeuiPc, San Francisco, Helvetica Neue, Helvetica,
+        Lucida Grande, Roboto, Ubuntu, Tahoma, Microsoft Sans Serif, Arial,
+        sans-serif;
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+        color: #222;
+        left: 8px;
+        font-weight: 520;
+        letter-spacing: 0.75px;
+      }
+      .info_user_room {
+        span {
+          font-weight: 300;
+          min-width: 110px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          background-color: rgba(249, 249, 253, 0.7);
+          box-shadow: 0 0 13px 1px #f2f5fa;
+          display: contents;
+        }
+      }
+      .action {
+        top: -60px;
+        width: 20%;
+        display: inline-block;
+        padding-left: 750px;
+        position: relative;
+        button {
+          background-color: transparent;
+          border: none;
+          font-size: 30px;
+          color: #767676;
+          span {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  #avt-user{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+  }
+}
