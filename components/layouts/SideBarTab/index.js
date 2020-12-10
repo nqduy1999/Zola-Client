@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
@@ -28,8 +29,8 @@ const ChangePasswordUser = dynamic(() =>
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
-import { findUserByIdAction } from 'actions/userAction';
 import Avatar from 'react-avatar';
+import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -37,16 +38,36 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const SideBarTab = () => {
+  // react hook
   const [infoRoom, setInfoRoom] = useState({});
   const [statusRoom, setStatusRoom] = useState(false);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // redux hook
   const dispatch = useDispatch();
-  const { push } = useRouter();
   const { userProfile } = useSelector(state => state.userData);
+
+  // custom hook
   const { listGroup } = useFetchAllGroup();
+
+  // nextjs hook
+  const { push } = useRouter();
+
+  const RenderAvatarUserGroup = group => {
+    const [renderAvatarUserGroup] = useRenderAvatar(
+      group,
+      {
+        borderRadius: '50%',
+        width: '35px',
+        height: '35px'
+      },
+      '35px'
+    );
+    return renderAvatarUserGroup();
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -77,47 +98,10 @@ const SideBarTab = () => {
     });
   };
 
-  const renderAvatarUserGroup = group => {
-    const arrayImage = group?.users?.slice(0, 4);
-    return (
-      <>
-        {arrayImage?.map((user, key) => {
-          return (
-            <div className="avatar-group" key={key}>
-              <div className="userInfoSideBar">
-                {user.avatar === null || user.avatar === '' ? (
-                  <Avatar
-                    className="avatar-user"
-                    name={user.name}
-                    size="32px"
-                    round={true}
-                    maxInitials={4}
-                  />
-                ) : (
-                  <img
-                    src={user.avatar}
-                    alt="avatar"
-                    style={{
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      marginRight: '5px'
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </>
-    );
-  };
-
   const handleClickRoom = value => {
     setLoading(true);
     setInfoRoom(value);
     if (!value.group) {
-      dispatch(findUserByIdAction(value?.users[1]?.id));
       setStatusRoom(false);
       setLoading(false);
     } else {
@@ -126,7 +110,8 @@ const SideBarTab = () => {
     }
   };
 
-  const renderNameListRoom = () => {
+  // Hiển thị các group và single group
+  const renderNameListRoom = useCallback(() => {
     return listGroup?.map((room, key) => {
       return (
         <>
@@ -138,7 +123,7 @@ const SideBarTab = () => {
                     <div className="tab_room">
                       <div style={{ display: 'inline-block' }}>
                         <div className="avatar-group-vip-pro">
-                          {renderAvatarUserGroup(room)}
+                          {RenderAvatarUserGroup(room)}
                         </div>
                       </div>
                       <div
@@ -147,12 +132,6 @@ const SideBarTab = () => {
                       >
                         <p className="group__name_group">{room.name}</p>
                       </div>
-                      {/* <div
-                        className="edit"
-                        style={{ display: 'inline-block', paddingLeft: '20px' }}
-                      >
-                        <EllipsisOutlined />
-                      </div> */}
                     </div>
                   ) : (
                     <div className="tab_room">
@@ -183,12 +162,6 @@ const SideBarTab = () => {
                       >
                         <p className="group__name">{room?.users[1]?.name}</p>
                       </div>
-                      {/* <div
-                        className="edit"
-                        style={{ display: 'inline-block', paddingLeft: '40px' }}
-                      >
-                        <EllipsisOutlined />
-                      </div> */}
                     </div>
                   )}
                 </div>
@@ -198,9 +171,192 @@ const SideBarTab = () => {
         </>
       );
     });
+  }, [listGroup]);
+
+  // Hiển thị ra các tab với các icon tương ứng
+  const renderTabsIcon = () => {
+    return (
+      <>
+        <Tab style={{ padding: '24.5%' }}>
+          <i className="fa fa-comment" style={{ fontSize: '20px' }}></i>
+        </Tab>
+        <Tab style={{ padding: '24.5%', paddingLeft: '29%' }}>
+          <i className="fa fa-address-book" style={{ fontSize: '20px' }}></i>
+        </Tab>
+        <div className="sign-out">
+          <Button
+            onClick={() => {
+              dispatch(accountLogout(push));
+            }}
+          >
+            <i className="fa fa-sign-out-alt"></i>
+          </Button>
+        </div>
+      </>
+    );
   };
 
-  const renderData = () => {
+  // Đây là submenu khi người dùng click vào avatar sẽ hiển thị ra
+  const renderSubMenuWhenClickIconAvatar = useCallback(() => {
+    return (
+      <>
+        <SubMenu
+          className="Submenu"
+          title={
+            <div className="avatar" style={{ cursor: 'pointer' }}>
+              <img
+                src={userProfile?.avatar}
+                className="img_avatar"
+                data-reactid="23"
+              />
+
+              <div className="icon-online"></div>
+            </div>
+          }
+        >
+          <MenuItemGroup className="styleMenuItem">
+            <EditOutlined className="styleIcon" />
+            <a target="_blank" onClick={showModal} style={{ color: 'black' }}>
+              Cập nhật thông tin
+            </a>
+          </MenuItemGroup>
+          <MenuItemGroup className="styleMenuItem">
+            <KeyOutlined className="styleIcon" />
+            <a
+              target="_blank"
+              onClick={() => setVisiblePassword(true)}
+              style={{ color: 'black' }}
+            >
+              Đổi mật khẩu
+            </a>
+          </MenuItemGroup>
+          <MenuItemGroup className="submenu__delete">
+            <a
+              target="_blank"
+              style={{ color: 'red' }}
+              onClick={() => {
+                dispatch(accountLogout(push));
+              }}
+            >
+              Đăng Xuất
+            </a>
+          </MenuItemGroup>
+        </SubMenu>
+      </>
+    );
+  }, [userProfile]);
+
+  //Đây là tab để render ra bên cây màu xanh nè!
+  const renderTabList = () => {
+    return (
+      <TabList className={c`tabs__tablist`}>
+        <div className="tablist__content">
+          <Menu className="menuUser" triggerSubMenuAction="click">
+            {renderSubMenuWhenClickIconAvatar()}
+          </Menu>
+          {renderTabsIcon()}
+        </div>
+      </TabList>
+    );
+  };
+
+  // Đây là tabpanel của các tab trong tab danh bạ điện thoại
+  const renderTabPanelItemInIconPhoneBook = () => {
+    return (
+      <>
+        <TabPanel>
+          <FriendList />
+        </TabPanel>
+        <TabPanel>
+          <PhoneBook />
+        </TabPanel>
+        <TabPanel>
+          <GroupList />
+        </TabPanel>
+      </>
+    );
+  };
+
+  // Đây là tab của icon danh bạ điện thoại
+  const renderTabPanelInPhoneBook = () => {
+    return (
+      <TabPanel>
+        <Tabs forceRenderTabPanel>
+          <TabList className={c`tabs__tablist`}>
+            <SearchComponent />
+            <div className="scrollCustom">
+              <Tab className="tab">
+                <img
+                  src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
+                  alt="imgAddF"
+                />
+                <span>Danh Sách Kết Bạn</span>
+              </Tab>
+
+              <Tab className="tab">
+                <i className="fa fa-address-book"></i>
+                <span>Danh Bạ Bạn Bè</span>
+              </Tab>
+              <Tab className="tab">
+                <img
+                  src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
+                  alt="imgAddF"
+                />
+                <span>Danh Sách Nhóm</span>
+              </Tab>
+              <Directory />
+            </div>
+          </TabList>
+          {renderTabPanelItemInIconPhoneBook()}
+        </Tabs>
+      </TabPanel>
+    );
+  };
+
+  const renderTabPanelItemInIconChat = () => {
+    return (
+      <>
+        <TabPanel>
+          <HomePage />
+        </TabPanel>
+        {renderRooms()}
+      </>
+    );
+  };
+
+  // Đây là tab của icon chat
+  const renderTabpanelInChatting = useCallback(() => {
+    return (
+      <TabPanel>
+        <Tabs forceRenderTabPanel>
+          <TabList className={c`tabs__tablist`}>
+            <SearchComponent />
+            <Menu
+              style={{ border: 'none' }}
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+            ></Menu>
+            <div className="scrollCustom">
+              <Tab style={{ display: 'none' }}></Tab>
+              {renderNameListRoom()}
+            </div>
+          </TabList>
+          {renderTabPanelItemInIconChat()}
+        </Tabs>
+      </TabPanel>
+    );
+  }, [renderNameListRoom, renderRooms]);
+
+  const renderTabPanel = () => {
+    return (
+      <>
+        {renderTabpanelInChatting()}
+        {renderTabPanelInPhoneBook()}
+      </>
+    );
+  };
+
+  const renderTabsTree = () => {
     return (
       <>
         <secion className={prefix}>
@@ -210,158 +366,8 @@ const SideBarTab = () => {
             className={c`tabs`}
             selectedTabClassName="is-selected"
           >
-            <TabList className={c`tabs__tablist`}>
-              <div className="tablist__content">
-                <Menu className="menuUser">
-                  <SubMenu
-                    className="Submenu"
-                    title={
-                      <div className="avatar" style={{ cursor: 'pointer' }}>
-                        <img
-                          src={userProfile?.avatar}
-                          className="img_avatar"
-                          data-reactid="23"
-                        />
-
-                        <div className="icon-online"></div>
-                      </div>
-                    }
-                  >
-                    <MenuItemGroup className="styleMenuItem">
-                      <EditOutlined className="styleIcon" />
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={showModal}
-                        style={{ color: 'black' }}
-                      >
-                        Cập nhật thông tin
-                      </a>
-                    </MenuItemGroup>
-                    <MenuItemGroup className="styleMenuItem">
-                      <KeyOutlined className="styleIcon" />
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setVisiblePassword(true)}
-                        style={{ color: 'black' }}
-                      >
-                        Đổi mật khẩu
-                      </a>
-                    </MenuItemGroup>
-                    <MenuItemGroup
-                      style={{
-                        padding: '10px 20px',
-                        color: 'red',
-                        fontWeight: '500'
-                      }}
-                    >
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: 'red' }}
-                        onClick={() => {
-                          dispatch(accountLogout(push));
-                        }}
-                      >
-                        Đăng Xuất
-                      </a>
-                    </MenuItemGroup>
-                  </SubMenu>
-                </Menu>
-                <Tab style={{ padding: '24.5%' }}>
-                  <i className="fa fa-comment" style={{ fontSize: '20px' }}></i>
-                </Tab>
-                <Tab style={{ padding: '24.5%', paddingLeft: '29%' }}>
-                  <i
-                    className="fa fa-address-book"
-                    style={{ fontSize: '20px' }}
-                  ></i>
-                </Tab>
-                <div className="sign-out">
-                  <Button
-                    onClick={() => {
-                      dispatch(accountLogout(push));
-                    }}
-                  >
-                    <i className="fa fa-sign-out-alt"></i>
-                  </Button>
-                </div>
-              </div>
-            </TabList>
-            <TabPanel>
-              <Tabs forceRenderTabPanel>
-                <TabList className={c`tabs__tablist`}>
-                  <SearchComponent />
-                  <Menu
-                    style={{ border: 'none' }}
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
-                  ></Menu>
-                  <div className="scrollCustom">
-                    <Tab style={{ display: 'none' }}></Tab>
-                    {renderNameListRoom()}
-                  </div>
-                </TabList>
-                <TabPanel>
-                  <HomePage />
-                </TabPanel>
-                {renderRooms()}
-              </Tabs>
-            </TabPanel>
-            <TabPanel>
-              <Tabs forceRenderTabPanel>
-                <TabList className={c`tabs__tablist`}>
-                  <SearchComponent />
-                  <div className="scrollCustom">
-                    <Tab className="tab">
-                      <img
-                        src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
-                        alt="imgAddF"
-                      />
-                      <span>Danh Sách Kết Bạn</span>
-                    </Tab>
-
-                    <Tab className="tab">
-                      <i
-                        className="fa fa-address-book"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          borderRadius: '50%',
-                          fontSize: '50px',
-                          color: 'cornflowerblue',
-                          marginRight: '10px'
-                        }}
-                      ></i>
-                      <span>Danh Bạ Bạn Bè</span>
-                    </Tab>
-                    <Tab className="tab">
-                      <img
-                        src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
-                        alt="imgAddF"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          borderRadius: '50%'
-                        }}
-                      />
-                      <span>Danh Sách Nhóm</span>
-                    </Tab>
-                    <Directory />
-                  </div>
-                </TabList>
-                <TabPanel>
-                  <FriendList />
-                </TabPanel>
-                <TabPanel>
-                  <PhoneBook />
-                </TabPanel>
-                <TabPanel>
-                  <GroupList />
-                </TabPanel>
-              </Tabs>
-            </TabPanel>
+            {renderTabList()}
+            {renderTabPanel()}
           </Tabs>
           <Update
             cancelAvatar={cancelModal}
@@ -379,7 +385,7 @@ const SideBarTab = () => {
       </>
     );
   };
-  return <>{renderData()}</>;
+  return <>{renderTabsTree()}</>;
 };
 
 export default SideBarTab;

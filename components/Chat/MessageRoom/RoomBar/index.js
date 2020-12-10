@@ -1,48 +1,26 @@
 /* eslint-disable react/prop-types */
+// React Libary
 import React from 'react';
-import Avatar from 'react-avatar';
-// import { useSelector } from 'react-redux';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+
+//Redux
+import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 
 const prefix = 'room_bar';
 
 const RoomBar = ({ ...props }) => {
   const { infoRoom, statusRoom } = props;
-  // const { userFind, isLoading } = useSelector(state => state.userData);
-
-  const renderAvatarUserGroup = item => {
-    const arrayImage = item?.users?.slice(0, 4);
-    return (
-      <>
-        {arrayImage?.map(user => {
-          return (
-            <>
-              <div className="userInfo">
-                {user.avatar === null || user.avatar === '' ? (
-                  <Avatar
-                    className="avatar-user"
-                    size="32.5px"
-                    name={user.name}
-                  />
-                ) : (
-                  <img
-                    style={{
-                      borderRadius: '50%',
-                      width: '32.5px',
-                      height: '32.5px'
-                    }}
-                    src={user.avatar}
-                    alt="avatar"
-                  />
-                )}
-              </div>
-            </>
-          );
-        })}
-      </>
-    );
-  };
+  const [renderAvatarUserGroup] = useRenderAvatar(
+    infoRoom,
+    {
+      borderRadius: '50%',
+      width: '35px',
+      height: '35px',
+      marginRight: '5px'
+    },
+    '35px'
+  );
 
   const renderRoomBarGroup = (
     <div className="content_group_room">
@@ -63,7 +41,7 @@ const RoomBar = ({ ...props }) => {
       {statusRoom ? (
         <div className="info_room">
           <div className="friend-center-item-v2">
-            <div className="avatar">{renderAvatarUserGroup(infoRoom)}</div>
+            <div className="avatar">{renderAvatarUserGroup()}</div>
           </div>
           {renderRoomBarGroup}
         </div>

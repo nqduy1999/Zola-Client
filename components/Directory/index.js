@@ -1,16 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// React Libary
 import React, { useEffect, useState } from 'react';
 import { Collapse, Dropdown, Menu, Popconfirm } from 'antd';
 import Avatar from 'react-avatar';
+import { EllipsisOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
+
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteFriendContactAction,
   dispatchDefaultAction,
   fetchFriendsContactAction
 } from 'actions/friendAction';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { toast } from 'react-toastify';
 import { findUserByIdAction } from 'actions/userAction';
+
+// Component
 import ViewUserFriendByID from 'components/Friend/ViewUserById';
 
 const prefix = 'directory';

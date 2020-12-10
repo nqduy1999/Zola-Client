@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unreachable */
+// React Libary
 import React, { useEffect } from 'react';
-import { classPrefixor } from 'utils/classPrefixor';
+import { Button } from 'antd';
+import { toast } from 'react-toastify';
+import Avatar from 'react-avatar';
+
+// Redux
 import { useSelector, useDispatch } from 'react-redux';
 import {
   acceptFriendAction,
@@ -10,9 +15,9 @@ import {
   fetchFriendsContactAction,
   fetchFriendsRequestAction
 } from 'actions/friendAction';
-import { Button } from 'antd';
-import { toast } from 'react-toastify';
-import Avatar from 'react-avatar';
+
+// Common
+import { classPrefixor } from 'utils/classPrefixor';
 
 const prefix = 'listFriend';
 const c = classPrefixor(prefix);

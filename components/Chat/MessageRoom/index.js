@@ -20,8 +20,6 @@ const c = classPrefixor(prefix);
 const MessageRoom = ({ ...props }) => {
   const { infoRoom, statusRoom } = props;
 
-  console.log('infoRoom', infoRoom);
-
   const { messages } = useChatWithSocket(infoRoom);
 
   return (

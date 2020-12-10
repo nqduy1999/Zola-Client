@@ -1,12 +1,17 @@
+// React Libary
 import React, { useEffect } from 'react';
 import Avatar from 'react-avatar';
-import { classPrefixor } from 'utils/classPrefixor';
+import { toast } from 'react-toastify';
+
+// Redux
 import { useSelector, useDispatch } from 'react-redux';
 import {
   dispatchDefaultAction,
   fetchFriendsByPhoneBookAction
 } from 'actions/friendAction';
-import { toast } from 'react-toastify';
+
+// Common
+import { classPrefixor } from 'utils/classPrefixor';
 
 const prefix = 'phoneBook';
 const c = classPrefixor(prefix);
