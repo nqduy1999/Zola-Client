@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
-import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
+import { EditOutlined, KeyOutlined } from '@ant-design/icons';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +76,7 @@ const SideBarTab = () => {
       );
     });
   };
+
   const renderAvatarUserGroup = group => {
     const arrayImage = group?.users?.slice(0, 4);
     return (
@@ -111,6 +112,7 @@ const SideBarTab = () => {
       </>
     );
   };
+
   const handleClickRoom = value => {
     setLoading(true);
     setInfoRoom(value);
@@ -123,6 +125,7 @@ const SideBarTab = () => {
       setLoading(false);
     }
   };
+
   const renderNameListRoom = () => {
     return listGroup?.map((room, key) => {
       return (
@@ -144,12 +147,12 @@ const SideBarTab = () => {
                       >
                         <p className="group__name_group">{room.name}</p>
                       </div>
-                      <div
+                      {/* <div
                         className="edit"
                         style={{ display: 'inline-block', paddingLeft: '20px' }}
                       >
                         <EllipsisOutlined />
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
                     <div className="tab_room">
@@ -180,12 +183,12 @@ const SideBarTab = () => {
                       >
                         <p className="group__name">{room?.users[1]?.name}</p>
                       </div>
-                      <div
+                      {/* <div
                         className="edit"
                         style={{ display: 'inline-block', paddingLeft: '40px' }}
                       >
                         <EllipsisOutlined />
-                      </div>
+                      </div> */}
                     </div>
                   )}
                 </div>

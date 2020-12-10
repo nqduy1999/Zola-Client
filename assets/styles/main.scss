@@ -17,9 +17,12 @@
 @import 'components/Account/Update/update.scss';
 @import 'components/Account/SendOtp/sendOtp.scss';
 @import 'components/Account/ConfirmOtpSignUp/confirmOtpSignUp.scss';
+
 //Chat Component
 @import 'components/Chat/MessageRoom/messageRoom.scss';
-@import 'components/Chat/Message/message.scss';
+@import '../../components/Chat/MessageRoom/MessageList/Message/message.scss';
+@import '../../components/Chat/MessageRoom/RoomBar/roombar.scss';
+
 
 //layout
 @import 'components/layouts/layout.scss';

@@ -22,11 +22,18 @@ const useChatWithSocket = dataGroup => {
         positionUserCurrent: dataGroup?.users?.indexOf(findUser)
       };
       socket.emit('join', info);
+
       socket.on('load_message', function (msg) {
         setMessages(msg);
       });
     }
-  }, [dataGroup, userProfile]);
+  }, [dataGroup]);
+
+  useEffect(() => {
+    socket.on('send_and_recive', function (msg) {
+      setMessages(preMess => [...preMess, msg]);
+    });
+  }, []);
 
   return { messages, setMessages };
 };
