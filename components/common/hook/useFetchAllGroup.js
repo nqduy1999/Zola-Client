@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { dispatchDefaulRoomstAction } from 'actions/roomsAction';
 import { useState, useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SocketIOContext } from '../context/SocketIOContext';
 
 const useFetchAllGroup = () => {
+  const dispatch = useDispatch();
   const [listGroup, setListGroup] = useState([]);
   const { userProfile } = useSelector(state => state.userData);
+  const { messageEditName } = useSelector(state => state.RoomsReducer);
 
   const { socket } = useContext(SocketIOContext);
 
@@ -23,8 +26,9 @@ const useFetchAllGroup = () => {
           setListGroup(data?.rooms);
         }
       });
+      dispatch(dispatchDefaulRoomstAction());
     }
-  }, [userProfile]);
+  }, [userProfile, messageEditName]);
 
   return { listGroup, setListGroup };
 };

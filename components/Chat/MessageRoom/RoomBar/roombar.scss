@@ -44,90 +44,110 @@
       display: block;
       top: 9px;
       left: 490px;
-      h1 {
-        font-size: 24px;
-        line-height: 1.3;
-        color: #222;
-        left: 8px;
-        font-weight: 520;
-        letter-spacing: 0.75px;
-      }
       .info_user_room {
-        span {
-          font-weight: 300;
-          min-width: 110px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          background-color: rgba(249, 249, 253, 0.7);
-          box-shadow: 0 0 13px 1px #f2f5fa;
-          display: contents;
+        .count_user {
+          .anticon-user {
+            font-size: 18px;
+          }
         }
       }
-      .action {
-        top: -60px;
-        width: 20%;
-        display: inline-block;
-        padding-left: 750px;
-        position: relative;
-        button {
-          background-color: transparent;
-          border: none;
+      .room_name {
+        display: flex;
+        align-items: center;
+        h1 {
           font-size: 30px;
-          color: #767676;
-          span {
-            font-size: 30px;
+          margin-right: 15px;
+          margin-bottom: 0;
+        }
+        .anticon-edit {
+          font-size: 18px;
+          cursor: pointer;
+          &:hover {
+            color: royalblue;
+            transition: all 0.5s;
+          }
+        }
+
+        .form_editName {
+          .ant-form-item {
+            margin-bottom: 0;
+            input {
+              font-size: 30px;
+              padding: 0;
+              border-radius: 15px;
+              border-color: royalblue;
+              &:focus {
+                box-shadow: none;
+              }
+            }
+          }
+        }
+        .after_clickEdit {
+          font-size: 18px;
+          .anticon-close {
+            margin: 0 15px;
+            &:hover {
+              color: red;
+              transition: all 0.5s;
+            }
+          }
+          .anticon-check {
+            cursor: pointer;
+            &:hover {
+              color: green;
+              transition: all 0.5s;
+            }
           }
         }
       }
     }
-    .content_room {
-      position: absolute;
-      display: inline-block;
-      width: 50%;
-      font-family: Segoe UI, SegoeuiPc, San Francisco, Helvetica Neue, Helvetica,
-        Lucida Grande, Roboto, Ubuntu, Tahoma, Microsoft Sans Serif, Arial,
-        sans-serif;
-      h1 {
-        font-size: 24px;
-        line-height: 1.3;
-        color: #222;
-        left: 8px;
-        font-weight: 520;
-        letter-spacing: 0.75px;
-      }
-      .info_user_room {
-        span {
-          font-weight: 300;
-          min-width: 110px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          background-color: rgba(249, 249, 253, 0.7);
-          box-shadow: 0 0 13px 1px #f2f5fa;
-          display: contents;
-        }
-      }
-      .action {
-        top: -60px;
-        width: 20%;
-        display: inline-block;
-        padding-left: 750px;
-        position: relative;
-        button {
-          background-color: transparent;
-          border: none;
-          font-size: 30px;
-          color: #767676;
-          span {
-            font-size: 30px;
-          }
-        }
-      }
-    }
+    // .content_room {
+    //   position: absolute;
+    //   display: inline-block;
+    //   width: 50%;
+    //   font-family: Segoe UI, SegoeuiPc, San Francisco, Helvetica Neue, Helvetica,
+    //     Lucida Grande, Roboto, Ubuntu, Tahoma, Microsoft Sans Serif, Arial,
+    //     sans-serif;
+    //   h1 {
+    //     font-size: 24px;
+    //     line-height: 1.3;
+    //     color: #222;
+    //     left: 8px;
+    //     font-weight: 520;
+    //     letter-spacing: 0.75px;
+    //   }
+    //   .info_user_room {
+    //     span {
+    //       font-weight: 300;
+    //       min-width: 110px;
+    //       text-overflow: ellipsis;
+    //       white-space: nowrap;
+    //       overflow: hidden;
+    //       background-color: rgba(249, 249, 253, 0.7);
+    //       box-shadow: 0 0 13px 1px #f2f5fa;
+    //       display: contents;
+    //     }
+    //   }
+    //   .action {
+    //     top: -60px;
+    //     width: 20%;
+    //     display: inline-block;
+    //     padding-left: 750px;
+    //     position: relative;
+    //     button {
+    //       background-color: transparent;
+    //       border: none;
+    //       font-size: 30px;
+    //       color: #767676;
+    //       span {
+    //         font-size: 30px;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
-  #avt-user{
+  #avt-user {
     border-radius: 50%;
     width: 70px;
     height: 70px;
