@@ -258,8 +258,8 @@
 // CLick icon user in group chatting
 .clickPeopleIcon {
   display: flex;
-  .react-tabs {
-    width: 75% !important;
+  .sidebar-tab__tabs{
+    width: 100%;
   }
   .manage__people{
     display: block;

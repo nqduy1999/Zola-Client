@@ -329,7 +329,7 @@ const SideBarTab = () => {
   // Đây là tab của icon chat
   const renderTabpanelInChatting = useCallback(() => {
     return (
-      <TabPanel className={clickPeopleIcon}>
+      <TabPanel>
         <Tabs forceRenderTabPanel>
           <TabList className={c`tabs__tablist`}>
             <SearchComponent />
@@ -345,7 +345,6 @@ const SideBarTab = () => {
           </TabList>
           {renderTabPanelItemInIconChat()}
         </Tabs>
-        <ManagePeopleInGroup />
       </TabPanel>
     );
   }, [renderNameListRoom, renderRooms]);
@@ -362,7 +361,7 @@ const SideBarTab = () => {
   const renderTabsTree = () => {
     return (
       <>
-        <secion className={prefix}>
+        <secion className={`${prefix} ${clickPeopleIcon}`}>
           <Tabs
             forceRenderTabPanel
             defaultIndex={0}
@@ -372,6 +371,7 @@ const SideBarTab = () => {
             {renderTabList()}
             {renderTabPanel()}
           </Tabs>
+          <ManagePeopleInGroup />
           <Update
             cancelAvatar={cancelModal}
             visible={visible}
