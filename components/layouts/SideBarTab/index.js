@@ -42,12 +42,9 @@ const MenuItemGroup = Menu.ItemGroup;
 
 const SideBarTab = () => {
   // react hook
-  // const [infoRoom, setInfoRoom] = useState({});
-  // const [statusRoom, setStatusRoom] = useState(false);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
-  // const [loading, setLoading] = useState(false);
 
   // redux hook
   const dispatch = useDispatch();
