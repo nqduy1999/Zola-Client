@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 // React Libary
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   CheckOutlined,
   CloseOutlined,
@@ -14,16 +14,18 @@ import { Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import { editRoomNameAction } from 'actions/roomsAction';
+import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'room_bar';
 
-const RoomBar = ({ ...props }) => {
+const RoomBar = () => {
   const dispatch = useDispatch();
-  const { infoRoom, statusRoom } = props;
   const [clickItemEdit, setClickItemEdit] = useState(false);
   const [valueInputEditRoomName, setValueInputEditRoomName] = useState('');
   const [isUpdateRoomNameSuccess, setIsUpdateRoomNameSuccess] = useState(false);
-
+  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { infoRoom, statusRoom } = useContext(InfoRoomContext);
   const [renderAvatarUserGroup] = useRenderAvatar(
     infoRoom,
     {
@@ -119,7 +121,7 @@ const RoomBar = ({ ...props }) => {
       </div>
       <div className="info_user_room">
         <div className="count_user">
-          <UserOutlined />
+          <UserOutlined onClick={() => setClickPeopleIcon('clickPeopleIcon')} />
           <span>{infoRoom?.users?.length}</span>
         </div>
       </div>

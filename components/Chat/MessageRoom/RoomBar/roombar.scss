@@ -46,8 +46,13 @@
       left: 490px;
       .info_user_room {
         .count_user {
+          cursor: pointer;
           .anticon-user {
             font-size: 18px;
+          }
+          &:hover{
+            color: royalblue;
+            transition: all 0.5s;
           }
         }
       }
