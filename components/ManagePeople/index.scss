@@ -24,8 +24,8 @@
       cursor: pointer;
       padding: 15px;
       border-bottom: 9px solid rgba(102, 112, 131, 0.05);
-      &:hover{
-        background-color: #F4F5F7;
+      &:hover {
+        background-color: #f4f5f7;
       }
       .anticon-usergroup-add {
         background: rgba(0, 161, 242, 0.1);
@@ -43,9 +43,33 @@
       }
     }
   }
-  &__content--middle{
+  &__content--middle {
     padding: 15px 0;
     width: 90%;
     margin: 0 auto;
+    .listUserInGroup {
+      .user--info {
+        padding: 15px 0;
+        display: flex;
+        align-items: center;
+        position: relative;
+        .avatar--user {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+        .name--user {
+          margin-left: 10px;
+        }
+        .ant-tag {
+          right: 0;
+          bottom: 35%;
+          position: absolute;
+        }
+        .ant-tag-error {
+          cursor: pointer;
+        }
+      }
+    }
   }
 }

@@ -1,7 +1,14 @@
-import React, { useContext, useCallback } from 'react';
-import { Input } from 'antd';
+/* eslint-disable react-hooks/exhaustive-deps */
+// React Libary
+import React, { useContext, useCallback, useState } from 'react';
+import { Input, Tag } from 'antd';
 import Avatar from 'react-avatar';
 import { LeftOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+
+// Redux
+import { useSelector } from 'react-redux';
+
+// Common
 import { classPrefixor } from 'utils/classPrefixor';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
@@ -11,23 +18,54 @@ const c = classPrefixor(prefix);
 const { Search } = Input;
 
 const ManagePeopleInGroup = () => {
+  const [valueSearch, setValueSearch] = useState('');
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
   const { infoRoom } = useContext(InfoRoomContext);
+  const { userProfile } = useSelector(state => state.userData);
+  const { listFriendContact } = useSelector(state => state.FriendReducer);
 
-  const onSearch = value => {
-    console.log(value);
+  const handleSearchName = e => {
+    setValueSearch(e.target.value);
   };
 
+  const handleCheckAvatar = user => {
+    if (user.avatar === null || user.avatar === '') {
+      return <Avatar name={user.name} size="50px" round={true} />;
+    }
+    return <img src={user.avatar} alt="avatar" className="avatar--user" />;
+  };
+
+  const findUserFriend = user => {
+    return listFriendContact?.find(friend => friend.id === user.id);
+  };
+
+  const handleCheckStatusUser = user => {
+    if (user.id === userProfile?.id) {
+      return <Tag color="processing">Chính Bạn</Tag>;
+    }
+    if (findUserFriend(user)) {
+      return <Tag color="success">Bạn Bè</Tag>;
+    }
+    if (findUserFriend(user) === undefined) {
+      return <Tag color="error">Kết Bạn</Tag>;
+    }
+  };
+
+  const userSearch = infoRoom?.users?.filter(
+    user => user.name.toLowerCase().indexOf(valueSearch.toLowerCase()) !== -1
+  );
+
   const renderListUsersInGroup = useCallback(() => {
-    return infoRoom?.users?.map(user => {
+    return userSearch?.map(user => {
       return (
         <div className="user--info" key={user.id}>
-          <Avatar name={user.name} />
-          <span>{user.name}</span>
+          {handleCheckAvatar(user)}
+          <span className="name--user">{user.name}</span>
+          <span className="status--user">{handleCheckStatusUser(user)}</span>
         </div>
       );
     });
-  }, [infoRoom?.users]);
+  }, [handleCheckStatusUser, userSearch]);
 
   return (
     <>
@@ -50,7 +88,7 @@ const ManagePeopleInGroup = () => {
           </div>
         </section>
         <section className={c`content--middle`}>
-          <Search placeholder="Tìm Kiếm Bạn Bè" onSearch={onSearch} />
+          <Search placeholder="Tìm Kiếm Bạn Bè" onChange={handleSearchName} />
           <div className="listUserInGroup">{renderListUsersInGroup()}</div>
         </section>
       </aside>
