@@ -22,6 +22,7 @@ const RoomBar = ({ ...props }) => {
   const { infoRoom, statusRoom } = props;
   const [clickItemEdit, setClickItemEdit] = useState(false);
   const [valueInputEditRoomName, setValueInputEditRoomName] = useState('');
+  const [isUpdateRoomNameSuccess, setIsUpdateRoomNameSuccess] = useState(false);
 
   const [renderAvatarUserGroup] = useRenderAvatar(
     infoRoom,
@@ -35,13 +36,17 @@ const RoomBar = ({ ...props }) => {
   );
   const [form] = Form.useForm();
 
-  console.log('infoRoom', infoRoom);
-
   const handleClickEditGroupName = () => {
     setClickItemEdit(true);
-    form.setFieldsValue({
-      name: infoRoom?.name
-    });
+    if (!isUpdateRoomNameSuccess) {
+      form.setFieldsValue({
+        name: infoRoom?.name
+      });
+    } else {
+      form.setFieldsValue({
+        name: valueInputEditRoomName
+      });
+    }
   };
 
   const handleUpdateRoomName = () => {
@@ -51,11 +56,31 @@ const RoomBar = ({ ...props }) => {
       };
       dispatch(editRoomNameAction(infoRoom?._id, editName));
     }
+    setClickItemEdit(false);
+    setIsUpdateRoomNameSuccess(true);
   };
 
   const onFinish = values => {
     if (Object.keys(infoRoom).length > 0) {
       dispatch(editRoomNameAction(infoRoom?._id, values));
+    }
+    setClickItemEdit(false);
+    setIsUpdateRoomNameSuccess(true);
+  };
+
+  const handleAvoidUpdateRoomName = () => {
+    setClickItemEdit(false);
+  };
+
+  const checkInitialValue = () => {
+    if (isUpdateRoomNameSuccess) {
+      return {
+        name: valueInputEditRoomName
+      };
+    } else {
+      return {
+        name: infoRoom?.name
+      };
     }
   };
 
@@ -63,12 +88,16 @@ const RoomBar = ({ ...props }) => {
     <div className="content_group_room">
       <div className="room_name">
         {!clickItemEdit ? (
-          <h1>{infoRoom?.name}</h1>
+          <h1>
+            {!isUpdateRoomNameSuccess ? (
+              <>{infoRoom?.name}</>
+            ) : (
+              <>{valueInputEditRoomName}</>
+            )}
+          </h1>
         ) : (
           <Form
-            initialValues={{
-              name: infoRoom?.name
-            }}
+            initialValues={checkInitialValue()}
             className="form_editName"
             onFinish={onFinish}
           >
@@ -83,7 +112,7 @@ const RoomBar = ({ ...props }) => {
           <EditOutlined onClick={() => handleClickEditGroupName()} />
         ) : (
           <div className="after_clickEdit">
-            <CloseOutlined onClick={() => setClickItemEdit(false)} />
+            <CloseOutlined onClick={() => handleAvoidUpdateRoomName()} />
             <CheckOutlined onClick={() => handleUpdateRoomName()} />
           </div>
         )}
