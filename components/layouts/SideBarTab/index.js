@@ -120,6 +120,60 @@ const SideBarTab = () => {
     });
   };
   //
+  const renderTabSingleChat = room => {
+    return room?.users.map(user => {
+      if (user.id != userProfile.id) {
+        return (
+          <div key={user.id} className="tab_room">
+            <div
+              style={{
+                width: '74px',
+                display: 'inline-block'
+              }}
+            >
+              {user?.avatar === null || user?.avatar === '' ? (
+                <Avatar size="64px" className="avatar-chat" name={user?.name} />
+              ) : (
+                <img
+                  style={{
+                    borderRadius: '50%',
+                    width: '64px',
+                    height: '64px',
+                    marginRight: '11px'
+                  }}
+                  src={user?.avatar}
+                  alt="avatar"
+                />
+              )}
+            </div>
+            <div
+              className="content-tab-chat"
+              style={{ display: 'inline-block' }}
+            >
+              <p className="group__name">{user?.name}</p>
+            </div>
+          </div>
+        );
+      }
+    });
+  };
+  const renderTabNameGroupRoom = room => {
+    return (
+      <div className="tab_room">
+        <div style={{ display: 'inline-block' }}>
+          <div className="avatar-group-vip-pro">
+            {RenderAvatarUserGroup(room)}
+          </div>
+        </div>
+        <div
+          className="content-tab-chat_group"
+          style={{ display: 'inline-block' }}
+        >
+          <p className="group__name_group">{room.name}</p>
+        </div>
+      </div>
+    );
+  };
   const renderContactRooms = () => {
     return listFriendContact?.map((item, key) => {
       return (
@@ -140,51 +194,9 @@ const SideBarTab = () => {
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
-                  {room.group ? (
-                    <div className="tab_room">
-                      <div style={{ display: 'inline-block' }}>
-                        <div className="avatar-group-vip-pro">
-                          {RenderAvatarUserGroup(room)}
-                        </div>
-                      </div>
-                      <div
-                        className="content-tab-chat_group"
-                        style={{ display: 'inline-block' }}
-                      >
-                        <p className="group__name_group">{room.name}</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="tab_room">
-                      <div style={{ width: '74px', display: 'inline-block' }}>
-                        {room?.users[1]?.avatar === null ||
-                        room?.users[1]?.avatar === '' ? (
-                          <Avatar
-                            size="64px"
-                            className="avatar-chat"
-                            name={room?.users[1]?.name}
-                          />
-                        ) : (
-                          <img
-                            style={{
-                              borderRadius: '50%',
-                              width: '64px',
-                              height: '64px',
-                              marginRight: '11px'
-                            }}
-                            src={room?.users[1]?.avatar}
-                            alt="avatar"
-                          />
-                        )}
-                      </div>
-                      <div
-                        className="content-tab-chat"
-                        style={{ display: 'inline-block' }}
-                      >
-                        <p className="group__name">{room?.users[1]?.name}</p>
-                      </div>
-                    </div>
-                  )}
+                  {room.group
+                    ? renderTabNameGroupRoom(room)
+                    : renderTabSingleChat(room)}
                 </div>
               </div>
             </div>

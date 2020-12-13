@@ -20,7 +20,7 @@ const c = classPrefixor(prefix);
 
 const MessageRoom = ({ ...props }) => {
   const { infoRoom } = useContext(InfoRoomContext);
-
+  console.log(infoRoom);
   const { messages } = useChatWithSocket(infoRoom, props.id);
 
   return (
