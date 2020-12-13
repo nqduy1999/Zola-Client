@@ -39,7 +39,6 @@ const RoomBar = () => {
     '35px'
   );
   const [form] = Form.useForm();
-  console.log(infoRoom);
   const handleClickEditGroupName = () => {
     setClickItemEdit(true);
     if (!isUpdateRoomNameSuccess) {

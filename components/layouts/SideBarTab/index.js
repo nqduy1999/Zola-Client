@@ -95,16 +95,17 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
-
-  const handleClickRoom = value => {
-    setLoading(true);
-    setInfoRoom(value);
-    if (!value.group) {
-      setStatusRoom(false);
-      setLoading(false);
-    } else {
-      setStatusRoom(true);
-      setTimeout(setLoading(false), 3000);
+  const handleClickRoom = (value, key) => {
+    if (key !== -1) {
+      setLoading(true);
+      setInfoRoom(value);
+      if (!value.group) {
+        setStatusRoom(false);
+        setLoading(false);
+      } else {
+        setStatusRoom(true);
+        setTimeout(setLoading(false), 3000);
+      }
     }
   };
 
@@ -283,7 +284,7 @@ const SideBarTab = () => {
   const renderFriend = () => {
     return listFriendContact?.map((friend, key) => {
       return (
-        <Tab key={key} onClick={() => handleClickRoom(friend)}>
+        <Tab key={key} onClick={() => handleClickRoom(friend, key)}>
           <Directory elm={friend} totalFriend={totalFriend} />
         </Tab>
       );

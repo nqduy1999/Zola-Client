@@ -31,7 +31,6 @@ const useChatWithSocket = dataGroup => {
         list_user: [userProfile, dataGroup],
         positionUserCurrent: 0
       };
-      console.log(infoUser);
       socket.emit('join', infoUser);
       socket.on('load_message', function (msg) {
         setMessages(msg);
