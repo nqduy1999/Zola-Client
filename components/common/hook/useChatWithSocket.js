@@ -26,9 +26,18 @@ const useChatWithSocket = dataGroup => {
       socket.on('load_message', function (msg) {
         setMessages(msg);
       });
+    } else {
+      const infoUser = {
+        list_user: [userProfile, dataGroup],
+        positionUserCurrent: 0
+      };
+      console.log(infoUser);
+      socket.emit('join', infoUser);
+      socket.on('load_message', function (msg) {
+        setMessages(msg);
+      });
     }
   }, [dataGroup]);
-
   useEffect(() => {
     socket.on('send_and_recive', function (msg) {
       setMessages(preMess => [...preMess, msg]);
