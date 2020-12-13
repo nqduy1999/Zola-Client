@@ -5,6 +5,9 @@ import { Input, Tag } from 'antd';
 import Avatar from 'react-avatar';
 import { LeftOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
+// NextJS
+import dynamic from 'next/dynamic';
+
 // Redux
 import { useSelector } from 'react-redux';
 
@@ -13,12 +16,18 @@ import { classPrefixor } from 'utils/classPrefixor';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
+// Component
+const ModalAddFriendToGroup = dynamic(() => import('./ModalAddFriendToGroup'));
+
 const prefix = 'manage__people';
 const c = classPrefixor(prefix);
 const { Search } = Input;
 
 const ManagePeopleInGroup = () => {
   const [valueSearch, setValueSearch] = useState('');
+  const [showModalAddFriendToGroup, setShowModalAddFriendToGroup] = useState(
+    false
+  );
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
   const { infoRoom } = useContext(InfoRoomContext);
   const { userProfile } = useSelector(state => state.userData);
@@ -67,6 +76,10 @@ const ManagePeopleInGroup = () => {
     });
   }, [handleCheckStatusUser, userSearch]);
 
+  const handleCloseModal = bool => {
+    setShowModalAddFriendToGroup(bool);
+  };
+
   return (
     <>
       <aside className={prefix}>
@@ -82,7 +95,10 @@ const ManagePeopleInGroup = () => {
           </span>
         </nav>
         <section className={c`content--top`}>
-          <div className="addMemberInGroup">
+          <div
+            className="addMemberInGroup"
+            onClick={() => setShowModalAddFriendToGroup(true)}
+          >
             <UsergroupAddOutlined />
             <span>Thêm Thành Viên</span>
           </div>
@@ -91,6 +107,12 @@ const ManagePeopleInGroup = () => {
           <Search placeholder="Tìm Kiếm Bạn Bè" onChange={handleSearchName} />
           <div className="listUserInGroup">{renderListUsersInGroup()}</div>
         </section>
+        {showModalAddFriendToGroup && (
+          <ModalAddFriendToGroup
+            showModalAddFriendToGroup={showModalAddFriendToGroup}
+            handleCloseModalRoot={handleCloseModal}
+          />
+        )}
       </aside>
     </>
   );
