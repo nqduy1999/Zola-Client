@@ -6,9 +6,10 @@ import {
   CheckOutlined,
   CloseOutlined,
   EditOutlined,
+  EllipsisOutlined,
   UserOutlined
 } from '@ant-design/icons';
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -16,6 +17,7 @@ import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import { editRoomNameAction } from 'actions/roomsAction';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import Avatar from 'antd/lib/avatar/avatar';
 
 const prefix = 'room_bar';
 
@@ -37,7 +39,7 @@ const RoomBar = () => {
     '35px'
   );
   const [form] = Form.useForm();
-
+  console.log(infoRoom);
   const handleClickEditGroupName = () => {
     setClickItemEdit(true);
     if (!isUpdateRoomNameSuccess) {
@@ -138,24 +140,37 @@ const RoomBar = () => {
           {renderRoomBarGroup}
         </div>
       ) : (
-        <div className="info_room">
-          {/* {userFind.avatar === null || userFind.avatar === '' ? (
-            <Avatar size="70px" className="avatar-chat" name={userFind?.name} />
+        <div className="info_room" style={{ display: 'flex' }}>
+          {infoRoom?.avatar === null || infoRoom?.avatar === '' ? (
+            <Avatar
+              size={64}
+              className="avatar-chat"
+              style={{
+                backgroundColor: '#4287f5'
+              }}
+            >
+              {infoRoom?.name}
+            </Avatar>
           ) : (
-            <img src={userFind.avatar} alt="avatar" id="avt-user" />
+            <img src={infoRoom.avatar} alt="avatar" id="avt-user" />
           )}
           <div className="content_room">
-            <h1>{userFind?.name}</h1>
+            <h1>{infoRoom?.name}</h1>
             <div className="info_user_room">
               <span style={{ fontSize: '13px', color: '#99a4b0' }}>
                 Các bạn là bạn bè trên Zola
               </span>
             </div>
-            <div className="action">
-              <Button icon={<EllipsisOutlined />}></Button>
+            <div
+              className="action"
+              style={{ position: 'absolute', right: '20px', top: '23px' }}
+            >
+              <Button
+                icon={<EllipsisOutlined />}
+                style={{ border: 'none' }}
+              ></Button>
             </div>
-          </div> */}
-          XXXXXXXXXXXXXX
+          </div>
         </div>
       )}
     </nav>

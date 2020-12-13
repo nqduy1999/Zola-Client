@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
@@ -34,6 +34,7 @@ import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import { fetchFriendsContactAction } from 'actions/friendAction';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -49,9 +50,14 @@ const SideBarTab = () => {
   // redux hook
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
-
+  const { listFriendContact } = useSelector(state => state.FriendReducer);
   // custom hook
   const { listGroup } = useFetchAllGroup();
+  useEffect(() => {
+    if (userProfile?.id) {
+      dispatch(fetchFriendsContactAction(userProfile?.id));
+    }
+  }, [userProfile]);
 
   // nextjs hook
   const { push } = useRouter();
@@ -74,7 +80,9 @@ const SideBarTab = () => {
   const { setStatusRoom, setInfoRoom, setLoading } = useContext(
     InfoRoomContext
   );
-
+  //
+  const totalFriend = listFriendContact?.length;
+  //
   const showModal = () => {
     setVisible(true);
     setUserData(userProfile);
@@ -96,7 +104,7 @@ const SideBarTab = () => {
       setLoading(false);
     } else {
       setStatusRoom(true);
-      setLoading(false);
+      setTimeout(setLoading(false), 3000);
     }
   };
 
@@ -111,7 +119,18 @@ const SideBarTab = () => {
       );
     });
   };
-
+  //
+  const renderContactRooms = () => {
+    return listFriendContact?.map((_, key) => {
+      return (
+        <>
+          <TabPanel key={key}>
+            <MessageRoom />
+          </TabPanel>
+        </>
+      );
+    });
+  };
   // Hiển thị các group và single group
   const renderNameListRoom = useCallback(() => {
     return listGroup?.map((room, key) => {
@@ -261,7 +280,15 @@ const SideBarTab = () => {
       </TabList>
     );
   };
-
+  const renderFriend = () => {
+    return listFriendContact?.map((friend, key) => {
+      return (
+        <Tab key={key} onClick={() => handleClickRoom(friend)}>
+          <Directory elm={friend} totalFriend={totalFriend} />
+        </Tab>
+      );
+    });
+  };
   // Đây là tabpanel của các tab trong tab danh bạ điện thoại
   const renderTabPanelItemInIconPhoneBook = () => {
     return (
@@ -275,6 +302,7 @@ const SideBarTab = () => {
         <TabPanel>
           <GroupList />
         </TabPanel>
+        {renderContactRooms()}
       </>
     );
   };
@@ -306,7 +334,8 @@ const SideBarTab = () => {
                 />
                 <span>Danh Sách Nhóm</span>
               </Tab>
-              <Directory />
+              <p>Bạn bè ({totalFriend})</p>
+              {renderFriend()}
             </div>
           </TabList>
           {renderTabPanelItemInIconPhoneBook()}
@@ -372,18 +401,22 @@ const SideBarTab = () => {
             {renderTabPanel()}
           </Tabs>
           <ManagePeopleInGroup />
-          <Update
-            cancelAvatar={cancelModal}
-            visible={visible}
-            userProfile={userData}
-            setVisible={setVisible}
-            setUserProfile={setUserData}
-          />
-          <ChangePasswordUser
-            visible={visiblePassword}
-            setVisible={setVisiblePassword}
-            cancelPassword={onCancelPassword}
-          />
+          {visible && (
+            <Update
+              cancelAvatar={cancelModal}
+              visible={visible}
+              userProfile={userData}
+              setVisible={setVisible}
+              setUserProfile={setUserData}
+            />
+          )}
+          {visiblePassword && (
+            <ChangePasswordUser
+              visible={visiblePassword}
+              setVisible={setVisiblePassword}
+              cancelPassword={onCancelPassword}
+            />
+          )}
         </secion>
       </>
     );

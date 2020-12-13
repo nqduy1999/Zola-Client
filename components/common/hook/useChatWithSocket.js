@@ -12,7 +12,6 @@ const useChatWithSocket = dataGroup => {
   const findUserCurrent = () => {
     return dataGroup?.users?.find(user => user.id === userProfile.id);
   };
-
   useEffect(() => {
     if (dataGroup?.users !== undefined) {
       const findUser = findUserCurrent();
@@ -21,6 +20,7 @@ const useChatWithSocket = dataGroup => {
         roomId: dataGroup?._id,
         positionUserCurrent: dataGroup?.users?.indexOf(findUser)
       };
+
       socket.emit('join', info);
 
       socket.on('load_message', function (msg) {

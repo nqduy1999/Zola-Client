@@ -15,19 +15,19 @@ import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 const InputChating = dynamic(() => import('./InputChat'));
 const MessageList = dynamic(() => import('./MessageList'));
 const RoomBar = dynamic(() => import('./RoomBar'));
-
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
+
 const MessageRoom = () => {
   const { infoRoom } = useContext(InfoRoomContext);
 
   const { messages } = useChatWithSocket(infoRoom);
-
   return (
     <section className={prefix}>
       <div className={c`header`}>
         <RoomBar />
       </div>
+
       <div className={c`content`}>
         <ScrollToBottom className="scroll-chat">
           <MessageList messages={messages} />
