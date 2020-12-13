@@ -112,10 +112,12 @@ const SideBarTab = () => {
   };
 
   const renderRooms = () => {
-    return listGroup?.map((_, key) => {
+    return listGroup?.map((item, key) => {
       return (
         <>
-          <TabPanel key={key}>{key === id ? <MessageRoom /> : ''}</TabPanel>
+          <TabPanel key={key}>
+            {key === id ? <MessageRoom id={item.id} /> : ''}
+          </TabPanel>
         </>
       );
     });
@@ -125,7 +127,9 @@ const SideBarTab = () => {
     return listFriendContact?.map((item, key) => {
       return (
         <>
-          <TabPanel key={key}>{key === id ? <MessageRoom /> : ''}</TabPanel>
+          <TabPanel key={key}>
+            {key === id ? <MessageRoom id={item.id} /> : ''}
+          </TabPanel>
         </>
       );
     });

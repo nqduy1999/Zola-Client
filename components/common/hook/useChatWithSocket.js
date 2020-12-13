@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { SocketIOContext } from '../context/SocketIOContext';
 
-const useChatWithSocket = dataGroup => {
+const useChatWithSocket = (dataGroup, id) => {
   const [messages, setMessages] = useState([]);
   const { userProfile } = useSelector(state => state.userData);
 
@@ -27,14 +27,16 @@ const useChatWithSocket = dataGroup => {
         setMessages(msg);
       });
     } else {
-      const infoUser = {
-        list_user: [userProfile, dataGroup],
-        positionUserCurrent: 0
-      };
-      socket.emit('join', infoUser);
-      socket.on('load_message', function (msg) {
-        setMessages(msg);
-      });
+      if (dataGroup.id === id) {
+        const infoUser = {
+          list_user: [userProfile, dataGroup],
+          positionUserCurrent: 0
+        };
+        socket.emit('join', infoUser);
+        socket.on('load_message', function (msg) {
+          setMessages(msg);
+        });
+      }
     }
   }, [dataGroup]);
   useEffect(() => {

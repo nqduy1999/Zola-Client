@@ -18,10 +18,11 @@ const RoomBar = dynamic(() => import('./RoomBar'));
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
 
-const MessageRoom = () => {
+const MessageRoom = ({ ...props }) => {
   const { infoRoom } = useContext(InfoRoomContext);
 
-  const { messages } = useChatWithSocket(infoRoom);
+  const { messages } = useChatWithSocket(infoRoom, props.id);
+
   return (
     <section className={prefix}>
       <div className={c`header`}>
