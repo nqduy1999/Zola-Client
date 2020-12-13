@@ -137,7 +137,7 @@ const SideBarTab = () => {
     return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab onClick={() => handleClickRoom(room)}>
+          <Tab onClick={() => handleClickRoom(room, key)}>
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
