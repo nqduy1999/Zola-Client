@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Menu } from 'antd';
 import { EditOutlined, KeyOutlined } from '@ant-design/icons';
@@ -31,6 +31,9 @@ import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 import Avatar from 'react-avatar';
 import useRenderAvatar from 'components/common/hook/useRenderAvatar';
+import ManagePeopleInGroup from 'components/ManagePeople';
+import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -39,12 +42,9 @@ const MenuItemGroup = Menu.ItemGroup;
 
 const SideBarTab = () => {
   // react hook
-  const [infoRoom, setInfoRoom] = useState({});
-  const [statusRoom, setStatusRoom] = useState(false);
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   // redux hook
   const dispatch = useDispatch();
@@ -69,6 +69,12 @@ const SideBarTab = () => {
     return renderAvatarUserGroup();
   };
 
+  // Context
+  const { clickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { setStatusRoom, setInfoRoom, setLoading } = useContext(
+    InfoRoomContext
+  );
+
   const showModal = () => {
     setVisible(true);
     setUserData(userProfile);
@@ -82,22 +88,6 @@ const SideBarTab = () => {
     setVisiblePassword(false);
   };
 
-  const renderRooms = () => {
-    return listGroup?.map((_, key) => {
-      return (
-        <>
-          <TabPanel key={key}>
-            <MessageRoom
-              infoRoom={infoRoom}
-              statusRoom={statusRoom}
-              loading={loading}
-            />
-          </TabPanel>
-        </>
-      );
-    });
-  };
-
   const handleClickRoom = value => {
     setLoading(true);
     setInfoRoom(value);
@@ -108,6 +98,18 @@ const SideBarTab = () => {
       setStatusRoom(true);
       setLoading(false);
     }
+  };
+
+  const renderRooms = () => {
+    return listGroup?.map((_, key) => {
+      return (
+        <>
+          <TabPanel key={key}>
+            <MessageRoom />
+          </TabPanel>
+        </>
+      );
+    });
   };
 
   // Hiển thị các group và single group
@@ -359,7 +361,7 @@ const SideBarTab = () => {
   const renderTabsTree = () => {
     return (
       <>
-        <secion className={prefix}>
+        <secion className={`${prefix} ${clickPeopleIcon}`}>
           <Tabs
             forceRenderTabPanel
             defaultIndex={0}
@@ -369,6 +371,7 @@ const SideBarTab = () => {
             {renderTabList()}
             {renderTabPanel()}
           </Tabs>
+          <ManagePeopleInGroup />
           <Update
             cancelAvatar={cancelModal}
             visible={visible}

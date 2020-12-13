@@ -1,5 +1,5 @@
 // React Libary
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'antd';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 //Common
 import { classPrefixor } from 'utils/classPrefixor';
 import useChatWithSocket from 'components/common/hook/useChatWithSocket';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 //Component
 const InputChating = dynamic(() => import('./InputChat'));
@@ -17,15 +18,15 @@ const RoomBar = dynamic(() => import('./RoomBar'));
 
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
-const MessageRoom = ({ ...props }) => {
-  const { infoRoom, statusRoom } = props;
+const MessageRoom = () => {
+  const { infoRoom } = useContext(InfoRoomContext);
 
   const { messages } = useChatWithSocket(infoRoom);
 
   return (
     <section className={prefix}>
       <div className={c`header`}>
-        <RoomBar infoRoom={infoRoom} statusRoom={statusRoom} />
+        <RoomBar />
       </div>
       <div className={c`content`}>
         <ScrollToBottom className="scroll-chat">

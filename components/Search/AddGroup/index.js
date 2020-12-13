@@ -1,7 +1,6 @@
 import React from 'react';
-import { Modal, Select } from 'antd';
+import { Modal, Select, Form, Input, Button } from 'antd';
 import { classPrefixor } from 'utils/classPrefixor';
-import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGroupChatAction } from 'actions/groupAction';
 import Avatar from 'react-avatar';

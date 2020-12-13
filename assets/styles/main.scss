@@ -23,7 +23,6 @@
 @import '../../components/Chat/MessageRoom/MessageList/Message/message.scss';
 @import '../../components/Chat/MessageRoom/RoomBar/roombar.scss';
 
-
 //layout
 @import 'components/layouts/layout.scss';
 @import 'components/layouts/SideBarTab/index.scss';
@@ -34,3 +33,6 @@
 
 @import 'components/Search/AddGroup/index.scss';
 @import 'components/Search/index.scss';
+
+// Manage People in Group Component
+@import '../../components/ManagePeople/index.scss';

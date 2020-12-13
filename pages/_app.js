@@ -10,6 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'assets/styles/main.scss';
 import GlobalProvider from 'components/common/context/GlobalContext';
 import { SocketIOProvider } from 'components/common/context/SocketIOContext';
+import { ManagePeopleGroupProvider } from 'components/common/context/ManagePeopleGroupContext';
+import { InfoRoomContextProvider } from 'components/common/context/InfoRoomContext';
+
 const store = configStore();
 
 const MyApp = ({ Component, pageProps }) => {
@@ -17,8 +20,12 @@ const MyApp = ({ Component, pageProps }) => {
     <Provider store={store}>
       <GlobalProvider>
         <SocketIOProvider>
-          <Component {...pageProps} />
-          <ToastContainer limit={3} />
+          <ManagePeopleGroupProvider>
+            <InfoRoomContextProvider>
+              <Component {...pageProps} />
+              <ToastContainer limit={3} />
+            </InfoRoomContextProvider>
+          </ManagePeopleGroupProvider>
         </SocketIOProvider>
       </GlobalProvider>
     </Provider>
