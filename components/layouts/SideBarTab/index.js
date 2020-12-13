@@ -95,17 +95,19 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
-  const handleClickRoom = (value, key) => {
-    if (key !== -1) {
-      setLoading(true);
-      setInfoRoom(value);
-      if (!value.group) {
-        setStatusRoom(false);
-        setLoading(false);
-      } else {
-        setStatusRoom(true);
-        setTimeout(setLoading(false), 3000);
-      }
+
+  const [id, setId] = useState(-1);
+  const handleClickRoom = async (value, key) => {
+    await setId(key);
+    console.log(id);
+    setLoading(true);
+    setInfoRoom(value);
+    if (!value.group) {
+      setStatusRoom(false);
+      setLoading(false);
+    } else {
+      setStatusRoom(true);
+      setTimeout(setLoading(false), 3000);
     }
   };
 
@@ -113,21 +115,17 @@ const SideBarTab = () => {
     return listGroup?.map((_, key) => {
       return (
         <>
-          <TabPanel key={key}>
-            <MessageRoom />
-          </TabPanel>
+          <TabPanel key={key}>{key === id ? <MessageRoom /> : ''}</TabPanel>
         </>
       );
     });
   };
   //
   const renderContactRooms = () => {
-    return listFriendContact?.map((_, key) => {
+    return listFriendContact?.map((item, key) => {
       return (
         <>
-          <TabPanel key={key}>
-            <MessageRoom />
-          </TabPanel>
+          <TabPanel key={key}>{key === id ? <MessageRoom /> : ''}</TabPanel>
         </>
       );
     });
@@ -137,7 +135,7 @@ const SideBarTab = () => {
     return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab onClick={() => handleClickRoom(room)}>
+          <Tab onClick={() => handleClickRoom(room, key)}>
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
