@@ -96,10 +96,7 @@ const SideBarTab = () => {
     setVisiblePassword(false);
   };
 
-  const [id, setId] = useState(-1);
-  const handleClickRoom = async (value, key) => {
-    await setId(key);
-    console.log(id);
+  const handleClickRoom = async value => {
     setLoading(true);
     setInfoRoom(value);
     if (!value.group) {
@@ -116,7 +113,7 @@ const SideBarTab = () => {
       return (
         <>
           <TabPanel key={key}>
-            {key === id ? <MessageRoom id={item.id} /> : ''}
+            <MessageRoom id={item.id} />
           </TabPanel>
         </>
       );
@@ -128,7 +125,7 @@ const SideBarTab = () => {
       return (
         <>
           <TabPanel key={key}>
-            {key === id ? <MessageRoom id={item.id} /> : ''}
+            <MessageRoom id={item.id} />
           </TabPanel>
         </>
       );
@@ -139,7 +136,7 @@ const SideBarTab = () => {
     return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab onClick={() => handleClickRoom(room, key)}>
+          <Tab onClick={() => handleClickRoom(room)}>
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
@@ -286,7 +283,7 @@ const SideBarTab = () => {
   const renderFriend = () => {
     return listFriendContact?.map((friend, key) => {
       return (
-        <Tab key={key} onClick={() => handleClickRoom(friend, key)}>
+        <Tab key={key} onClick={() => handleClickRoom(friend)}>
           <Directory elm={friend} totalFriend={totalFriend} />
         </Tab>
       );
