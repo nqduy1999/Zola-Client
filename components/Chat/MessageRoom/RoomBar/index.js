@@ -18,6 +18,7 @@ import { editRoomNameAction } from 'actions/roomsAction';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import Avatar from 'antd/lib/avatar/avatar';
+import { useSelector } from 'react-redux';
 
 const prefix = 'room_bar';
 
@@ -28,6 +29,7 @@ const RoomBar = () => {
   const [isUpdateRoomNameSuccess, setIsUpdateRoomNameSuccess] = useState(false);
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
   const { infoRoom, statusRoom } = useContext(InfoRoomContext);
+  const { userProfile } = useSelector(state => state.userData);
   const [renderAvatarUserGroup] = useRenderAvatar(
     infoRoom,
     {
@@ -128,50 +130,103 @@ const RoomBar = () => {
       </div>
     </div>
   );
-
+  const renderBarRoomFromContactList = () => {
+    return (
+      <div className="info_room" style={{ display: 'flex' }}>
+        {infoRoom?.avatar === null || infoRoom?.avatar === '' ? (
+          <Avatar
+            size={64}
+            className="avatar-chat"
+            style={{
+              backgroundColor: '#4287f5'
+            }}
+          >
+            {infoRoom?.name}
+          </Avatar>
+        ) : (
+          <img src={infoRoom.avatar} alt="avatar" id="avt-user" />
+        )}
+        <div className="content_room">
+          <h1>{infoRoom?.name}</h1>
+          <div className="info_user_room">
+            <span style={{ fontSize: '13px', color: '#99a4b0' }}>
+              Các bạn là bạn bè trên Zola
+            </span>
+          </div>
+          <div
+            className="action"
+            style={{ position: 'absolute', right: '20px', top: '23px' }}
+          >
+            <Button
+              icon={<EllipsisOutlined />}
+              style={{ border: 'none' }}
+            ></Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const renderBarRoomFromTabRoom = user => {
+    return user?.map(user => {
+      if (user?.id != userProfile?.id) {
+        return (
+          <div className="info_room" style={{ display: 'flex' }}>
+            {user?.avatar === null || user?.avatar === '' ? (
+              <Avatar
+                size={64}
+                className="avatar-chat"
+                style={{
+                  backgroundColor: '#4287f5'
+                }}
+              >
+                {user?.name}
+              </Avatar>
+            ) : (
+              <img src={user.avatar} alt="avatar" id="avt-user" />
+            )}
+            <div className="content_room">
+              <h1>{user?.name}</h1>
+              <div className="info_user_room">
+                <span style={{ fontSize: '13px', color: '#99a4b0' }}>
+                  Các bạn là bạn bè trên Zola
+                </span>
+              </div>
+              <div
+                className="action"
+                style={{ position: 'absolute', right: '20px', top: '23px' }}
+              >
+                <Button
+                  icon={<EllipsisOutlined />}
+                  style={{ border: 'none' }}
+                ></Button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
+  };
   return (
     <nav className={prefix}>
-      {statusRoom ? (
-        <div className="info_room">
-          <div className="friend-center-item-v2">
-            <div className="avatar">{renderAvatarUserGroup()}</div>
-          </div>
-          {renderRoomBarGroup}
-        </div>
-      ) : (
-        <div className="info_room" style={{ display: 'flex' }}>
-          {infoRoom?.avatar === null || infoRoom?.avatar === '' ? (
-            <Avatar
-              size={64}
-              className="avatar-chat"
-              style={{
-                backgroundColor: '#4287f5'
-              }}
-            >
-              {infoRoom?.name}
-            </Avatar>
-          ) : (
-            <img src={infoRoom.avatar} alt="avatar" id="avt-user" />
-          )}
-          <div className="content_room">
-            <h1>{infoRoom?.name}</h1>
-            <div className="info_user_room">
-              <span style={{ fontSize: '13px', color: '#99a4b0' }}>
-                Các bạn là bạn bè trên Zola
-              </span>
+      {
+        statusRoom ? (
+          <div className="info_room">
+            <div className="friend-center-item-v2">
+              <div className="avatar">{renderAvatarUserGroup()}</div>
             </div>
-            <div
-              className="action"
-              style={{ position: 'absolute', right: '20px', top: '23px' }}
-            >
-              <Button
-                icon={<EllipsisOutlined />}
-                style={{ border: 'none' }}
-              ></Button>
-            </div>
+            {renderRoomBarGroup}
           </div>
-        </div>
-      )}
+        ) : infoRoom.active ? (
+          renderBarRoomFromContactList()
+        ) : (
+          renderBarRoomFromTabRoom(infoRoom?.users)
+        )
+
+        // infoRoom.active ? (
+        //   renderBarRoomFromContactList()
+        // ) : (
+        // )
+      }
     </nav>
   );
 };
