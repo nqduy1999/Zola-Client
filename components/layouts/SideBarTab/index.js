@@ -46,6 +46,7 @@ const SideBarTab = () => {
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
+
   // redux hook
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
@@ -97,7 +98,7 @@ const SideBarTab = () => {
 
   const handleClickRoom = async value => {
     setLoading(true);
-    setInfoRoom(value._id);
+    setInfoRoom(value);
     if (!value.group) {
       setStatusRoom(false);
       setLoading(false);
@@ -184,19 +185,12 @@ const SideBarTab = () => {
       );
     });
   };
-  const OutRoom = e => {
-    console.log(e);
-  };
   // Hiển thị các group và single group
   const renderNameListRoom = useCallback(() => {
     return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab
-            onClick={() => handleClickRoom(room)}
-            onChange={OutRoom}
-            key={room._id}
-          >
+          <Tab onClick={() => handleClickRoom(room)}>
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
