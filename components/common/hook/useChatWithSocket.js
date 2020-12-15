@@ -13,6 +13,7 @@ const useChatWithSocket = (dataGroup, id) => {
     return dataGroup?.users?.find(user => user.id === userProfile.id);
   };
   useEffect(() => {
+    console.log(dataGroup);
     if (dataGroup?.users !== undefined) {
       const findUser = findUserCurrent();
       const info = {
