@@ -13,7 +13,7 @@ const Message = ({ ...props }) => {
   const { userProfile } = useSelector(state => state.userData);
 
   const { message } = props;
-
+  const [type, setType] = useState();
   useEffect(() => {
     if (message?.user?.id === userProfile?.id) {
       setIsSentByCurrentUser(true);
@@ -28,7 +28,11 @@ const Message = ({ ...props }) => {
       </>
     );
   };
-
+  useEffect(() => {
+    if (message) {
+      setType(message.type);
+    }
+  }, [message]);
   const renderMessageItem = () => {
     return (
       <>
@@ -36,7 +40,11 @@ const Message = ({ ...props }) => {
           {isSentByCurrentUser ? (
             <div className="messageContainer justifyEnd">
               <div className="messageBox backgroundBlue">
-                {message.content}
+                {type === 'String' ? (
+                  message.content
+                ) : (
+                  <img src={message.content} />
+                )}
                 {convertDateTime(message.createdAt)}
               </div>
             </div>
@@ -44,7 +52,11 @@ const Message = ({ ...props }) => {
             <div className="messageContainer justifyStart">
               <div className="messageBox backgroundLight">
                 <p className="messageText colorDark">
-                  {message.content}
+                  {type === 'String' ? (
+                    message.content
+                  ) : (
+                    <img src={message.content} />
+                  )}
                   {convertDateTime(message.createdAt)}
                 </p>
               </div>
