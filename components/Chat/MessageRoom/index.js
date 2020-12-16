@@ -26,7 +26,6 @@ const MessageRoom = ({ ...props }) => {
       <div className={c`header`}>
         <RoomBar />
       </div>
-
       <div className={c`content`}>
         <ScrollToBottom className="scroll-chat">
           <MessageList messages={messages} />

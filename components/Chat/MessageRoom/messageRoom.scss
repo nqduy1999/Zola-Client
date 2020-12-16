@@ -2,7 +2,7 @@
   &__content {
     width: 100%;
     margin: 0 auto;
-    height: 70vh;
+    height: 76vh;
     margin-top: 10px;
     background-color: #e2e3e0;
     &__inside {
@@ -97,7 +97,7 @@
     }
     .icon {
       display: inline-block;
-      margin-left: 10px;
+      padding-left: 6%;
       width: 12%;
       button {
         border: none;
@@ -105,6 +105,9 @@
         color: #0068ff;
       }
     }
+  }
+  .ant-form-item{
+    margin-bottom: 0;
   }
 }
 // .scroll-chat {

@@ -1,7 +1,9 @@
 import { LikeOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
+import 'emoji-mart/css/emoji-mart.css';
 import { uploadImgSingle } from 'actions/uploadImgActions';
-import { Button, Input, Form, Upload } from 'antd';
+import { Button, Input, Form, Upload, Menu, Dropdown } from 'antd';
 import { SocketIOContext } from 'components/common/context/SocketIOContext';
+import { Picker } from 'emoji-mart';
 import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 const prefix = 'message-room';
@@ -16,8 +18,22 @@ const InputChat = () => {
     } else {
       setStatus(true);
     }
+    console.log(message);
   };
-  const { TextArea } = Input;
+  const addEmoji = e => {
+    let sym = e.unified.split('-');
+    let codesArray = [];
+    sym.forEach(el => codesArray.push('0x' + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    SetMessage(emoji);
+  };
+  const menu = () => (
+    <Menu>
+      <Menu.Item key="0">
+        <Picker onSelect={addEmoji} />
+      </Menu.Item>
+    </Menu>
+  );
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
   const [file, setFile] = useState(null);
@@ -48,15 +64,20 @@ const InputChat = () => {
     //   }
     // }
     else {
-      socket.emit('send_and_recive', {
-        message: values.chatting,
-        type: type
-      });
+      if (values.chatting == undefined || values.chatting == '') {
+        console.log('Can not send null message');
+      } else {
+        socket.emit('send_and_recive', {
+          message: values.chatting,
+          type: type
+        });
+      }
     }
     resetFieldOnSubmit();
   };
   const resetFieldOnSubmit = () => {
     form.resetFields();
+    setStatus(false);
   };
   const onChangeFile = e => {
     if (e.fileList == '') {
@@ -95,7 +116,7 @@ const InputChat = () => {
           style={{ width: '85%', display: 'inline-block' }}
         >
           {type && type === 'String' ? (
-            <TextArea
+            <Input
               onChange={onHandleChangeMessage}
               value={message}
               placeholder="Nhập tin nhắn của bạn"
@@ -106,10 +127,16 @@ const InputChat = () => {
             <></>
           )}
         </Form.Item>
-        <div className="icon" style={{ marginTop: '25px' }}>
-          <Button>
-            <SmileOutlined style={{ color: '#767676' }} />
-          </Button>
+        <div className="icon" style={{ marginTop: '15px' }}>
+          <Dropdown overlay={() => menu()} trigger={['click']}>
+            <SmileOutlined
+              style={{
+                fontSize: '20px',
+                color: '#0068ff',
+                paddingRight: '10px'
+              }}
+            />
+          </Dropdown>
           {status ? (
             <Button htmlType="submit">
               <SendOutlined />
