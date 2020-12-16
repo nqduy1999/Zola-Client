@@ -48,6 +48,7 @@ const ModalAddFriendToGroup = ({ ...props }) => {
               size="50px"
               className="avatar-create-group"
               name={friendInfo.name}
+              style={{ fonSize: '25px' }}
             />
           ) : (
             <img src={friendInfo.avatar} alt="avatar" />
