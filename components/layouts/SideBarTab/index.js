@@ -51,6 +51,7 @@ const SideBarTab = () => {
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
   const { listFriendContact } = useSelector(state => state.FriendReducer);
+
   // custom hook
   const { listGroup } = useFetchAllGroup();
   useEffect(() => {
@@ -80,6 +81,7 @@ const SideBarTab = () => {
   const { setStatusRoom, setInfoRoom, setLoading } = useContext(
     InfoRoomContext
   );
+  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
   //
   const totalFriend = listFriendContact?.length;
   //
@@ -124,7 +126,11 @@ const SideBarTab = () => {
     return room?.users.map(user => {
       if (user.id != userProfile.id) {
         return (
-          <div key={user.id} className="tab_room">
+          <div
+            key={user.id}
+            className="tab_room"
+            onClick={() => setClickPeopleIcon('unClickPeopleIcon')}
+          >
             <div
               style={{
                 width: '74px',
@@ -213,7 +219,10 @@ const SideBarTab = () => {
         <Tab style={{ padding: '24.5%' }}>
           <i className="fa fa-comment" style={{ fontSize: '20px' }}></i>
         </Tab>
-        <Tab style={{ padding: '24.5%', paddingLeft: '29%' }}>
+        <Tab
+          style={{ padding: '24.5%', paddingLeft: '29%' }}
+          onClick={() => setClickPeopleIcon('unClickPeopleIcon')}
+        >
           <i className="fa fa-address-book" style={{ fontSize: '20px' }}></i>
         </Tab>
         <div className="sign-out">
