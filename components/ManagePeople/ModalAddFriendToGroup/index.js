@@ -1,5 +1,6 @@
-import React, { useContext, useState, useCallback } from 'react';
-import { Modal, Button, Form, Checkbox } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Modal, Button, Form, Checkbox, Tag } from 'antd';
+// import _ from 'lodash';
 import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
@@ -10,25 +11,31 @@ const ModalAddFriendToGroup = ({ ...props }) => {
   const { showModalAddFriendToGroup, handleCloseModalRoot } = props;
   const [valueFriendAfterChecked, setValueFriendAfterChecked] = useState([]);
   const [form] = Form.useForm();
-  const { listFriendContact } = useSelector(state => state.FriendReducer);
+  const { listFriendContact, listFriendPhoneBook } = useSelector(
+    state => state.FriendReducer
+  );
   const { infoRoom } = useContext(InfoRoomContext);
+  const listFriendCanKnow = [...listFriendContact, ...listFriendPhoneBook];
+
+  // const listOptions = _.map(listFriendCanKnow, 'id');
 
   const onFinish = () => {
     const list_user_id = [...valueFriendAfterChecked];
     console.log(list_user_id);
   };
 
-  const findUserInRoom = useCallback(() => {
-    infoRoom?.users?.forEach(userInRoom => {
-      listFriendContact?.forEach(friend => {
-        if (userInRoom.id === friend.id) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    });
-  }, [infoRoom?.users, listFriendContact]);
+  const findUserInRoom = friendInfo => {
+    const userInRoom = infoRoom?.users?.find(
+      userInroom => userInroom.id === friendInfo.id
+    );
+    return userInRoom;
+  };
+
+  const handleCheckStatusUser = friendInfo => {
+    if (findUserInRoom(friendInfo)) {
+      return <Tag color="processing">Đã có mặt</Tag>;
+    }
+  };
 
   const renderInfoFriend = friendInfo => {
     const checkAvatarFriend =
@@ -46,6 +53,7 @@ const ModalAddFriendToGroup = ({ ...props }) => {
             <img src={friendInfo.avatar} alt="avatar" />
           )}
           <span>{friendInfo.name}</span>
+          <span>{handleCheckStatusUser(friendInfo)}</span>
         </span>
       </>
     );
@@ -56,11 +64,17 @@ const ModalAddFriendToGroup = ({ ...props }) => {
   };
 
   const renderCheckBox = () => {
-    return listFriendContact?.map(friend => {
+    return listFriendCanKnow?.map(friend => {
       return (
-        <Checkbox value={friend.id} key={friend.id} disabled={findUserInRoom}>
-          {renderInfoFriend(friend)}
-        </Checkbox>
+        <>
+          <Checkbox
+            value={friend.id}
+            key={friend.id}
+            // indeterminate={listOptions}
+          >
+            {renderInfoFriend(friend)}
+          </Checkbox>
+        </>
       );
     });
   };
@@ -88,7 +102,7 @@ const ModalAddFriendToGroup = ({ ...props }) => {
 
           <Form.Item>
             <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-              Submit
+              Thêm vào nhóm
             </Button>
           </Form.Item>
         </Form>
