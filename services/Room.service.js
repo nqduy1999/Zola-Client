@@ -8,6 +8,7 @@ class RoomService {
       data: roomName
     });
   };
+
   addUserToGroup = (idRoom, list_user_id) => {
     return axios.request({
       method: 'PUT',
@@ -17,6 +18,14 @@ class RoomService {
       }
     });
   };
+
+  getDetailGroup = idRoom => {
+    return axios.request({
+      method: 'GET',
+      url: `https://api-chat.ga/api/v0/rooms/detail?id=${idRoom}`
+    });
+  };
+
   deleteRoom = idRoom => {
     return axios.request({
       method: 'DELETE',

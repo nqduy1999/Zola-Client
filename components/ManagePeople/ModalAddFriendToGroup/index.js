@@ -14,14 +14,23 @@ import { addUserToGroupAction } from 'actions/roomsAction';
 const prefix = 'modalAddFriendToGroup';
 
 const ModalAddFriendToGroup = ({ ...props }) => {
-  const [form] = Form.useForm();
   const { showModalAddFriendToGroup, handleCloseModalRoot } = props;
+
+  // antd hook
+  const [form] = Form.useForm();
+
+  // React Hook
   const [valueFriendAfterChecked, setValueFriendAfterChecked] = useState([]);
+
+  //Redux Hook
   const dispatch = useDispatch();
   const { listFriendContact, listFriendPhoneBook } = useSelector(
     state => state.FriendReducer
   );
+
+  // Context
   const { infoRoom } = useContext(InfoRoomContext);
+
   const listAllFriend = [...listFriendContact, ...listFriendPhoneBook];
 
   // lấy phần tử khác nhau giữa 2 mảng
