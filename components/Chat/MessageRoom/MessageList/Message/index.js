@@ -68,6 +68,7 @@ const Message = ({ ...props }) => {
             <div className="messageContainer justifyStart">
               <div>{renderUserAvatar}</div>
               <div className="messageBox backgroundLight">
+                <p className="messageName">{message?.user?.name}</p>
                 <p className="messageText colorDark">
                   {type === 'String' ? (
                     message.content
