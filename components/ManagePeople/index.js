@@ -19,9 +19,14 @@ import {
   dispatchDefaulMessagetAddUserToGroupAction,
   getDetailGroupAction
 } from 'actions/roomsAction';
+import { findUserByIdAction } from 'actions/userAction';
 
 // Component
 const ModalAddFriendToGroup = dynamic(() => import('./ModalAddFriendToGroup'));
+// const ViewUserFriendByID = dynamic(() =>
+//   import('components/Friend/ViewUserById')
+// );
+import ViewUserFriend from 'components/Friend/ViewUserFriend';
 
 const prefix = 'manage__people';
 const c = classPrefixor(prefix);
@@ -31,6 +36,10 @@ const ManagePeopleInGroup = () => {
   // React Hook
   const [valueSearch, setValueSearch] = useState('');
   const [showModalAddFriendToGroup, setShowModalAddFriendToGroup] = useState(
+    false
+  );
+  const [userInGroupData, setUserInGroupData] = useState({});
+  const [visibleModalViewUserById, setVisibleModalViewUserById] = useState(
     false
   );
 
@@ -47,6 +56,7 @@ const ManagePeopleInGroup = () => {
   );
   const { messageAddUserToGroup } = useSelector(state => state.RoomsReducer);
 
+  // useEffect này chạy khi messageAddUserToGroup thay đổi, nghĩa là người dùng đã được add thành công
   useEffect(() => {
     if (messageAddUserToGroup.length > 0) {
       dispatch(getDetailGroupAction(infoRoom?._id));
@@ -91,10 +101,21 @@ const ManagePeopleInGroup = () => {
     user => user.name.toLowerCase().indexOf(valueSearch.toLowerCase()) !== -1
   );
 
+  const handeGetUserIDInRoom = idUser => {
+    dispatch(findUserByIdAction(idUser)).then(res => {
+      setUserInGroupData(res.data);
+      setVisibleModalViewUserById(true);
+    });
+  };
+
   const renderListUsersInGroup = useCallback(() => {
     return userSearch?.map(user => {
       return (
-        <div className="user--info" key={user.id}>
+        <div
+          className="user--info"
+          key={user.id}
+          onClick={() => handeGetUserIDInRoom(user.id)}
+        >
           {handleCheckAvatar(user)}
           <span className="name--user">{user.name}</span>
           <span className="status--user">{handleCheckStatusUser(user)}</span>
@@ -106,7 +127,9 @@ const ManagePeopleInGroup = () => {
   const handleCloseModal = bool => {
     setShowModalAddFriendToGroup(bool);
   };
-
+  const cancelModal = () => {
+    setVisibleModalViewUserById(false);
+  };
   return (
     <>
       <aside className={prefix}>
@@ -138,6 +161,13 @@ const ManagePeopleInGroup = () => {
           <ModalAddFriendToGroup
             showModalAddFriendToGroup={showModalAddFriendToGroup}
             handleCloseModalRoot={handleCloseModal}
+          />
+        )}
+        {visibleModalViewUserById && (
+          <ViewUserFriend
+            userData={userInGroupData}
+            visible={visibleModalViewUserById}
+            onCancelModal={cancelModal}
           />
         )}
       </aside>
