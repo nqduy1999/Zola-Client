@@ -1,40 +1,40 @@
+// React Libary
 import React, { useContext, useState } from 'react';
-import { Modal, Button, Form, Checkbox, Tag } from 'antd';
-// import _ from 'lodash';
+import { Modal, Button, Form, Checkbox } from 'antd';
+import _ from 'lodash';
 import Avatar from 'react-avatar';
+
+// Redux
 import { useSelector } from 'react-redux';
+
+// Common
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'modalAddFriendToGroup';
 
 const ModalAddFriendToGroup = ({ ...props }) => {
+  const [form] = Form.useForm();
   const { showModalAddFriendToGroup, handleCloseModalRoot } = props;
   const [valueFriendAfterChecked, setValueFriendAfterChecked] = useState([]);
-  const [form] = Form.useForm();
   const { listFriendContact, listFriendPhoneBook } = useSelector(
     state => state.FriendReducer
   );
   const { infoRoom } = useContext(InfoRoomContext);
-  const listFriendCanKnow = [...listFriendContact, ...listFriendPhoneBook];
+  const listAllFriend = [...listFriendContact, ...listFriendPhoneBook];
 
-  // const listOptions = _.map(listFriendCanKnow, 'id');
+  // lấy phần tử khác nhau giữa 2 mảng
+  const listFriendCanKnow = _.differenceBy(
+    listAllFriend,
+    infoRoom?.users,
+    'id'
+  );
+
+  // Xóa user nếu trùng id;
+  const listFriendCanKnowClearDuplicate = _.uniqBy(listFriendCanKnow, 'id');
 
   const onFinish = () => {
     const list_user_id = [...valueFriendAfterChecked];
     console.log(list_user_id);
-  };
-
-  const findUserInRoom = friendInfo => {
-    const userInRoom = infoRoom?.users?.find(
-      userInroom => userInroom.id === friendInfo.id
-    );
-    return userInRoom;
-  };
-
-  const handleCheckStatusUser = friendInfo => {
-    if (findUserInRoom(friendInfo)) {
-      return <Tag color="processing">Đã có mặt</Tag>;
-    }
   };
 
   const renderInfoFriend = friendInfo => {
@@ -53,7 +53,6 @@ const ModalAddFriendToGroup = ({ ...props }) => {
             <img src={friendInfo.avatar} alt="avatar" />
           )}
           <span>{friendInfo.name}</span>
-          <span>{handleCheckStatusUser(friendInfo)}</span>
         </span>
       </>
     );
@@ -64,14 +63,10 @@ const ModalAddFriendToGroup = ({ ...props }) => {
   };
 
   const renderCheckBox = () => {
-    return listFriendCanKnow?.map(friend => {
+    return listFriendCanKnowClearDuplicate?.map(friend => {
       return (
         <>
-          <Checkbox
-            value={friend.id}
-            key={friend.id}
-            // indeterminate={listOptions}
-          >
+          <Checkbox value={friend.id} key={friend.id}>
             {renderInfoFriend(friend)}
           </Checkbox>
         </>
