@@ -5,6 +5,7 @@ const createRequestTypes = (base, act) =>
     return acc;
   }, {});
 const ROOMS_TYPE = {
-  ...createRequestTypes('ROOMS_TYPE', 'EDIT_ROOM_NAME')
+  ...createRequestTypes('ROOMS_TYPE', 'EDIT_ROOM_NAME'),
+  ...createRequestTypes('ROOMS_TYPE', 'ADD_USER_TO_GROUP')
 };
 export default ROOMS_TYPE;

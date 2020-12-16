@@ -8,7 +8,7 @@ class RoomService {
       data: roomName
     });
   };
-  addFriendToGroup = (idRoom, list_user_id) => {
+  addUserToGroup = (idRoom, list_user_id) => {
     return axios.request({
       method: 'PUT',
       url: `https://api-chat.ga/api/v0/rooms/members?id=${idRoom}`,

@@ -5,10 +5,11 @@ import _ from 'lodash';
 import Avatar from 'react-avatar';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Common
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import { addUserToGroupAction } from 'actions/roomsAction';
 
 const prefix = 'modalAddFriendToGroup';
 
@@ -16,6 +17,7 @@ const ModalAddFriendToGroup = ({ ...props }) => {
   const [form] = Form.useForm();
   const { showModalAddFriendToGroup, handleCloseModalRoot } = props;
   const [valueFriendAfterChecked, setValueFriendAfterChecked] = useState([]);
+  const dispatch = useDispatch();
   const { listFriendContact, listFriendPhoneBook } = useSelector(
     state => state.FriendReducer
   );
@@ -34,7 +36,8 @@ const ModalAddFriendToGroup = ({ ...props }) => {
 
   const onFinish = () => {
     const list_user_id = [...valueFriendAfterChecked];
-    console.log(list_user_id);
+    dispatch(addUserToGroupAction(infoRoom?._id, list_user_id));
+    handleCloseModalRoot(false);
   };
 
   const renderInfoFriend = friendInfo => {

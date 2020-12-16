@@ -28,6 +28,35 @@ export const editRoomNameAction = (idRoom, roomName) => dispatch => {
       });
     });
 };
+
+export const addUserToGroupAction = (idRoom, list_user_id) => dispatch => {
+  dispatch({
+    type: ROOMS_TYPE.ADD_USER_TO_GROUP_REQUEST
+  });
+
+  roomService
+    .addUserToGroup(idRoom, list_user_id)
+    .then(res => {
+      const { error, message } = res.data;
+      if (!error) {
+        dispatch({
+          type: ROOMS_TYPE.ADD_USER_TO_GROUP_SUCCESS,
+          payload: message
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: ROOMS_TYPE.ADD_USER_TO_GROUP_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
 export const dispatchDefaulRoomstAction = () => ({
   type: 'DEFAULT_ROOMS_ACTION'
 });
