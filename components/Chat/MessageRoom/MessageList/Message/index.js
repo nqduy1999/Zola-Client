@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Avatar from 'react-avatar';
 
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'message';
 const c = classPrefixor(prefix);
 const Message = ({ ...props }) => {
   const [type, setType] = useState();
   const [isSentByCurrentUser, setIsSentByCurrentUser] = useState(false);
-
+  const { infoRoom } = useContext(InfoRoomContext);
   const { userProfile } = useSelector(state => state.userData);
 
   const { message } = props;
@@ -41,9 +42,20 @@ const Message = ({ ...props }) => {
     <div className="user-center-item-v2">
       <div className="avatar avatar--huge">
         {message?.user.avatar === null || message?.user.avatar === '' ? (
-          <Avatar size="50px" className="avatar" name={message?.user.name} />
+          <Avatar
+            size="50px"
+            className="avatar"
+            name={
+              infoRoom.users.find(user => user.id === message.user.id)?.name
+            }
+          />
         ) : (
-          <img src={message?.user.avatar} alt="avatar" />
+          <img
+            src={
+              infoRoom.users.find(user => user.id === message.user.id)?.avatar
+            }
+            alt="avatar"
+          />
         )}
       </div>
     </div>
@@ -68,7 +80,12 @@ const Message = ({ ...props }) => {
             <div className="messageContainer justifyStart">
               <div>{renderUserAvatar}</div>
               <div className="messageBox backgroundLight">
-                <p className="messageName">{message?.user?.name}</p>
+                <p className="messageName">
+                  {
+                    infoRoom.users.find(user => user.id === message.user.id)
+                      ?.name
+                  }
+                </p>
                 <p className="messageText colorDark">
                   {type === 'String' ? (
                     message.content
