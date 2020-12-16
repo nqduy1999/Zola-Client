@@ -10,15 +10,19 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
+import Avatar from 'antd/lib/avatar/avatar';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import { editRoomNameAction } from 'actions/roomsAction';
+
+import { useSelector } from 'react-redux';
+import { exitGroupChatAction } from 'actions/groupAction';
+
+// Common
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
-import Avatar from 'antd/lib/avatar/avatar';
-import { useSelector } from 'react-redux';
+import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 
 const prefix = 'room_bar';
 
@@ -77,6 +81,10 @@ const RoomBar = () => {
     setClickItemEdit(false);
   };
 
+  const handleExitGroup = () => {
+    dispatch(exitGroupChatAction(infoRoom?._id));
+  };
+
   const checkInitialValue = () => {
     if (isUpdateRoomNameSuccess) {
       return {
@@ -90,45 +98,54 @@ const RoomBar = () => {
   };
 
   const renderRoomBarGroup = (
-    <div className="content_group_room">
-      <div className="room_name">
-        {!clickItemEdit ? (
-          <h1>
-            {!isUpdateRoomNameSuccess ? (
-              <>{infoRoom?.name}</>
-            ) : (
-              <>{valueInputEditRoomName}</>
-            )}
-          </h1>
-        ) : (
-          <Form
-            initialValues={checkInitialValue()}
-            className="form_editName"
-            onFinish={onFinish}
-          >
-            <Form.Item name="name">
-              <Input
-                onChange={e => setValueInputEditRoomName(e.target.value)}
-              />
-            </Form.Item>
-          </Form>
-        )}
-        {!clickItemEdit ? (
-          <EditOutlined onClick={() => handleClickEditGroupName()} />
-        ) : (
-          <div className="after_clickEdit">
-            <CloseOutlined onClick={() => handleAvoidUpdateRoomName()} />
-            <CheckOutlined onClick={() => handleUpdateRoomName()} />
+    <>
+      <div className="content_group_room">
+        <div className="room_name">
+          {!clickItemEdit ? (
+            <h1>
+              {!isUpdateRoomNameSuccess ? (
+                <>{infoRoom?.name}</>
+              ) : (
+                <>{valueInputEditRoomName}</>
+              )}
+            </h1>
+          ) : (
+            <Form
+              initialValues={checkInitialValue()}
+              className="form_editName"
+              onFinish={onFinish}
+            >
+              <Form.Item name="name">
+                <Input
+                  onChange={e => setValueInputEditRoomName(e.target.value)}
+                />
+              </Form.Item>
+            </Form>
+          )}
+          {!clickItemEdit ? (
+            <EditOutlined onClick={() => handleClickEditGroupName()} />
+          ) : (
+            <div className="after_clickEdit">
+              <CloseOutlined onClick={() => handleAvoidUpdateRoomName()} />
+              <CheckOutlined onClick={() => handleUpdateRoomName()} />
+            </div>
+          )}
+        </div>
+        <div className="info_user_room">
+          <div className="count_user">
+            <UserOutlined
+              onClick={() => setClickPeopleIcon('clickPeopleIcon')}
+            />
+            <span>{infoRoom?.users?.length}</span>
           </div>
-        )}
-      </div>
-      <div className="info_user_room">
-        <div className="count_user">
-          <UserOutlined onClick={() => setClickPeopleIcon('clickPeopleIcon')} />
-          <span>{infoRoom?.users?.length}</span>
         </div>
       </div>
-    </div>
+      <div className="exit-group">
+        <Button type="primary" danger onClick={() => handleExitGroup()}>
+          Rời Khỏi Nhóm
+        </Button>
+      </div>
+    </>
   );
   const renderBarRoomFromContactList = () => {
     return (
@@ -208,25 +225,18 @@ const RoomBar = () => {
   };
   return (
     <nav className={prefix}>
-      {
-        statusRoom ? (
-          <div className="info_room">
-            <div className="friend-center-item-v2">
-              <div className="avatar">{renderAvatarUserGroup()}</div>
-            </div>
-            {renderRoomBarGroup}
+      {statusRoom ? (
+        <div className="info_room">
+          <div className="friend-center-item-v2">
+            <div className="avatar">{renderAvatarUserGroup()}</div>
           </div>
-        ) : infoRoom.active ? (
-          renderBarRoomFromContactList()
-        ) : (
-          renderBarRoomFromTabRoom(infoRoom?.users)
-        )
-
-        // infoRoom.active ? (
-        //   renderBarRoomFromContactList()
-        // ) : (
-        // )
-      }
+          {renderRoomBarGroup}
+        </div>
+      ) : infoRoom.active ? (
+        renderBarRoomFromContactList()
+      ) : (
+        renderBarRoomFromTabRoom(infoRoom?.users)
+      )}
     </nav>
   );
 };

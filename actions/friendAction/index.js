@@ -95,7 +95,6 @@ export const searchFriendAction = value => dispatch => {
       return data;
     })
     .catch(err => {
-      console.log(err);
       const { error, data } = err.response?.data;
       dispatch({
         type: FRIENDS_TYPE.SEARCH_FRIEND_FAILURE
@@ -248,7 +247,6 @@ export const getUserSentRequestAction = () => dispatch => {
     .get('users/request/sent')
     .then(res => {
       const { data } = res.data;
-      console.log(data);
       dispatch({
         type: FRIENDS_TYPE.GET_USER_SENT_REQUEST_SUCCESS,
         payload: data

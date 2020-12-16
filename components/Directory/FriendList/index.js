@@ -144,7 +144,6 @@ const FriendList = () => {
         <div className="scroll-chat">
           <div className={c`content__inside`}>
             <p>Lời mời kết bạn ({totalFriendRequest})</p>
-
             {renderListFriendRequest()}
           </div>
         </div>

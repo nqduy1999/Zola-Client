@@ -1,81 +1,120 @@
-import React from 'react';
-import { Modal, Button, Form, Select } from 'antd';
+// React Libary
+import React, { useContext, useState } from 'react';
+import { Modal, Button, Form, Checkbox } from 'antd';
+import _ from 'lodash';
 import Avatar from 'react-avatar';
-import { useSelector } from 'react-redux';
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+
+// Common
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import { addUserToGroupAction } from 'actions/roomsAction';
 
 const prefix = 'modalAddFriendToGroup';
-const { Option } = Select;
 
 const ModalAddFriendToGroup = ({ ...props }) => {
   const { showModalAddFriendToGroup, handleCloseModalRoot } = props;
-  const [form] = Form.useForm();
-  const { listFriendContact } = useSelector(state => state.FriendReducer);
 
-  const onFinish = values => {
-    console.log(values);
+  // antd hook
+  const [form] = Form.useForm();
+
+  // React Hook
+  const [valueFriendAfterChecked, setValueFriendAfterChecked] = useState([]);
+
+  //Redux Hook
+  const dispatch = useDispatch();
+  const { listFriendContact, listFriendPhoneBook } = useSelector(
+    state => state.FriendReducer
+  );
+
+  // Context
+  const { infoRoom } = useContext(InfoRoomContext);
+
+  const listAllFriend = [...listFriendContact, ...listFriendPhoneBook];
+
+  // lấy phần tử khác nhau giữa 2 mảng
+  const listFriendCanKnow = _.differenceBy(
+    listAllFriend,
+    infoRoom?.users,
+    'id'
+  );
+
+  // Xóa user nếu trùng id;
+  const listFriendCanKnowClearDuplicate = _.uniqBy(listFriendCanKnow, 'id');
+
+  const onFinish = () => {
+    const list_user_id = [...valueFriendAfterChecked];
+    dispatch(addUserToGroupAction(infoRoom?._id, list_user_id));
+    handleCloseModalRoot(false);
   };
 
-  const renderOption = () => {
-    return listFriendContact?.map(friend => {
+  const renderInfoFriend = friendInfo => {
+    const checkAvatarFriend =
+      friendInfo.avatar === null || friendInfo.avatar === '';
+    return (
+      <>
+        <span className="friend--info">
+          {checkAvatarFriend ? (
+            <Avatar
+              size="50px"
+              className="avatar-create-group"
+              name={friendInfo.name}
+              style={{ fonSize: '25px' }}
+            />
+          ) : (
+            <img src={friendInfo.avatar} alt="avatar" />
+          )}
+          <span>{friendInfo.name}</span>
+        </span>
+      </>
+    );
+  };
+
+  const handleChangeCheckBox = valueCheckBox => {
+    setValueFriendAfterChecked(valueCheckBox);
+  };
+
+  const renderCheckBox = () => {
+    return listFriendCanKnowClearDuplicate?.map(friend => {
       return (
-        <Option label={friend.name} value={friend.id} key={friend.id}>
-          <div className="select--info">
-            {friend.avatar === null || friend.avatar === '' ? (
-              <Avatar
-                size="38px"
-                className="avatar-create-group"
-                name={friend.name}
-              />
-            ) : (
-              <img src={friend.avatar} alt="avatar" />
-            )}
-            <span>{friend.name}</span>
-          </div>
-        </Option>
+        <>
+          <Checkbox value={friend.id} key={friend.id}>
+            {renderInfoFriend(friend)}
+          </Checkbox>
+        </>
       );
     });
   };
+
   return (
     <>
-      <>
-        <Modal
-          title="Thêm Bạn Vào Nhóm"
-          visible={showModalAddFriendToGroup}
-          onCancel={() => handleCloseModalRoot(false)}
-          footer={false}
-          className={prefix}
+      <Modal
+        title="Thêm Bạn Vào Nhóm"
+        visible={showModalAddFriendToGroup}
+        onCancel={() => handleCloseModalRoot(false)}
+        footer={false}
+        className={prefix}
+      >
+        <Form
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          form={form}
         >
-          <Form
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            form={form}
-          >
-            <Form.Item name="list_user_id">
-              <Select
-                mode="multiple"
-                allowClear
-                style={{ width: '100%' }}
-                placeholder="Tìm kiếm bằng tên"
-                filterOption={(input, option) =>
-                  option?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {renderOption()}
-              </Select>
-            </Form.Item>
+          <span>Có thể bạn quen biết</span>
+          <Form.Item>
+            <Checkbox.Group onChange={handleChangeCheckBox}>
+              {renderCheckBox()}
+            </Checkbox.Group>
+          </Form.Item>
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}
-              >
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
-      </>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+              Thêm vào nhóm
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
