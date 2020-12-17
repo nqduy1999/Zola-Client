@@ -26,28 +26,34 @@ const InputChat = () => {
   const [visible, setVisible] = useState(false);
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
+  const [messErr, setMessErr] = useState(false);
   const onFinish = values => {
     const formData = new FormData();
-    setLoading(true);
-    if (imageFormData) {
-      formData.append('files', imageFormData);
-      uploadImgSingle(formData).then(res => {
-        if (res.data[0]) {
-          setLoading(false);
-          socket.emit('send_and_recive', {
-            message: res.data[0],
-            type: type
-          });
-          setVisible(false);
-        }
-      });
+    if (!messErr) {
+      setLoading(true);
+      if (imageFormData) {
+        formData.append('files', imageFormData);
+        uploadImgSingle(formData).then(res => {
+          if (res.data[0]) {
+            setLoading(false);
+            socket.emit('send_and_recive', {
+              message: res.data[0],
+              type: type
+            });
+            setVisible(false);
+          }
+        });
+      } else {
+        socket.emit('send_and_recive', {
+          message: values.chatting,
+          type: type
+        });
+      }
+      resetFieldOnSubmit();
     } else {
-      socket.emit('send_and_recive', {
-        message: values.chatting,
-        type: type
-      });
+      setVisible(false);
+      setMessErr(false);
     }
-    resetFieldOnSubmit();
   };
   const resetFieldOnSubmit = () => {
     form.resetFields();
@@ -63,7 +69,6 @@ const InputChat = () => {
     }
   };
   const addEmoji = e => {
-    console.log();
     let emoji = e.native;
     SetMessage(message + emoji);
   };
@@ -74,128 +79,104 @@ const InputChat = () => {
       </Menu.Item>
     </Menu>
   );
-  const onUploadImage = () => {
+  const onUpload = () => {
     setVisible(true);
-    setType('Image');
-  };
-  const onUploadVideo = () => {
-    setVisible(true);
-    setType('Video');
+    setType('ImageAndVideo');
   };
   const cancelUpload = () => {
     setVisible(false);
+    setMessErr(false);
+  };
+  const onUploadFile = () => {
+    setVisible(true);
+    setType('File');
   };
   const handleChangeFile = e => {
     const reader = new FileReader();
-    if (e.file.originFileObj) {
-      reader.readAsDataURL(e.file.originFileObj);
-      setImageFormData(e.file.originFileObj);
+    if (!messErr) {
+      let type = e.file.originFileObj?.type;
+      if (type == 'image/png' || type == 'image/jpeg') {
+        setType('Image');
+      } else if (
+        type == 'video/mp4' ||
+        type == 'video/mov' ||
+        type == 'video/quicktime'
+      ) {
+        setType('Video');
+      } else {
+        setType('File');
+      }
+      if (e.file.originFileObj) {
+        reader.readAsDataURL(e.file.originFileObj);
+        setImageFormData(e.file.originFileObj);
+      }
     }
   };
-  function beforeUpload(file) {
-    if (type == 'Image') {
-      const isJpgOrPng =
-        file.type === 'image/jpeg' || file.type === 'image/png';
-      if (!isJpgOrPng) {
-        message.error('Chỉ có thể upload hình với định dạng jpg/png!');
-      }
-      const isLt2M = file.size / 1024 / 1024 < 5;
-      if (!isLt2M) {
-        message.error('Ảnh phải nhỏ hơn 5 MB!');
-      }
-      return isJpgOrPng && isLt2M;
-    } else if (type == 'Video' || type == 'file') {
-      const isLt2M = file.size / 1024 / 1024 < 100;
-      if (!isLt2M) {
-        message.error('File phải nhỏ hơn 100 MB!');
-      }
-      return isLt2M;
+  function beforeUploadFile(file) {
+    const isLt2M = file.size / 1024 / 1024 < 10;
+    if (!isLt2M) {
+      setMessErr(true);
     }
+    return isLt2M;
   }
+  const ModalFile = () => {
+    return (
+      <Modal
+        title={type == 'File' ? 'Upload File' : 'Upload Image And Video'}
+        className="modalUpdateUser"
+        visible={visible}
+        onOk={onFinish}
+        onCancel={cancelUpload}
+        footer={[
+          <Button key="submit" onClick={onFinish}>
+            Gửi
+          </Button>
+        ]}
+        style={{
+          width: '150px'
+        }}
+      >
+        {loading ? (
+          <Spin
+            tip="Đang tải ..."
+            style={{ width: '100%', justifyContent: 'center' }}
+          ></Spin>
+        ) : (
+          <Upload
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            listType={type == 'File' ? 'picture' : 'picture-card'}
+            onChange={handleChangeFile}
+            beforeUpload={beforeUploadFile}
+            style={{ border: '1px dotted black' }}
+          >
+            <div style={{ cursor: 'pointer' }}>
+              <UploadOutlined />
+            </div>
+          </Upload>
+        )}
+        {messErr ? (
+          <p style={{ color: 'red', fontWeight: 'bold' }}>
+            Chỉ được gửi file dưới 10MB{' '}
+          </p>
+        ) : (
+          ''
+        )}
+      </Modal>
+    );
+  };
   return (
     <>
-      {visible && type == 'Image' ? (
-        <Modal
-          title="Upload ảnh"
-          className="modalUpdateUser"
-          visible={visible}
-          onOk={onFinish}
-          onCancel={cancelUpload}
-          footer={[
-            <Button key="submit" onClick={onFinish}>
-              Gửi
-            </Button>
-          ]}
-          style={{
-            width: '150px'
-          }}
-        >
-          {loading ? (
-            <Spin
-              tip="Đang tải ..."
-              style={{ width: '100%', justifyContent: 'center' }}
-            ></Spin>
-          ) : (
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-card"
-              onChange={handleChangeFile}
-              beforeUpload={beforeUpload}
-              style={{ border: '1px dotted black' }}
-            >
-              <div style={{ cursor: 'pointer' }}>
-                <UploadOutlined />
-              </div>
-            </Upload>
-          )}
-        </Modal>
-      ) : (
-        <Modal
-          title="Upload File"
-          className="modalUpdateUser"
-          visible={visible}
-          onOk={onFinish}
-          onCancel={cancelUpload}
-          footer={[
-            <Button key="submit" onClick={onFinish}>
-              Gửi
-            </Button>
-          ]}
-          style={{
-            width: '150px'
-          }}
-        >
-          {loading ? (
-            <Spin
-              tip="Đang tải ..."
-              style={{ width: '100%', justifyContent: 'center' }}
-            ></Spin>
-          ) : (
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture"
-              onChange={handleChangeFile}
-              beforeUpload={beforeUpload}
-              style={{ border: '1px dotted black' }}
-            >
-              <div style={{ cursor: 'pointer' }}>
-                <UploadOutlined />
-              </div>
-            </Upload>
-          )}
-        </Modal>
-      )}
+      {visible ? ModalFile() : ''}
       <Form className={c`chat_tab`} onFinish={onFinish} form={form}>
         <div className={c`icon_chat_tab`}>
           <div className={`content__inside`}>
             <Button
               icon={<i className="fa fa-image"></i>}
-              onClick={onUploadImage}
+              onClick={onUpload}
             ></Button>
             <Button
               icon={<i className="fa fa-paperclip" aria-hidden="true"></i>}
-              onClick={onUploadVideo}
-              style={{ paddingLeft: '50px' }}
+              onClick={onUploadFile}
             ></Button>
           </div>
         </div>

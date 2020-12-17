@@ -69,7 +69,6 @@ const SendOtpComponent = props => {
     if (typeOfsendOtp) {
       const apiSendOtp = `active/send?email=${value.email}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
-        console.log(res);
         if (res.error) {
           toast.error(res.data[0].msg, {
             position: 'top-right',

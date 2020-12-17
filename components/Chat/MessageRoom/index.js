@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { classPrefixor } from 'utils/classPrefixor';
 import useChatWithSocket from 'components/common/hook/useChatWithSocket';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { Spin } from 'antd';
 
 //Component
@@ -62,7 +63,9 @@ const MessageRoom = ({ ...props }) => {
           ) : (
             ''
           )}
-          <MessageList messages={messageinRoom} />
+          <ScrollToBottom>
+            <MessageList messages={messageinRoom} />
+          </ScrollToBottom>
         </div>
       </div>
       <InputChating />

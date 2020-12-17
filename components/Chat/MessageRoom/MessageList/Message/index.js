@@ -79,6 +79,10 @@ const Message = ({ ...props }) => {
                   <video width="320" height="240" controls>
                     <source src={message.content} type="video/mp4" />
                   </video>
+                ) : type == 'File' ? (
+                  <a style={{ color: 'white' }} href={message.content}>
+                    {message.content}
+                  </a>
                 ) : (
                   ''
                 )}
@@ -98,8 +102,16 @@ const Message = ({ ...props }) => {
                 <p className="messageText colorDark">
                   {type === 'String' ? (
                     message.content
-                  ) : (
+                  ) : type == 'Image' ? (
                     <img src={message.content} />
+                  ) : type == 'Video' ? (
+                    <video width="320" height="240" controls>
+                      <source src={message.content} type="video/mp4" />
+                    </video>
+                  ) : type == 'File' ? (
+                    <a href={message.content}>{message.content}</a>
+                  ) : (
+                    ''
                   )}
                   {convertDateTime(message.createdAt)}
                 </p>
