@@ -1,21 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Avatar from 'react-avatar';
+import { Popover } from 'antd';
 
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import { SocketIOContext } from 'components/common/context/SocketIOContext';
+import { getDetailGroupAction } from 'actions/roomsAction';
 
 const prefix = 'message';
 const c = classPrefixor(prefix);
 const Message = ({ ...props }) => {
+  const { message } = props;
+
   const [type, setType] = useState();
   const [isSentByCurrentUser, setIsSentByCurrentUser] = useState(false);
   const { infoRoom } = useContext(InfoRoomContext);
+  const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
-
-  const { message } = props;
+  const { socket } = useContext(SocketIOContext);
 
   useEffect(() => {
     if (message?.user?.id === userProfile?.id) {
@@ -28,6 +33,11 @@ const Message = ({ ...props }) => {
       setType(message.type);
     }
   }, [message]);
+
+  const handleDeleteMess = () => {
+    socket.emit('delete_message', message?._id);
+    dispatch(getDetailGroupAction(infoRoom?._id));
+  };
 
   const convertDateTime = date => {
     const newDate = new Date(date);
@@ -64,13 +74,27 @@ const Message = ({ ...props }) => {
     </div>
   );
 
+  const content = (
+    <span
+      className="delete--message"
+      style={{ cursor: 'pointer' }}
+      onClick={() => handleDeleteMess()}
+    >
+      Xóa tin nhắn
+    </span>
+  );
+
   const renderMessageItem = () => {
     return (
       <>
         <div className={c`item`}>
           {isSentByCurrentUser ? (
             <div className="messageContainer justifyEnd">
-              <div className="messageBox backgroundBlue">
+              <Popover
+                className="messageBox backgroundBlue"
+                placement="left"
+                content={content}
+              >
                 {type === 'String' ? (
                   message.content
                 ) : type == 'Image' ? (
@@ -87,12 +111,16 @@ const Message = ({ ...props }) => {
                   ''
                 )}
                 {convertDateTime(message.createdAt)}
-              </div>
+              </Popover>
             </div>
           ) : (
             <div className="messageContainer justifyStart">
               <div>{renderUserAvatar}</div>
-              <div className="messageBox backgroundLight">
+              <Popover
+                className="messageBox backgroundLight"
+                content={content}
+                placement="right"
+              >
                 <p className="messageName">
                   {
                     infoRoom.users?.find(user => user.id === message.user.id)
@@ -115,7 +143,7 @@ const Message = ({ ...props }) => {
                   )}
                   {convertDateTime(message.createdAt)}
                 </p>
-              </div>
+              </Popover>
             </div>
           )}
         </div>
