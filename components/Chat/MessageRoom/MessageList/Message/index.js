@@ -41,7 +41,10 @@ const Message = ({ ...props }) => {
   const renderUserAvatar = (
     <div className="user-center-item-v2">
       <div className="avatar avatar--huge">
-        {message?.user.avatar === null || message?.user.avatar === '' ? (
+        {infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
+          null ||
+        infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
+          '' ? (
           <Avatar
             size="50px"
             className="avatar"

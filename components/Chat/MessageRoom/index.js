@@ -21,21 +21,25 @@ const MessageRoom = ({ ...props }) => {
   const { infoRoom } = useContext(InfoRoomContext);
   const { messages } = useChatWithSocket(infoRoom, props.id);
   const [messageinRoom, setMessageInRoom] = useState([]);
-  const [pos, setPos] = useState(1000);
+  const [pos, setPos] = useState();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (messages) {
-      setPos(900);
-      setMessageInRoom(messages.slice(messages.length - 10, messages.length));
+      const currentPost = messages.length - 10 <= 0 ? 0 : messages.length - 10; // Nếu post <=0 thì vị trí bị âm sẽ lõi nên phải check
+      setPos(currentPost);
+      setMessageInRoom(messages.slice(currentPost, messages.length));
+      setIsLoading(false);
     }
   }, [messages]);
   const onScrollMessage = e => {
     const position = e.target.scrollTop;
     setIsLoading(true);
-    if (position <= 0 && pos >= 101) {
+    if (position <= 20) {
       setTimeout(() => {
-        // setMessageInRoom(messages.slice(messages.length - 10, messages.length));
-        setPos(pos - 100);
+        setMessageInRoom(
+          messages.slice(pos - 10 <= 0 ? 0 : pos - 10, messages.length) // Nếu post <=0 thì vị trí bị âm sẽ lõi nên phải check
+        );
+        setPos(pos - 10);
         setIsLoading(false);
       }, 1500);
     }
@@ -48,7 +52,12 @@ const MessageRoom = ({ ...props }) => {
       <div className={c`content`}>
         <div className="scroll-chat" onScroll={onScrollMessage}>
           {isLoading ? (
-            <Spin tip="Đang tải ..." style={{ margin: '0' }}></Spin>
+            <div>
+              <Spin
+                tip="Đang tải ..."
+                style={{ width: '100%', justifyContent: 'center' }}
+              ></Spin>
+            </div>
           ) : (
             ''
           )}
