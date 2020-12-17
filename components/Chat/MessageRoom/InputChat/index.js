@@ -1,4 +1,9 @@
-import { LikeOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  LikeOutlined,
+  SendOutlined,
+  SmileOutlined,
+  UploadOutlined
+} from '@ant-design/icons';
 import 'emoji-mart/css/emoji-mart.css';
 import { uploadImgSingle } from 'actions/uploadImgActions';
 import { Button, Input, Form, Upload, Menu, Dropdown } from 'antd';
@@ -6,6 +11,9 @@ import { SocketIOContext } from 'components/common/context/SocketIOContext';
 import { Picker } from 'emoji-mart';
 import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
+import Modal from 'antd/lib/modal/Modal';
+import { Spin } from 'antd';
+
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
 const InputChat = () => {
@@ -13,42 +21,31 @@ const InputChat = () => {
   // const [showPicker, setPickerState] = useState(false);
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
-  const [file, setFile] = useState(null);
   const [type, setType] = useState('String');
   const [status, setStatus] = useState(false);
-  const [multipleImage, setMutipleImage] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [imageFormData, setImageFormData] = useState();
+  const [loading, setLoading] = useState(false);
   const onFinish = values => {
     const formData = new FormData();
-    if (file && multipleImage.length == 1) {
-      formData.append('files', file);
+    setLoading(true);
+    if (imageFormData) {
+      formData.append('files', imageFormData);
       uploadImgSingle(formData).then(res => {
-        socket.emit('send_and_recive', {
-          message: res.data[0],
-          type: type
-        });
+        if (res.data[0]) {
+          setLoading(false);
+          socket.emit('send_and_recive', {
+            message: res.data[0],
+            type: type
+          });
+          setVisible(false);
+        }
       });
-    }
-    // else if (file && multipleImage.length > 1) {
-    //   for (let i = 0; i < multipleImage.length; i++) {
-    //     formData.append('files', multipleImage[i]);
-    //     uploadImgSingle(formData).then(res => {
-    //       console.log(res);
-    //       // socket.emit('send_and_recive', {
-    //       //   message: res.data[0],
-    //       //   type: type
-    //       // });
-    //     });
-    //   }
-    // }
-    else {
-      if (values.chatting == undefined || values.chatting == '') {
-        console.log('Can not send null message');
-      } else {
-        socket.emit('send_and_recive', {
-          message: values.chatting,
-          type: type
-        });
-      }
+    } else {
+      socket.emit('send_and_recive', {
+        message: values.chatting,
+        type: type
+      });
     }
     resetFieldOnSubmit();
   };
@@ -77,35 +74,88 @@ const InputChat = () => {
       </Menu.Item>
     </Menu>
   );
-  const onChangeFile = e => {
-    if (e.fileList == '') {
-      setType('String');
-      setStatus(false);
-      setFile(null);
-    } else {
-      setType('Image');
-      setStatus(true);
-      setFile(e.file.originFileObj);
-      setMutipleImage(e.fileList);
+  const onUploadImage = () => {
+    setVisible(true);
+    setType('Image');
+  };
+  const onUploadVideo = () => {
+    setVisible(true);
+    setType('Video');
+  };
+  const cancelUpload = () => {
+    setVisible(false);
+  };
+  const handleChangeFile = e => {
+    const reader = new FileReader();
+    if (e.file.originFileObj) {
+      reader.readAsDataURL(e.file.originFileObj);
+      setImageFormData(e.file.originFileObj);
     }
   };
+  function beforeUpload(file) {
+    console.log(file);
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('Chỉ có thể upload hình với định dạng jpg/png!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 5;
+    if (!isLt2M) {
+      message.error('Ảnh phải nhỏ hơn 5 MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  }
   return (
     <>
+      {visible ? (
+        <Modal
+          title="Upload ảnh"
+          className="modalUpdateUser"
+          visible={visible}
+          onOk={onFinish}
+          onCancel={cancelUpload}
+          footer={[
+            <Button key="submit" onClick={onFinish}>
+              Gửi
+            </Button>
+          ]}
+          style={{
+            width: '150px'
+          }}
+        >
+          {loading ? (
+            <Spin
+              tip="Đang tải ..."
+              style={{ width: '100%', justifyContent: 'center' }}
+            ></Spin>
+          ) : (
+            <Upload
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture-card"
+              onChange={handleChangeFile}
+              beforeUpload={beforeUpload}
+              style={{ border: '1px dotted black' }}
+            >
+              <div style={{ cursor: 'pointer' }}>
+                <UploadOutlined />
+              </div>
+            </Upload>
+          )}
+        </Modal>
+      ) : (
+        ''
+      )}
       <Form className={c`chat_tab`} onFinish={onFinish} form={form}>
         <div className={c`icon_chat_tab`}>
           <div className={`content__inside`}>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              onChange={onChangeFile}
-              listType="picture"
-              className="upload-image-message"
-              multiple
-            >
-              <Button icon={<i className="fa fa-image"></i>}></Button>
-            </Upload>
-            {/* <Upload>
-            <Button icon={<i className="fa fa-paperclip"></i>}></Button>
-          </Upload> */}
+            <Button
+              icon={<i className="fa fa-image"></i>}
+              onClick={onUploadImage}
+            ></Button>
+            <Button
+              icon={<i className="fa fa-paperclip" aria-hidden="true"></i>}
+              onClick={onUploadVideo}
+              style={{ paddingLeft: '50px' }}
+            ></Button>
           </div>
         </div>
         <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
