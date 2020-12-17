@@ -3,6 +3,7 @@ import ROOMS_TYPE from 'constant/roomsTypes';
 const initialState = {
   messageEditName: '',
   messageAddUserToGroup: '',
+  messageDeleteRoom: '',
   infoRoomAfterAddUserToGroup: [],
   error: null
 };
@@ -23,7 +24,7 @@ const RoomsReducer = (state = initialState, action) => {
 
     case ROOMS_TYPE.DELETE_ROOM_SUCCESS: {
       console.log(action.payload);
-      return { ...state };
+      return { ...state, messageDeleteRoom: action.payload };
     }
 
     case 'DEFAULT_ROOMS_ACTION': {
@@ -37,6 +38,12 @@ const RoomsReducer = (state = initialState, action) => {
       return {
         ...state,
         messageAddUserToGroup: ''
+      };
+    }
+    case 'DEFAULT_MESSAGE_DELETE_ROOM_ACTION': {
+      return {
+        ...state,
+        messageDeleteRoom: ''
       };
     }
     default:

@@ -93,11 +93,11 @@ export const deleteRoomAction = idRoom => dispatch => {
   roomService
     .deleteRoom(idRoom)
     .then(res => {
-      const { error, data } = res.data;
+      const { error, message } = res.data;
       if (!error) {
         dispatch({
           type: ROOMS_TYPE.DELETE_ROOM_SUCCESS,
-          payload: data
+          payload: message
         });
       }
     })
@@ -119,4 +119,8 @@ export const dispatchDefaulRoomstAction = () => ({
 
 export const dispatchDefaulMessagetAddUserToGroupAction = () => ({
   type: 'DEFAULT_MESSAGE_ADD_USER_TO_GROUP_ACTION'
+});
+
+export const dispatchDefaulMessageDeleteRoomAction = () => ({
+  type: 'DEFAULT_MESSAGE_DELETE_ROOM_ACTION'
 });

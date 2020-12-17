@@ -35,7 +35,11 @@ import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import { fetchFriendsContactAction } from 'actions/friendAction';
-import { deleteRoomAction } from 'actions/roomsAction';
+import {
+  deleteRoomAction,
+  dispatchDefaulRoomstAction,
+  getDetailGroupAction
+} from 'actions/roomsAction';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -52,6 +56,9 @@ const SideBarTab = () => {
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
   const { listFriendContact } = useSelector(state => state.FriendReducer);
+  const { infoRoomAfterAddUserToGroup, messageDeleteRoom } = useSelector(
+    state => state.RoomsReducer
+  );
 
   // custom hook
   const { listGroup } = useFetchAllGroup();
@@ -74,7 +81,7 @@ const SideBarTab = () => {
 
   // Context
   const { clickPeopleIcon } = useContext(ManagePeopleGroupContext);
-  const { setStatusRoom, setInfoRoom, setLoading } = useContext(
+  const { setStatusRoom, setInfoRoom, setLoading, infoRoom } = useContext(
     InfoRoomContext
   );
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
@@ -87,6 +94,17 @@ const SideBarTab = () => {
       dispatch(fetchFriendsContactAction(userProfile?.id));
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    if (messageDeleteRoom?.length > 0) {
+      dispatch(getDetailGroupAction(infoRoom?._id));
+    }
+  }, [messageDeleteRoom]);
+
+  useEffect(() => {
+    setInfoRoom(infoRoomAfterAddUserToGroup);
+    dispatch(dispatchDefaulRoomstAction());
+  }, [infoRoomAfterAddUserToGroup]);
 
   const showModal = () => {
     setVisible(true);
@@ -144,6 +162,19 @@ const SideBarTab = () => {
       );
     });
   };
+
+  const renderDropdownThreeDots = room => {
+    return (
+      <Dropdown overlay={() => menu(room._id)} trigger={['click']}>
+        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+          <span className="right">
+            <EllipsisOutlined />
+          </span>
+        </a>
+      </Dropdown>
+    );
+  };
+
   //
   const renderTabSingleChat = room => {
     return room?.users.map(user => {
@@ -181,6 +212,7 @@ const SideBarTab = () => {
             >
               <p className="group__name">{user?.name}</p>
             </div>
+            {renderDropdownThreeDots(room)}
           </div>
         );
       }
@@ -201,13 +233,7 @@ const SideBarTab = () => {
         >
           <p className="group__name_group">{room.name}</p>
         </div>
-        <Dropdown overlay={() => menu(room._id)} trigger={['click']}>
-          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            <span className="right">
-              <EllipsisOutlined />
-            </span>
-          </a>
-        </Dropdown>
+        {renderDropdownThreeDots(room)}
       </div>
     );
   };

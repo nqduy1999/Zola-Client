@@ -90,18 +90,27 @@
       .message_tab_chat {
         padding: 10px;
         .tab_room {
+          display: flex;
+          align-items: center;
+          position: relative;
           .avatar-group-vip-pro {
             display: grid;
             grid-template-columns: auto auto;
             width: 74px;
             height: 64px;
-            // .avatar-group {
-            //   .userInfoSideBar {
-            //     // .avatar-user {
-            //     //   margin-right: 5px;
-            //     // }
-            //   }
-            // }
+          }
+          svg {
+            font-size: 20px;
+            color: transparent;
+            position: absolute;
+            right: 0;
+            bottom: 50%;
+          }
+          &:hover {
+            svg {
+              transition: all 0.5s;
+              color: black;
+            }
           }
         }
         .group__name {
@@ -258,16 +267,16 @@
 // CLick icon user in group chatting
 .clickPeopleIcon {
   display: flex;
-  .sidebar-tab__tabs{
+  .sidebar-tab__tabs {
     width: 100%;
   }
-  .manage__people{
+  .manage__people {
     display: block;
   }
 }
 
 .unClickPeopleIcon {
-  .manage__people{
+  .manage__people {
     display: none;
   }
 }
