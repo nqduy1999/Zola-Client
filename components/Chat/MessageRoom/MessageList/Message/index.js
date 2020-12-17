@@ -46,13 +46,13 @@ const Message = ({ ...props }) => {
             size="50px"
             className="avatar"
             name={
-              infoRoom.users.find(user => user.id === message.user.id)?.name
+              infoRoom.users?.find(user => user.id === message.user.id)?.name
             }
           />
         ) : (
           <img
             src={
-              infoRoom.users.find(user => user.id === message.user.id)?.avatar
+              infoRoom.users?.find(user => user.id === message.user.id)?.avatar
             }
             alt="avatar"
           />
@@ -82,7 +82,7 @@ const Message = ({ ...props }) => {
               <div className="messageBox backgroundLight">
                 <p className="messageName">
                   {
-                    infoRoom.users.find(user => user.id === message.user.id)
+                    infoRoom.users?.find(user => user.id === message.user.id)
                       ?.name
                   }
                 </p>
