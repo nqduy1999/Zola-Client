@@ -73,8 +73,14 @@ const Message = ({ ...props }) => {
               <div className="messageBox backgroundBlue">
                 {type === 'String' ? (
                   message.content
-                ) : (
+                ) : type == 'Image' ? (
                   <img src={message.content} />
+                ) : type == 'Video' ? (
+                  <video width="320" height="240" controls>
+                    <source src={message.content} type="video/mp4" />
+                  </video>
+                ) : (
+                  ''
                 )}
                 {convertDateTime(message.createdAt)}
               </div>

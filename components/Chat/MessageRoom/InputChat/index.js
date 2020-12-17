@@ -93,20 +93,28 @@ const InputChat = () => {
     }
   };
   function beforeUpload(file) {
-    console.log(file);
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('Chỉ có thể upload hình với định dạng jpg/png!');
+    if (type == 'Image') {
+      const isJpgOrPng =
+        file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        message.error('Chỉ có thể upload hình với định dạng jpg/png!');
+      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('Ảnh phải nhỏ hơn 5 MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    } else if (type == 'Video' || type == 'file') {
+      const isLt2M = file.size / 1024 / 1024 < 100;
+      if (!isLt2M) {
+        message.error('File phải nhỏ hơn 100 MB!');
+      }
+      return isLt2M;
     }
-    const isLt2M = file.size / 1024 / 1024 < 5;
-    if (!isLt2M) {
-      message.error('Ảnh phải nhỏ hơn 5 MB!');
-    }
-    return isJpgOrPng && isLt2M;
   }
   return (
     <>
-      {visible ? (
+      {visible && type == 'Image' ? (
         <Modal
           title="Upload ảnh"
           className="modalUpdateUser"
@@ -142,7 +150,40 @@ const InputChat = () => {
           )}
         </Modal>
       ) : (
-        ''
+        <Modal
+          title="Upload File"
+          className="modalUpdateUser"
+          visible={visible}
+          onOk={onFinish}
+          onCancel={cancelUpload}
+          footer={[
+            <Button key="submit" onClick={onFinish}>
+              Gửi
+            </Button>
+          ]}
+          style={{
+            width: '150px'
+          }}
+        >
+          {loading ? (
+            <Spin
+              tip="Đang tải ..."
+              style={{ width: '100%', justifyContent: 'center' }}
+            ></Spin>
+          ) : (
+            <Upload
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture"
+              onChange={handleChangeFile}
+              beforeUpload={beforeUpload}
+              style={{ border: '1px dotted black' }}
+            >
+              <div style={{ cursor: 'pointer' }}>
+                <UploadOutlined />
+              </div>
+            </Upload>
+          )}
+        </Modal>
       )}
       <Form className={c`chat_tab`} onFinish={onFinish} form={form}>
         <div className={c`icon_chat_tab`}>
