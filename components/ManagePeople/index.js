@@ -98,7 +98,7 @@ const ManagePeopleInGroup = () => {
   };
 
   const userSearch = infoRoom?.users?.filter(
-    user => user.name.toLowerCase().indexOf(valueSearch.toLowerCase()) !== -1
+    user => user?.name?.toLowerCase().indexOf(valueSearch.toLowerCase()) !== -1
   );
 
   const handeGetUserIDInRoom = idUser => {

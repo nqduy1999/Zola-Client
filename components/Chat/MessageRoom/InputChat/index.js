@@ -27,6 +27,7 @@ const InputChat = () => {
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
   const [messErr, setMessErr] = useState(false);
+  const listImage = [];
   const onFinish = values => {
     const formData = new FormData();
     if (!messErr) {
@@ -108,6 +109,7 @@ const InputChat = () => {
       }
       if (e.file.originFileObj) {
         reader.readAsDataURL(e.file.originFileObj);
+        listImage.push(e.file.originFileObj);
         setImageFormData(e.file.originFileObj);
       }
     }
@@ -123,7 +125,7 @@ const InputChat = () => {
     return (
       <Modal
         title={type == 'File' ? 'Tải File lên' : 'Tải Ảnh và Video'}
-        className="modalUpdateUser"
+        className="modalUploadImageMessage"
         visible={visible}
         onOk={onFinish}
         onCancel={cancelUpload}

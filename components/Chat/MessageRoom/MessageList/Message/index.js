@@ -105,7 +105,7 @@ const Message = ({ ...props }) => {
                   </video>
                 ) : type == 'File' ? (
                   <a style={{ color: 'white' }} href={message.content}>
-                    {message.content}
+                    {message.content.slice(51, message.content.length)};
                   </a>
                 ) : (
                   ''
@@ -137,7 +137,9 @@ const Message = ({ ...props }) => {
                       <source src={message.content} type="video/mp4" />
                     </video>
                   ) : type == 'File' ? (
-                    <a href={message.content}>{message.content}</a>
+                    <a href={message.content}>
+                      {message.content.slice(51, message.content.length)}
+                    </a>
                   ) : (
                     ''
                   )}

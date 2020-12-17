@@ -128,6 +128,32 @@
 //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 //   background-color: #f5f5f5;
 // }
+.modalUploadImageMessage {
+  .ant-modal-content {
+    width: 400px;
+    margin: 0 auto;
+    .ant-upload.ant-upload-select-picture-card {
+      border: none;
+      background-color: white;
+      .ant-upload {
+        border: 1px dotted black;
+      }
+    }
+    .avatar {
+      left: 120%;
+      display: block;
+      position: relative;
+      .img_avatar {
+        margin-left: 5px;
+        height: 84px;
+        width: 84px;
+        display: block;
+        border-radius: 50% !important;
+        border: 0.5px solid #0cb3ff;
+      }
+    }
+  }
+}
 @media only screen and (max-width: 1440px) {
   .message-room {
     &__content {
