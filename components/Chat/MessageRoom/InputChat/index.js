@@ -9,31 +9,8 @@ import { classPrefixor } from 'utils/classPrefixor';
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
 const InputChat = () => {
-  const [message, SetMessage] = useState('');
-  const onHandleChangeMessage = e => {
-    SetMessage(e.target.value);
-    setType('String');
-    if (e.target.value == '') {
-      setStatus(false);
-    } else {
-      setStatus(true);
-    }
-    console.log(message);
-  };
-  const addEmoji = e => {
-    let sym = e.unified.split('-');
-    let codesArray = [];
-    sym.forEach(el => codesArray.push('0x' + el));
-    let emoji = String.fromCodePoint(...codesArray);
-    SetMessage(emoji);
-  };
-  const menu = () => (
-    <Menu>
-      <Menu.Item key="0">
-        <Picker onSelect={addEmoji} />
-      </Menu.Item>
-    </Menu>
-  );
+  const [message, SetMessage] = useState();
+  // const [showPicker, setPickerState] = useState(false);
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
   const [file, setFile] = useState(null);
@@ -79,6 +56,27 @@ const InputChat = () => {
     form.resetFields();
     setStatus(false);
   };
+  const onHandleChangeMessage = e => {
+    SetMessage(e.target.value);
+    setType('String');
+    if (e.target.value == '') {
+      setStatus(false);
+    } else {
+      setStatus(true);
+    }
+  };
+  const addEmoji = e => {
+    console.log();
+    let emoji = e.native;
+    SetMessage(message + emoji);
+  };
+  const menu = () => (
+    <Menu>
+      <Menu.Item key="0">
+        <Picker onSelect={addEmoji} emojiTooltip={true} title="Zola" theme="" />
+      </Menu.Item>
+    </Menu>
+  );
   const onChangeFile = e => {
     if (e.fileList == '') {
       setType('String');

@@ -33,30 +33,30 @@ const FriendList = () => {
 
   useEffect(() => {
     if (userProfile?.id) {
-      dispatch(fetchFriendsRequestAction(userProfile?.id));
+      dispatch(fetchFriendsRequestAction(userProfile.id));
     }
   }, [userProfile, dispatch]);
 
   useEffect(() => {
-    if (messageAccept?.length > 0) {
+    if (messageAccept?.length > 0 && userProfile?.id) {
       toast.success(`${messageAccept}`, {
         position: 'top-right',
         autoClose: 2000
       });
-      dispatch(fetchFriendsRequestAction(userProfile.id));
-      dispatch(fetchFriendsContactAction(userProfile.id));
+      dispatch(fetchFriendsRequestAction(userProfile?.id));
+      dispatch(fetchFriendsContactAction(userProfile?.id));
     }
     dispatch(dispatchDefaultAction());
   }, [messageAccept]);
   let totalFriendRequest = listFriendRequest?.length;
 
   useEffect(() => {
-    if (messageAvoid.length > 0) {
+    if (messageAvoid.length > 0 && userProfile?.id) {
       toast.success(`Avoid Friend Request Success`, {
         position: 'top-right',
         autoClose: 2000
       });
-      dispatch(fetchFriendsRequestAction(userProfile.id));
+      dispatch(fetchFriendsRequestAction(userProfile?.id));
     }
     dispatch(dispatchDefaultAction());
   }, [messageAvoid]);
