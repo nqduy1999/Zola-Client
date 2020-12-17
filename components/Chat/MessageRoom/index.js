@@ -23,6 +23,7 @@ const MessageRoom = ({ ...props }) => {
   const [messageinRoom, setMessageInRoom] = useState([]);
   const [pos, setPos] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (messages) {
       const currentPost = messages.length - 10 <= 0 ? 0 : messages.length - 10; // Nếu post <=0 thì vị trí bị âm sẽ lõi nên phải check

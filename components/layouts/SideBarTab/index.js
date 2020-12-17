@@ -54,11 +54,6 @@ const SideBarTab = () => {
 
   // custom hook
   const { listGroup } = useFetchAllGroup();
-  useEffect(() => {
-    if (userProfile?.id) {
-      dispatch(fetchFriendsContactAction(userProfile?.id));
-    }
-  }, [userProfile]);
 
   // nextjs hook
   const { push } = useRouter();
@@ -85,6 +80,13 @@ const SideBarTab = () => {
   //
   const totalFriend = listFriendContact?.length;
   //
+
+  useEffect(() => {
+    if (userProfile?.id) {
+      dispatch(fetchFriendsContactAction(userProfile?.id));
+    }
+  }, [userProfile]);
+
   const showModal = () => {
     setVisible(true);
     setUserData(userProfile);
