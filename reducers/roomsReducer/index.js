@@ -23,7 +23,6 @@ const RoomsReducer = (state = initialState, action) => {
     }
 
     case ROOMS_TYPE.DELETE_ROOM_SUCCESS: {
-      console.log(action.payload);
       return { ...state, messageDeleteRoom: action.payload };
     }
 
