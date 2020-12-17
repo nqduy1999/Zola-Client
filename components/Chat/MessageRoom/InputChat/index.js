@@ -122,7 +122,7 @@ const InputChat = () => {
   const ModalFile = () => {
     return (
       <Modal
-        title={type == 'File' ? 'Upload File' : 'Upload Image And Video'}
+        title={type == 'File' ? 'Tải File lên' : 'Tải Ảnh và Video'}
         className="modalUpdateUser"
         visible={visible}
         onOk={onFinish}
