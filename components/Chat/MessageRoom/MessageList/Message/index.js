@@ -17,13 +17,11 @@ const Message = ({ ...props }) => {
 
   const [type, setType] = useState();
   const [isSentByCurrentUser, setIsSentByCurrentUser] = useState(false);
-  const { infoRoom, setInfoRoom } = useContext(InfoRoomContext);
+  const { infoRoom } = useContext(InfoRoomContext);
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
   const { socket } = useContext(SocketIOContext);
-  const { infoRoomAfterAddUserToGroup } = useSelector(
-    state => state.RoomsReducer
-  );
+
   useEffect(() => {
     if (message?.user?.id === userProfile?.id) {
       setIsSentByCurrentUser(true);
@@ -35,10 +33,6 @@ const Message = ({ ...props }) => {
       setType(message.type);
     }
   }, [message]);
-
-  useEffect(() => {
-    setInfoRoom(infoRoomAfterAddUserToGroup);
-  }, [infoRoomAfterAddUserToGroup]);
 
   const handleDeleteMess = () => {
     socket.emit('delete_message', message?._id);
@@ -96,7 +90,11 @@ const Message = ({ ...props }) => {
         <div className={c`item`}>
           {isSentByCurrentUser ? (
             <div className="messageContainer justifyEnd">
-              <div className="messageBox backgroundBlue">
+              <Popover
+                className="messageBox backgroundBlue"
+                placement="left"
+                content={content}
+              >
                 {type === 'String' ? (
                   message.content
                 ) : type == 'Image' ? (
@@ -109,7 +107,7 @@ const Message = ({ ...props }) => {
                   ''
                 )}
                 {convertDateTime(message.createdAt)}
-              </div>
+              </Popover>
             </div>
           ) : (
             <div className="messageContainer justifyStart">
