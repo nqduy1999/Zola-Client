@@ -85,6 +85,34 @@ export const getDetailGroupAction = idRoom => dispatch => {
     });
 };
 
+export const deleteRoomAction = idRoom => dispatch => {
+  dispatch({
+    type: ROOMS_TYPE.DELETE_ROOM_REQUEST
+  });
+
+  roomService
+    .deleteRoom(idRoom)
+    .then(res => {
+      const { error, data } = res.data;
+      if (!error) {
+        dispatch({
+          type: ROOMS_TYPE.DELETE_ROOM_SUCCESS,
+          payload: data
+        });
+      }
+    })
+    .catch(err => {
+      const { error, data } = err.response?.data;
+      dispatch({
+        type: ROOMS_TYPE.DELETE_ROOM_FAILURE,
+        payload: {
+          error,
+          data
+        }
+      });
+    });
+};
+
 export const dispatchDefaulRoomstAction = () => ({
   type: 'DEFAULT_ROOMS_ACTION'
 });

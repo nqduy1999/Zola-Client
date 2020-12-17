@@ -2,8 +2,8 @@
 // React Libary
 import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Menu } from 'antd';
-import { EditOutlined, KeyOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu, Popconfirm } from 'antd';
+import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +35,7 @@ import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import { fetchFriendsContactAction } from 'actions/friendAction';
+import { deleteRoomAction } from 'actions/roomsAction';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -77,9 +78,9 @@ const SideBarTab = () => {
     InfoRoomContext
   );
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
-  //
+
+  // variable Global
   const totalFriend = listFriendContact?.length;
-  //
 
   useEffect(() => {
     if (userProfile?.id) {
@@ -99,6 +100,26 @@ const SideBarTab = () => {
   const onCancelPassword = () => {
     setVisiblePassword(false);
   };
+
+  const handleDeleteRoom = idRoom => {
+    dispatch(deleteRoomAction(idRoom));
+  };
+
+  const menu = id => (
+    <Menu>
+      <Menu.Item key="1">
+        <Popconfirm
+          placement="right"
+          title="Bạn muốn xóa Cuộc trò chuyện này?"
+          onConfirm={() => handleDeleteRoom(id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          Xóa cuộc trò chuyện
+        </Popconfirm>
+      </Menu.Item>
+    </Menu>
+  );
 
   const handleClickRoom = async value => {
     setLoading(true);
@@ -165,6 +186,7 @@ const SideBarTab = () => {
       }
     });
   };
+
   const renderTabNameGroupRoom = room => {
     return (
       <div className="tab_room">
@@ -179,9 +201,17 @@ const SideBarTab = () => {
         >
           <p className="group__name_group">{room.name}</p>
         </div>
+        <Dropdown overlay={() => menu(room._id)} trigger={['click']}>
+          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            <span className="right">
+              <EllipsisOutlined />
+            </span>
+          </a>
+        </Dropdown>
       </div>
     );
   };
+
   const renderContactRooms = () => {
     return listFriendContact?.map((item, key) => {
       return (

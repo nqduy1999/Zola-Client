@@ -20,6 +20,12 @@ const RoomsReducer = (state = initialState, action) => {
     case ROOMS_TYPE.GET_DETAIL_GROUP_SUCCESS: {
       return { ...state, infoRoomAfterAddUserToGroup: action.payload };
     }
+
+    case ROOMS_TYPE.DELETE_ROOM_SUCCESS: {
+      console.log(action.payload);
+      return { ...state };
+    }
+
     case 'DEFAULT_ROOMS_ACTION': {
       return {
         ...state,
