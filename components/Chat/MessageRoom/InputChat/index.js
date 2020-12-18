@@ -8,9 +8,9 @@ import {
 } from '@ant-design/icons';
 import 'emoji-mart/css/emoji-mart.css';
 import { uploadImgSingle } from 'actions/uploadImgActions';
+import InputEmoji from 'react-input-emoji';
 import { Button, Input, Form, Upload, Menu, Dropdown } from 'antd';
 import { SocketIOContext } from 'components/common/context/SocketIOContext';
-import { Picker } from 'emoji-mart';
 import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Modal from 'antd/lib/modal/Modal';
@@ -20,7 +20,7 @@ const { Dragger } = Upload;
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
 const InputChat = () => {
-  const [message, SetMessage] = useState();
+  const [message, setMessage] = useState();
   // const [showPicker, setPickerState] = useState(false);
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
@@ -33,6 +33,7 @@ const InputChat = () => {
   const [_, setListItem] = useState([]);
   const onFinish = values => {
     const formData = new FormData();
+    console.log(values);
     if (!messErr) {
       setLoading(true);
       if (imageFormData) {
@@ -63,26 +64,19 @@ const InputChat = () => {
     form.resetFields();
     setStatus(false);
   };
-  const onHandleChangeMessage = e => {
-    SetMessage(e.target.value);
+  const onHandleChangeMessage = mess => {
+    console.log(mess);
     setType('String');
-    if (e.target.value == '') {
+    if (mess == '') {
       setStatus(false);
     } else {
       setStatus(true);
+      onFinish({
+        chatting: mess
+      });
     }
   };
-  const addEmoji = e => {
-    let emoji = e.native;
-    SetMessage(message + emoji);
-  };
-  const menu = () => (
-    <Menu>
-      <Menu.Item key="0">
-        <Picker onSelect={addEmoji} emojiTooltip={true} title="Zola" theme="" />
-      </Menu.Item>
-    </Menu>
-  );
+
   const onUpload = () => {
     setVisible(true);
     setType('ImageAndVideo');
@@ -192,7 +186,7 @@ const InputChat = () => {
   return (
     <>
       {visible ? ModalFile() : ''}
-      <Form className={c`chat_tab`} onFinish={onFinish} form={form}>
+      <Form className={c`chat_tab`} form={form}>
         <div className={c`icon_chat_tab`}>
           <div className={`content__inside`}>
             <Button
@@ -206,36 +200,14 @@ const InputChat = () => {
           </div>
         </div>
         <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
-        <Form.Item
-          name="chatting"
-          style={{ width: '85%', display: 'inline-block' }}
-        >
-          {type && type === 'String' ? (
-            <Input
-              onChange={onHandleChangeMessage}
-              value={message}
-              placeholder="Nhập tin nhắn của bạn"
-              autoFocus
-              style={{ border: 'none', height: '64px' }}
-            />
-          ) : (
-            <></>
-          )}
-        </Form.Item>
-        <div className="icon" style={{ marginTop: '15px' }}>
-          <Dropdown overlay={() => menu()} trigger={['click']}>
-            <SmileOutlined className="emoji-picker" />
-          </Dropdown>
-          {status ? (
-            <Button htmlType="submit">
-              <SendOutlined />
-            </Button>
-          ) : (
-            <Button>
-              <LikeOutlined />
-            </Button>
-          )}
-        </div>
+        <InputEmoji
+          onChange={setMessage}
+          value={message}
+          placeholder="Nhập tin nhắn của bạn"
+          cleanOnEnter
+          borderColor="rgb(80 81 119)"
+          onEnter={onHandleChangeMessage}
+        />
       </Form>
     </>
   );
