@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
 import React, { useContext, useCallback, useState, useEffect } from 'react';
-import { Input, Tag } from 'antd';
+import { Button, Input, Tag } from 'antd';
 import Avatar from 'react-avatar';
 import { LeftOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
@@ -27,6 +27,7 @@ const ModalAddFriendToGroup = dynamic(() => import('./ModalAddFriendToGroup'));
 //   import('components/Friend/ViewUserById')
 // );
 import ViewUserFriend from 'components/Friend/ViewUserFriend';
+import { exitGroupChatAction } from 'actions/groupAction';
 
 const prefix = 'manage__people';
 const c = classPrefixor(prefix);
@@ -72,7 +73,9 @@ const ManagePeopleInGroup = () => {
   const handleSearchName = e => {
     setValueSearch(e.target.value);
   };
-
+  const handleExitGroup = () => {
+    dispatch(exitGroupChatAction(infoRoom?._id));
+  };
   const handleCheckAvatar = user => {
     const checkUserAvatar = user.avatar === null || user.avatar === '';
     if (checkUserAvatar) {
@@ -170,6 +173,15 @@ const ManagePeopleInGroup = () => {
             onCancelModal={cancelModal}
           />
         )}
+        <div className="exit-group" style={{ paddingLeft: '60px' }}>
+          <Button
+            type="primary"
+            onClick={() => handleExitGroup()}
+            style={{ borderRadius: '5px' }}
+          >
+            Rời Khỏi Nhóm
+          </Button>
+        </div>
       </aside>
     </>
   );

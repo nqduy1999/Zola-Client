@@ -17,7 +17,6 @@ import { useDispatch } from 'react-redux';
 import { editRoomNameAction } from 'actions/roomsAction';
 
 import { useSelector } from 'react-redux';
-import { exitGroupChatAction } from 'actions/groupAction';
 
 // Common
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
@@ -80,11 +79,6 @@ const RoomBar = () => {
   const handleAvoidUpdateRoomName = () => {
     setClickItemEdit(false);
   };
-
-  const handleExitGroup = () => {
-    dispatch(exitGroupChatAction(infoRoom?._id));
-  };
-
   const checkInitialValue = () => {
     if (isUpdateRoomNameSuccess) {
       return {
@@ -139,11 +133,6 @@ const RoomBar = () => {
             <span>{infoRoom?.users?.length}</span>
           </div>
         </div>
-      </div>
-      <div className="exit-group">
-        <Button type="primary" danger onClick={() => handleExitGroup()}>
-          Rời Khỏi Nhóm
-        </Button>
       </div>
     </>
   );
