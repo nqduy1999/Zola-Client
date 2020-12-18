@@ -88,6 +88,7 @@ const AddGroup = ({ ...props }) => {
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
+                style={{ borderRadius: '5px' }}
               >
                 Tạo Nhóm
               </Button>

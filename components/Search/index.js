@@ -49,13 +49,14 @@ const SearchComponent = () => {
               onClick={() => setVisibleModalSearch(true)}
               icon={<PlusOutlined />}
               type="primary"
-              style={{ marginRight: '5px' }}
+              style={{ marginRight: '5px', borderRadius: '5px' }}
             >
               Thêm bạn bè
             </Button>
             <Button
               onClick={() => setShowModalAddGroup(true)}
               icon={<UsergroupAddOutlined />}
+              style={{ borderRadius: '5px' }}
             >
               Tạo nhóm
             </Button>

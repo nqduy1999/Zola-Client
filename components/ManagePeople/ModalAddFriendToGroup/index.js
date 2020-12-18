@@ -109,7 +109,11 @@ const ModalAddFriendToGroup = ({ ...props }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ width: '100%', borderRadius: '5px' }}
+            >
               Thêm vào nhóm
             </Button>
           </Form.Item>

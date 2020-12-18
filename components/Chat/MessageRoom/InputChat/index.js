@@ -1,4 +1,5 @@
 import {
+  InboxOutlined,
   LikeOutlined,
   SendOutlined,
   SmileOutlined,
@@ -13,6 +14,7 @@ import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Modal from 'antd/lib/modal/Modal';
 import { Spin } from 'antd';
+const { Dragger } = Upload;
 
 const prefix = 'message-room';
 const c = classPrefixor(prefix);
@@ -27,7 +29,7 @@ const InputChat = () => {
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
   const [messErr, setMessErr] = useState(false);
-  const listImage = [];
+  const [listItem, setListItem] = useState([]);
   const onFinish = values => {
     const formData = new FormData();
     if (!messErr) {
@@ -87,6 +89,7 @@ const InputChat = () => {
   const cancelUpload = () => {
     setVisible(false);
     setMessErr(false);
+    setListItem([]);
   };
   const onUploadFile = () => {
     setVisible(true);
@@ -109,11 +112,12 @@ const InputChat = () => {
       }
       if (e.file.originFileObj) {
         reader.readAsDataURL(e.file.originFileObj);
-        listImage.push(e.file.originFileObj);
         setImageFormData(e.file.originFileObj);
+        setListItem(e.file.originFileObj);
       }
     }
   };
+  console.log(listItem);
   function beforeUploadFile(file) {
     const isLt2M = file.size / 1024 / 1024 < 10;
     if (!isLt2M) {
@@ -143,10 +147,27 @@ const InputChat = () => {
             tip="Đang tải ..."
             style={{ width: '100%', justifyContent: 'center' }}
           ></Spin>
+        ) : type == 'File' ? (
+          <Dragger
+            multiple
+            beforeUpload={beforeUploadFile}
+            onChange={handleChangeFile}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Kéo thả file hoặc click vào đây để Upload
+            </p>
+            <p className="ant-upload-hint">
+              Giúp việc gửi file trở nên dễ dàng hơn bao giờ hết
+            </p>
+          </Dragger>
         ) : (
           <Upload
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType={type == 'File' ? 'picture' : 'picture-card'}
+            listType="picture-card"
+            multiple
             onChange={handleChangeFile}
             beforeUpload={beforeUploadFile}
             style={{ border: '1px dotted black' }}
@@ -201,13 +222,7 @@ const InputChat = () => {
         </Form.Item>
         <div className="icon" style={{ marginTop: '15px' }}>
           <Dropdown overlay={() => menu()} trigger={['click']}>
-            <SmileOutlined
-              style={{
-                fontSize: '20px',
-                color: '#0068ff',
-                paddingRight: '10px'
-              }}
-            />
+            <SmileOutlined className="emoji-picker" />
           </Dropdown>
           {status ? (
             <Button htmlType="submit">

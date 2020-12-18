@@ -76,8 +76,8 @@ const GroupList = () => {
               </div>
               <Button
                 type="primary"
-                danger
                 onClick={() => handleExitGroup(item._id)}
+                style={{ borderRadius: '5px' }}
               >
                 Rời Khỏi Nhóm
               </Button>

@@ -58,7 +58,7 @@ const ViewUserFriendByID = ({ ...props }) => {
       </div>
       <div className="friend-profile__actions friend-profile__actions__header">
         <div>
-          <Button type="primary">
+          <Button type="primary" style={{ borderRadius: '5px' }}>
             <CheckOutlined />
             Bạn bè
           </Button>
