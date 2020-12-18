@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import useRenderAvatar from 'components/common/hook/useRenderAvatar';
+import { filterUserExitedRoom } from 'components/common/function/lodash';
 
 const prefix = 'room_bar';
 
@@ -33,6 +34,8 @@ const RoomBar = () => {
   const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
   const { infoRoom, statusRoom } = useContext(InfoRoomContext);
   const { userProfile } = useSelector(state => state.userData);
+  const infoRoomClearUserExited = filterUserExitedRoom(infoRoom?.users);
+
   const [renderAvatarUserGroup] = useRenderAvatar(
     infoRoom,
     {
@@ -130,7 +133,7 @@ const RoomBar = () => {
             <UserOutlined
               onClick={() => setClickPeopleIcon('clickPeopleIcon')}
             />
-            <span>{infoRoom?.users?.length}</span>
+            <span>{infoRoomClearUserExited?.length}</span>
           </div>
         </div>
       </div>

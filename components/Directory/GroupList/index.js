@@ -16,6 +16,7 @@ import { getListMessage } from 'actions/messageAction';
 import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
 import useRenderAvatar from 'components/common/hook/useRenderAvatar';
+import { filterUserExitedRoom } from 'components/common/function/lodash';
 
 const prefix = 'groupList';
 const c = classPrefixor(prefix);
@@ -55,6 +56,11 @@ const GroupList = () => {
     return renderAvatarUserGroup();
   };
 
+  const renderNumberUserInGroup = group => {
+    const infoRoomClearUserExited = filterUserExitedRoom(group?.users);
+    return infoRoomClearUserExited?.length;
+  };
+
   const renderListGroup = () => {
     return listGroup?.map(item => {
       return (
@@ -71,7 +77,7 @@ const GroupList = () => {
                     color: 'rgb(130, 130, 130)'
                   }}
                 >
-                  {item?.users.length} Thành Viên
+                  {renderNumberUserInGroup(item)} Thành Viên
                 </div>
               </div>
               <Button

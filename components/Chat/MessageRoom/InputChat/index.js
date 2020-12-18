@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   InboxOutlined,
   LikeOutlined,
@@ -29,7 +30,7 @@ const InputChat = () => {
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
   const [messErr, setMessErr] = useState(false);
-  const [listItem, setListItem] = useState([]);
+  const [_, setListItem] = useState([]);
   const onFinish = values => {
     const formData = new FormData();
     if (!messErr) {
@@ -117,7 +118,7 @@ const InputChat = () => {
       }
     }
   };
-  console.log(listItem);
+
   function beforeUploadFile(file) {
     const isLt2M = file.size / 1024 / 1024 < 10;
     if (!isLt2M) {
@@ -125,6 +126,7 @@ const InputChat = () => {
     }
     return isLt2M;
   }
+
   const ModalFile = () => {
     return (
       <Modal

@@ -8,6 +8,12 @@ import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { accountLogout } from 'actions/accountAction';
+import { fetchFriendsContactAction } from 'actions/friendAction';
+import {
+  deleteRoomAction,
+  dispatchDefaulRoomstAction,
+  getDetailGroupAction
+} from 'actions/roomsAction';
 
 // NextJS
 import dynamic from 'next/dynamic';
@@ -34,12 +40,6 @@ import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
-import { fetchFriendsContactAction } from 'actions/friendAction';
-import {
-  deleteRoomAction,
-  dispatchDefaulRoomstAction,
-  getDetailGroupAction
-} from 'actions/roomsAction';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -66,6 +66,16 @@ const SideBarTab = () => {
   // nextjs hook
   const { push } = useRouter();
 
+  // Context
+  const { clickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { setStatusRoom, setInfoRoom, setLoading, infoRoom } = useContext(
+    InfoRoomContext
+  );
+  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
+
+  // variable Global
+  const totalFriend = listFriendContact?.length;
+
   const RenderAvatarUserGroup = group => {
     const [renderAvatarUserGroup] = useRenderAvatar(
       group,
@@ -78,16 +88,6 @@ const SideBarTab = () => {
     );
     return renderAvatarUserGroup();
   };
-
-  // Context
-  const { clickPeopleIcon } = useContext(ManagePeopleGroupContext);
-  const { setStatusRoom, setInfoRoom, setLoading, infoRoom } = useContext(
-    InfoRoomContext
-  );
-  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
-
-  // variable Global
-  const totalFriend = listFriendContact?.length;
 
   useEffect(() => {
     if (userProfile?.id) {

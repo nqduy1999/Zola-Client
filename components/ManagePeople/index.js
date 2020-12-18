@@ -23,10 +23,9 @@ import { findUserByIdAction } from 'actions/userAction';
 
 // Component
 const ModalAddFriendToGroup = dynamic(() => import('./ModalAddFriendToGroup'));
-// const ViewUserFriendByID = dynamic(() =>
-//   import('components/Friend/ViewUserById')
-// );
+
 import ViewUserFriend from 'components/Friend/ViewUserFriend';
+import { filterUserExitedRoom } from 'components/common/function/lodash';
 import { exitGroupChatAction } from 'actions/groupAction';
 
 const prefix = 'manage__people';
@@ -56,6 +55,8 @@ const ManagePeopleInGroup = () => {
     state => state.RoomsReducer
   );
   const { messageAddUserToGroup } = useSelector(state => state.RoomsReducer);
+
+  const infoRoomClearUserExited = filterUserExitedRoom(infoRoom?.users);
 
   // useEffect này chạy khi messageAddUserToGroup thay đổi, nghĩa là người dùng đã được add thành công
   useEffect(() => {
@@ -100,7 +101,7 @@ const ManagePeopleInGroup = () => {
     }
   };
 
-  const userSearch = infoRoom?.users?.filter(
+  const userSearch = infoRoomClearUserExited?.filter(
     user => user?.name?.toLowerCase().indexOf(valueSearch.toLowerCase()) !== -1
   );
 
