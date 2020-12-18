@@ -13,6 +13,7 @@ const layout = {
 const prefix = 'add-friend';
 const c = classPrefixor(prefix);
 const AddFriend = props => {
+  const [form] = Form.useForm();
   const [statusSearch, setStatusSearch] = useState(false);
   const [suggestFriend, setSuggestFriend] = useState(null);
   const { Panel } = Collapse;
@@ -39,6 +40,7 @@ const AddFriend = props => {
     setVisible(false);
     setSuggestFriend(null);
     setStatusSearch(false);
+    form.resetFields();
   };
   return (
     <Modal
@@ -51,7 +53,12 @@ const AddFriend = props => {
       }}
       className={c`main`}
     >
-      <Form {...layout} name="searchUser" initialValues={{ remember: true }}>
+      <Form
+        {...layout}
+        name="searchUser"
+        initialValues={{ remember: true }}
+        form={form}
+      >
         <Form.Item name="phone">
           <Input
             placeholder="Nhập vào email hoặc số điện thoại"

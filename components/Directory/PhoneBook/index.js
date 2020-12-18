@@ -72,25 +72,19 @@ const PhoneBook = () => {
   };
 
   return (
-    <section className={prefix}>
+    <>
       <div className={c`header`}>
-        <i
-          className="fa fa-address-book"
-          style={{
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            fontSize: '50px',
-            color: 'cornflowerblue',
-            marginRight: '10px'
-          }}
-        ></i>
+        <i className="fa fa-address-book"></i>
         <span>Danh Bạ Bạn Bè</span>
       </div>
-      <div className={c`content`}>
-        <div className={c`content__inside`}>{renderListFriendPhoneBook()}</div>
-      </div>
-    </section>
+      <section className={prefix}>
+        <div className={c`content`}>
+          <div className={c`content__inside`}>
+            {renderListFriendPhoneBook()}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

@@ -89,14 +89,14 @@ const GroupList = () => {
   };
   return (
     <>
+      <div className={c`header`}>
+        <img
+          src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
+          alt="imgAddF"
+        />
+        <span>Danh Sách Nhóm</span>
+      </div>
       <section className={prefix}>
-        <div className={c`header`}>
-          <img
-            src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
-            alt="imgAddF"
-          />
-          <span>Danh Sách Nhóm</span>
-        </div>
         <div className={c`content`}>
           <div className={c`content__inside`}>
             <div className="scroll-list">{renderListGroup()}</div>

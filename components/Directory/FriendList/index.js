@@ -132,7 +132,7 @@ const FriendList = () => {
   };
 
   return (
-    <section className={prefix}>
+    <>
       <div className={c`header`}>
         <img
           src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
@@ -140,15 +140,17 @@ const FriendList = () => {
         />
         <span>Danh Sách Kết Bạn</span>
       </div>
-      <div className={c`content`}>
-        <div className="scroll-chat">
-          <div className={c`content__inside`}>
-            <p>Lời mời kết bạn ({totalFriendRequest})</p>
-            {renderListFriendRequest()}
+      <section className={prefix}>
+        <div className={c`content`}>
+          <div className="scroll-chat">
+            <div className={c`content__inside`}>
+              <p>Lời mời kết bạn ({totalFriendRequest})</p>
+              {renderListFriendRequest()}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
