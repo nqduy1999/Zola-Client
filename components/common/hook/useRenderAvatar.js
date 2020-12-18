@@ -1,9 +1,11 @@
 import React from 'react';
 import Avatar from 'react-avatar';
+import { filterUserExitedRoom } from '../function/lodash';
 
 const useRenderAvatar = (group, styleImgGroup, sizeAvatar) => {
+  const infoRoomClearUserExited = filterUserExitedRoom(group?.users);
   const renderAvatarUserGroup = () => {
-    const arrayImage = group?.users?.slice(0, 4);
+    const arrayImage = infoRoomClearUserExited?.slice(0, 4);
     return (
       <>
         {arrayImage?.map((user, key) => {
