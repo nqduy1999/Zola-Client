@@ -33,7 +33,6 @@ const InputChat = () => {
   const [_, setListItem] = useState([]);
   const onFinish = values => {
     const formData = new FormData();
-    console.log(values);
     if (!messErr) {
       setLoading(true);
       if (imageFormData) {
@@ -47,6 +46,8 @@ const InputChat = () => {
             });
             setVisible(false);
           }
+          setImageFormData(undefined);
+          setType('String');
         });
       } else {
         socket.emit('send_and_recive', {
@@ -62,19 +63,23 @@ const InputChat = () => {
   };
   const resetFieldOnSubmit = () => {
     form.resetFields();
+    setLoading(false);
     setStatus(false);
   };
   const onHandleChangeMessage = mess => {
-    console.log(mess);
+    setMessage(mess);
     setType('String');
     if (mess == '') {
       setStatus(false);
     } else {
       setStatus(true);
-      onFinish({
-        chatting: mess
-      });
     }
+  };
+
+  const sendTextMess = mess => {
+    onFinish({
+      chatting: mess
+    });
   };
 
   const onUpload = () => {
@@ -201,12 +206,12 @@ const InputChat = () => {
         </div>
         <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
         <InputEmoji
-          onChange={setMessage}
+          onChange={onHandleChangeMessage}
           value={message}
           placeholder="Nhập tin nhắn của bạn"
           cleanOnEnter
           borderColor="rgb(80 81 119)"
-          onEnter={onHandleChangeMessage}
+          onEnter={sendTextMess}
         />
       </Form>
     </>
