@@ -197,7 +197,13 @@ const SideBarTab = () => {
               }}
             >
               {user?.avatar === null || user?.avatar === '' ? (
-                <Avatar size="64px" className="avatar-chat" name={user?.name} />
+                <Avatar
+                  size={64}
+                  className="avatar-chat"
+                  style={{ backgroundColor: '#1890ff' }}
+                >
+                  {user?.name}
+                </Avatar>
               ) : (
                 <img
                   style={{
