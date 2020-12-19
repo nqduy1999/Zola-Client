@@ -52,7 +52,7 @@ const SideBarTab = () => {
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
-
+  const [tabIndex, setTabIndex] = useState(0);
   // redux hook
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
@@ -71,10 +71,14 @@ const SideBarTab = () => {
   const { clickPeopleIcon, setClickPeopleIcon, clickSideBarIcon } = useContext(
     ManagePeopleGroupContext
   );
-  const { setStatusRoom, setInfoRoom, setLoading, infoRoom } = useContext(
-    InfoRoomContext
-  );
-
+  const {
+    setStatusRoom,
+    setInfoRoom,
+    setLoading,
+    infoRoom,
+    sendMessage,
+    setSendMessage
+  } = useContext(InfoRoomContext);
   // variable Global
   const totalFriend = listFriendContact?.length;
 
@@ -435,12 +439,19 @@ const SideBarTab = () => {
       </>
     );
   };
-
+  const renderSelectedTab = index => {
+    setSendMessage(false);
+    setTabIndex(index);
+  };
   // Đây là tab của icon chat
   const renderTabpanelInChatting = useCallback(() => {
     return (
       <TabPanel>
-        <Tabs forceRenderTabPanel>
+        <Tabs
+          forceRenderTabPanel
+          selectedIndex={sendMessage ? 1 : tabIndex}
+          onSelect={index => renderSelectedTab(index)}
+        >
           <TabList className={c`tabs__tablist`}>
             <SearchComponent />
             <Menu

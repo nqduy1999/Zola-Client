@@ -11,6 +11,7 @@ import { uploadImgSingle } from 'actions/uploadImgActions';
 import InputEmoji from 'react-input-emoji';
 import { Button, Form, Upload, Menu, Dropdown } from 'antd';
 import { SocketIOContext } from 'components/common/context/SocketIOContext';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Modal from 'antd/lib/modal/Modal';
@@ -24,12 +25,14 @@ const InputChat = () => {
   // const [showPicker, setPickerState] = useState(false);
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
+  const { setSendMessage } = useContext(InfoRoomContext);
   const [type, setType] = useState('String');
   const [visible, setVisible] = useState(false);
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
   const [messErr, setMessErr] = useState(false);
   const [_, setListItem] = useState([]);
+
   const onFinish = values => {
     if (!messErr) {
       const formData = new FormData();
@@ -53,6 +56,7 @@ const InputChat = () => {
           type: type
         });
       }
+      setSendMessage(true);
       resetFieldOnSubmit();
     } else {
       setVisible(false);
