@@ -77,9 +77,11 @@ const InputChat = () => {
   };
 
   const sendTextMess = mess => {
-    onFinish({
-      chatting: mess
-    });
+    if (mess.trim()) {
+      onFinish({
+        chatting: mess
+      });
+    }
   };
 
   const onUpload = () => {
