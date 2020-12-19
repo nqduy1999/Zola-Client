@@ -40,6 +40,7 @@ import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
+import InfoConversation from 'components/InfoConversation';
 
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
@@ -67,11 +68,12 @@ const SideBarTab = () => {
   const { push } = useRouter();
 
   // Context
-  const { clickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { clickPeopleIcon, setClickPeopleIcon, clickSideBarIcon } = useContext(
+    ManagePeopleGroupContext
+  );
   const { setStatusRoom, setInfoRoom, setLoading, infoRoom } = useContext(
     InfoRoomContext
   );
-  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
 
   // variable Global
   const totalFriend = listFriendContact?.length;
@@ -469,7 +471,7 @@ const SideBarTab = () => {
   const renderTabsTree = () => {
     return (
       <>
-        <secion className={`${prefix} ${clickPeopleIcon}`}>
+        <secion className={`${prefix} ${clickPeopleIcon} ${clickSideBarIcon}`}>
           <Tabs
             forceRenderTabPanel
             defaultIndex={0}
@@ -480,6 +482,7 @@ const SideBarTab = () => {
             {renderTabPanel()}
           </Tabs>
           <ManagePeopleInGroup />
+          <InfoConversation />
           {visible && (
             <Update
               cancelAvatar={cancelModal}

@@ -1,0 +1,52 @@
+.info-conversation {
+  width: 25%;
+  border-left: 1px solid #e3e5e8;
+  position: relative;
+  &__header {
+    height: 91px;
+    border-bottom: 1px solid #e3e5e8;
+    position: relative;
+    .title {
+      font-size: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+    .icon_out {
+      font-size: 25px;
+      position: absolute;
+      bottom: 0;
+      cursor: pointer;
+    }
+  }
+  &__content--top {
+    .memberInGroup {
+      cursor: pointer;
+      padding: 15px;
+      border-bottom: 9px solid rgba(102, 112, 131, 0.05);
+      &:hover {
+        background-color: #f4f5f7;
+      }
+      .anticon-user {
+        background: rgba(0, 161, 242, 0.1);
+        border-radius: 50%;
+        line-height: 36px;
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        margin-right: 10px;
+        color: rgba(0, 161, 242, 0.8);
+        &:hover {
+          color: #0068ff;
+          transition: all 0.5s;
+        }
+      }
+    }
+  }
+  .exit-group {
+    position: absolute;
+    bottom: 10px;
+    left: 20%;
+  }
+}

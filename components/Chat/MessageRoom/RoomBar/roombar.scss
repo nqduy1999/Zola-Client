@@ -113,6 +113,14 @@
       justify-content: flex-end;
       align-items: center;
     }
+    .sidebar_icon {
+      cursor: pointer;
+      margin-top: 15px;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
 
   #avt-user {
