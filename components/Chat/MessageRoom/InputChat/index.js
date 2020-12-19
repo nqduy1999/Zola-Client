@@ -32,10 +32,10 @@ const InputChat = () => {
   const [_, setListItem] = useState([]);
   const onFinish = values => {
     if (!messErr) {
-      setLoading(true);
       const formData = new FormData();
       if (imageFormData) {
         formData.append('files', imageFormData);
+        setLoading(true);
         uploadImgSingle(formData).then(res => {
           if (res.data[0]) {
             console.log(res.data[0]);
