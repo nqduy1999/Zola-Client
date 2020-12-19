@@ -37,6 +37,7 @@ export const getProfileUser = auth_token => dispatch => {
   });
 };
 export const updateProfileUser = dataDispatch => async dispatch => {
+  console.log(dataDispatch);
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
