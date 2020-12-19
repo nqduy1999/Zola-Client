@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // Common
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import { addUserToGroupAction } from 'actions/roomsAction';
+import { filterUserExitedRoom } from 'components/common/function/lodash';
 
 const prefix = 'modalAddFriendToGroup';
 
@@ -31,12 +32,14 @@ const ModalAddFriendToGroup = ({ ...props }) => {
   // Context
   const { infoRoom } = useContext(InfoRoomContext);
 
+  const infoRoomClearUserExited = filterUserExitedRoom(infoRoom?.users);
+
   const listAllFriend = [...listFriendContact, ...listFriendPhoneBook];
 
   // lấy phần tử khác nhau giữa 2 mảng
   const listFriendCanKnow = _.differenceBy(
     listAllFriend,
-    infoRoom?.users,
+    infoRoomClearUserExited,
     'id'
   );
 
