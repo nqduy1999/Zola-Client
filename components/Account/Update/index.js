@@ -62,6 +62,7 @@ const Update = props => {
     if (imageFormData) {
       uploadImgSingle(formData).then(res => {
         const dataUpdate = {
+          id: userProfile?.id,
           name: userProfile?.name,
           avatar: res.data[0],
           phone: userProfile?.phone,
@@ -79,6 +80,7 @@ const Update = props => {
       });
     } else {
       const dataUpdate = {
+        id: userProfile?.id,
         name: userProfile?.name,
         avatar: userProfile?.avatar,
         phone: userProfile?.phone,
