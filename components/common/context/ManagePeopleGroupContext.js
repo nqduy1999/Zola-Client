@@ -5,10 +5,15 @@ const { Provider } = ManagePeopleGroupContext;
 
 const ManagePeopleGroupProvider = ({ ...props }) => {
   const [clickPeopleIcon, setClickPeopleIcon] = useState('unClickPeopleIcon');
+  const [clickSideBarIcon, setClickSideBarIcon] = useState(
+    'unClickSideBarIcon'
+  );
 
   const store = {
     clickPeopleIcon,
-    setClickPeopleIcon
+    setClickPeopleIcon,
+    clickSideBarIcon,
+    setClickSideBarIcon
   };
   return <Provider value={{ ...store }}>{props.children}</Provider>;
 };

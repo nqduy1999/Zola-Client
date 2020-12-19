@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
 import React, { useContext, useCallback, useState, useEffect } from 'react';
-import { Button, Input, Tag } from 'antd';
+import { Input, Tag } from 'antd';
 import Avatar from 'react-avatar';
 import { LeftOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
@@ -26,7 +26,6 @@ const ModalAddFriendToGroup = dynamic(() => import('./ModalAddFriendToGroup'));
 
 import ViewUserFriend from 'components/Friend/ViewUserFriend';
 import { filterUserExitedRoom } from 'components/common/function/lodash';
-import { exitGroupChatAction } from 'actions/groupAction';
 
 const prefix = 'manage__people';
 const c = classPrefixor(prefix);
@@ -44,7 +43,9 @@ const ManagePeopleInGroup = () => {
   );
 
   // Context
-  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { setClickPeopleIcon, setClickSideBarIcon } = useContext(
+    ManagePeopleGroupContext
+  );
   const { infoRoom, setInfoRoom } = useContext(InfoRoomContext);
 
   // Redux Hook
@@ -74,9 +75,7 @@ const ManagePeopleInGroup = () => {
   const handleSearchName = e => {
     setValueSearch(e.target.value);
   };
-  const handleExitGroup = () => {
-    dispatch(exitGroupChatAction(infoRoom?._id));
-  };
+
   const handleCheckAvatar = user => {
     const checkUserAvatar = user.avatar === null || user.avatar === '';
     if (checkUserAvatar) {
@@ -134,14 +133,15 @@ const ManagePeopleInGroup = () => {
   const cancelModal = () => {
     setVisibleModalViewUserById(false);
   };
+  const handleClickOutIcon = () => {
+    setClickPeopleIcon('unClickPeopleIcon');
+    setClickSideBarIcon('clickSidebarIcon');
+  };
   return (
     <>
       <aside className={prefix}>
         <nav className={c`header`}>
-          <span
-            className="icon_out"
-            onClick={() => setClickPeopleIcon('unClickPeopleIcon')}
-          >
+          <span className="icon_out" onClick={() => handleClickOutIcon()}>
             <LeftOutlined />
           </span>
           <span className="title">
@@ -174,15 +174,6 @@ const ManagePeopleInGroup = () => {
             onCancelModal={cancelModal}
           />
         )}
-        <div className="exit-group" style={{ paddingLeft: '60px' }}>
-          <Button
-            type="primary"
-            onClick={() => handleExitGroup()}
-            style={{ borderRadius: '5px' }}
-          >
-            Rời Khỏi Nhóm
-          </Button>
-        </div>
       </aside>
     </>
   );

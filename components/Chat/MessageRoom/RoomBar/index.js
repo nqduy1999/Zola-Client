@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
+import SideBarIcon from 'assets/svg/sidebar.svg';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -31,7 +32,9 @@ const RoomBar = () => {
   const [clickItemEdit, setClickItemEdit] = useState(false);
   const [valueInputEditRoomName, setValueInputEditRoomName] = useState('');
   const [isUpdateRoomNameSuccess, setIsUpdateRoomNameSuccess] = useState(false);
-  const { setClickPeopleIcon } = useContext(ManagePeopleGroupContext);
+  const { setClickPeopleIcon, setClickSideBarIcon } = useContext(
+    ManagePeopleGroupContext
+  );
   const { infoRoom, statusRoom } = useContext(InfoRoomContext);
   const { userProfile } = useSelector(state => state.userData);
   const infoRoomClearUserExited = filterUserExitedRoom(infoRoom?.users);
@@ -137,8 +140,15 @@ const RoomBar = () => {
           </div>
         </div>
       </div>
+      <div
+        className="sidebar_icon"
+        onClick={() => setClickSideBarIcon('clickSidebarIcon')}
+      >
+        <img src={SideBarIcon} alt="sidebar-icon" />
+      </div>
     </>
   );
+
   const renderBarRoomFromContactList = () => {
     return (
       <div className="info_room" style={{ display: 'flex' }}>
@@ -175,6 +185,7 @@ const RoomBar = () => {
       </div>
     );
   };
+
   const renderBarRoomFromTabRoom = user => {
     return user?.map(user => {
       if (user?.id != userProfile?.id) {

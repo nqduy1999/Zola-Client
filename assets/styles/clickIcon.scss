@@ -1,0 +1,35 @@
+// CLick icon user in group chatting
+.clickPeopleIcon {
+  display: flex;
+  .sidebar-tab__tabs {
+    width: 100%;
+  }
+  .manage__people {
+    display: block;
+  }
+  .info-conversation {
+    display: none;
+  }
+}
+
+.unClickPeopleIcon {
+  .manage__people {
+    display: none;
+  }
+}
+
+.clickSidebarIcon {
+  display: flex;
+  .sidebar-tab__tabs {
+    width: 100%;
+  }
+  .info-conversation {
+    display: block;
+  }
+}
+
+.unClickSideBarIcon {
+  .info-conversation {
+    display: none;
+  }
+}
