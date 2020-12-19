@@ -143,7 +143,7 @@ const ViewUserFriend = props => {
             </Button>
           ) : statusFriend == 4 ? (
             <Button type="success" onClick={AcceptFriend}>
-              <PlusOutlined />
+              <CheckOutlined />
               Chấp nhận
             </Button>
           ) : (

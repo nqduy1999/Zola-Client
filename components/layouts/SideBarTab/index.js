@@ -419,7 +419,17 @@ const SideBarTab = () => {
                 />
                 <span>Danh Sách Nhóm</span>
               </Tab>
-              <p>Bạn bè ({totalFriend})</p>
+              <div style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }} />
+              <p
+                style={{
+                  marginTop: '15px',
+                  textAlign: 'center',
+                  color: '#1890ff',
+                  fontWeight: 'bold'
+                }}
+              >
+                Bạn bè ({totalFriend})
+              </p>
               {renderFriend()}
             </div>
           </TabList>

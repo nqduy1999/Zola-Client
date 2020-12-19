@@ -226,8 +226,6 @@
   }
   li {
     border: none;
-    padding-top: 20px;
-    padding-bottom: 20px;
     &:focus {
       box-shadow: none;
       outline: none;
@@ -262,4 +260,7 @@
 }
 .styleMenuItem {
   padding: 10px 20px;
+}
+.ant-modal-mask{
+   background-color: rgba(0, 0, 0, 0.1);
 }

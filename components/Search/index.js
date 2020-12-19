@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import AddFriend from 'components/Friend/AddFriend';
 import { UsergroupAddOutlined, PlusOutlined } from '@ant-design/icons';
 import AddGroup from './AddGroup';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'search-bar';
 const SearchComponent = () => {
   const { userProfile } = useSelector(state => state.userData);
   const [userData, setUserData] = useState(null);
-  const [visibleModalSearch, setVisibleModalSearch] = useState(false);
+  // const [visibleModalSearch, setVisibleModalSearch] = useState(false);
+  const { visibleAddFriend, setVisibleAddFriend } = useContext(InfoRoomContext);
 
   const [showModalAddGroup, setShowModalAddGroup] = useState(false);
 
@@ -46,7 +48,7 @@ const SearchComponent = () => {
         <Row className="zola-section-mid">
           <Col span={24}>
             <Button
-              onClick={() => setVisibleModalSearch(true)}
+              onClick={() => setVisibleAddFriend(true)}
               icon={<PlusOutlined />}
               type="primary"
               style={{ marginRight: '5px', borderRadius: '5px' }}
@@ -62,10 +64,15 @@ const SearchComponent = () => {
             </Button>
           </Col>
         </Row>
-        <AddFriend
-          visible={visibleModalSearch}
-          setVisible={setVisibleModalSearch}
-        />
+        {visibleAddFriend ? (
+          <AddFriend
+            visible={visibleAddFriend}
+            setVisible={setVisibleAddFriend}
+          />
+        ) : (
+          ''
+        )}
+
         {showModalAddGroup && (
           <AddGroup
             showModalAddGroup={showModalAddGroup}

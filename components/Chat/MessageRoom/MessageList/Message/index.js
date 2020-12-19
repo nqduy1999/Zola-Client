@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Avatar from 'react-avatar';
 import { Popover } from 'antd';
 
 // Common
@@ -9,6 +8,7 @@ import { classPrefixor } from 'utils/classPrefixor';
 import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import { SocketIOContext } from 'components/common/context/SocketIOContext';
 import { getDetailGroupAction } from 'actions/roomsAction';
+import Avatar from 'antd/lib/avatar/avatar';
 
 const prefix = 'message';
 const c = classPrefixor(prefix);
@@ -38,7 +38,6 @@ const Message = ({ ...props }) => {
     socket.emit('delete_message', message?._id);
     dispatch(getDetailGroupAction(infoRoom?._id));
   };
-
   const convertDateTime = date => {
     const newDate = new Date(date);
     return (
@@ -50,27 +49,49 @@ const Message = ({ ...props }) => {
 
   const renderUserAvatar = (
     <div className="user-center-item-v2">
-      <div className="avatar avatar--huge">
-        {infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
-          null ||
-        infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
-          '' ? (
-          <Avatar
-            size="50px"
-            className="avatar"
-            name={
-              infoRoom.users?.find(user => user.id === message.user.id)?.name
-            }
-          />
-        ) : (
-          <img
-            src={
-              infoRoom.users?.find(user => user.id === message.user.id)?.avatar
-            }
-            alt="avatar"
-          />
-        )}
-      </div>
+      {infoRoom?.users ? (
+        <div className="avatar avatar--huge">
+          {infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
+            null ||
+          infoRoom.users?.find(user => user.id === message.user.id)?.avatar ===
+            '' ? (
+            <Avatar
+              size={50}
+              className="avatar-chat"
+              style={{
+                backgroundColor: '#4287f5'
+              }}
+            >
+              {infoRoom.users?.find(user => user.id === message.user.id)?.name}
+            </Avatar>
+          ) : (
+            <img
+              src={
+                infoRoom.users?.find(user => user.id === message.user.id)
+                  ?.avatar
+              }
+            />
+          )}
+        </div>
+      ) : infoRoom.active ? (
+        <div className="avatar avatar--huge">
+          {infoRoom?.avatar === null ? (
+            <Avatar
+              size={50}
+              className="avatar-chat"
+              style={{
+                backgroundColor: '#4287f5'
+              }}
+            >
+              {infoRoom?.name}
+            </Avatar>
+          ) : (
+            <img src={infoRoom?.avatar} alt="null" />
+          )}
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 

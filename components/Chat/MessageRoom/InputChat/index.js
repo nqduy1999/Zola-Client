@@ -205,8 +205,9 @@ const InputChat = () => {
             ></Button>
           </div>
         </div>
-        <hr style={{ background: 'rgba(0, 0, 0, 0.1)' }} />
+        <div style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }} />
         <InputEmoji
+          style={{ borderColor: '1px solid rgba(0, 0, 0, 0.1)' }}
           onChange={onHandleChangeMessage}
           value={message}
           placeholder="Nhập tin nhắn của bạn"

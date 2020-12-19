@@ -11,6 +11,7 @@ const InfoRoomContextProvider = ({ ...props }) => {
   const [statusRoom, setStatusRoom] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sendMessage, setSendMessage] = useState(false);
+  const [visibleAddFriend, setVisibleAddFriend] = useState(false);
   const prevInfoRoom = usePrevious(infoRoom?._id);
 
   useEffect(() => {
@@ -25,7 +26,9 @@ const InfoRoomContextProvider = ({ ...props }) => {
     loading,
     setLoading,
     sendMessage,
-    setSendMessage
+    setSendMessage,
+    visibleAddFriend,
+    setVisibleAddFriend
   };
   return <Provider value={{ ...store }}>{props.children}</Provider>;
 };

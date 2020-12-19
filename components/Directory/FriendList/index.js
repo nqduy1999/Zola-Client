@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { toast } from 'react-toastify';
 import Avatar from 'react-avatar';
-
+import AddFriendPage from 'components/Friend/AddFriendPage';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -18,6 +18,7 @@ import {
 
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const prefix = 'listFriend';
 const c = classPrefixor(prefix);
@@ -91,6 +92,7 @@ const FriendList = () => {
             {friendRq.avatar === null || friendRq.avatar === '' ? (
               <Avatar
                 size="62px"
+                round={true}
                 className="avatar-request-friend"
                 name={friendRq.name}
               />
@@ -106,24 +108,28 @@ const FriendList = () => {
                 alt="avatar"
               />
             )}
-            <span>{friendRq.name}</span>
+            <span style={{ paddingLeft: '15px' }}>{friendRq.name}</span>
           </div>
 
           <div className="friendReq__btn">
             <Button
               type="primary"
-              danger
               className="btn"
-              onClick={() => handleAvoidFriendRequest(friendRq.id)}
+              style={{ borderRadius: '5px' }}
+              onClick={() => handleAcceptFriend(friendRq.id)}
+              icon={<CheckOutlined />}
             >
-              Bỏ Qua
+              Đồng ý
             </Button>
             <Button
               type="primary"
+              danger
               className="btn"
-              onClick={() => handleAcceptFriend(friendRq.id)}
+              style={{ borderRadius: '5px' }}
+              onClick={() => handleAvoidFriendRequest(friendRq.id)}
+              icon={<CloseOutlined />}
             >
-              Đồng ý
+              Bỏ Qua
             </Button>
           </div>
         </div>
@@ -140,16 +146,20 @@ const FriendList = () => {
         />
         <span>Danh Sách Kết Bạn</span>
       </div>
-      <section className={prefix}>
-        <div className={c`content`}>
-          <div className="scroll-chat">
-            <div className={c`content__inside`}>
-              <p>Lời mời kết bạn ({totalFriendRequest})</p>
-              {renderListFriendRequest()}
+      {listFriendRequest.length >= 1 ? (
+        <section className={prefix}>
+          <div className={c`content`}>
+            <div className="scroll-chat">
+              <div className={c`content__inside`}>
+                <p>Lời mời kết bạn ({totalFriendRequest})</p>
+                {renderListFriendRequest()}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </div>{' '}
+        </section>
+      ) : (
+        <AddFriendPage />
+      )}
     </>
   );
 };
