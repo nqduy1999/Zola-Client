@@ -2,19 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'react-avatar';
 import ViewUserFriend from '../ViewUserFriend';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchFriendsContactAction,
-  fetchFriendsRequestAction,
-  getUserSentRequestAction
-} from 'actions/friendAction';
-
 const SuggestFriend = props => {
   const { suggestF } = props;
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState(null);
-  const dispatch = useDispatch();
-  const { userProfile } = useSelector(state => state.userData);
   useEffect(() => {
     setUserData(suggestF);
   }, [suggestF]);
@@ -22,9 +13,6 @@ const SuggestFriend = props => {
     setVisible(false);
   };
   const openModal = () => {
-    dispatch(getUserSentRequestAction());
-    dispatch(fetchFriendsContactAction(userProfile?.id));
-    dispatch(fetchFriendsRequestAction());
     setVisible(true);
   };
   return (

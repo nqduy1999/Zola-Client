@@ -9,7 +9,7 @@ import {
 import 'emoji-mart/css/emoji-mart.css';
 import { uploadImgSingle } from 'actions/uploadImgActions';
 import InputEmoji from 'react-input-emoji';
-import { Button, Input, Form, Upload, Menu, Dropdown } from 'antd';
+import { Button, Form, Upload, Menu, Dropdown } from 'antd';
 import { SocketIOContext } from 'components/common/context/SocketIOContext';
 import React, { useContext, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
@@ -25,20 +25,20 @@ const InputChat = () => {
   const [form] = Form.useForm();
   const { socket } = useContext(SocketIOContext);
   const [type, setType] = useState('String');
-  const [status, setStatus] = useState(false);
   const [visible, setVisible] = useState(false);
   const [imageFormData, setImageFormData] = useState();
   const [loading, setLoading] = useState(false);
   const [messErr, setMessErr] = useState(false);
   const [_, setListItem] = useState([]);
   const onFinish = values => {
-    const formData = new FormData();
     if (!messErr) {
       setLoading(true);
+      const formData = new FormData();
       if (imageFormData) {
         formData.append('files', imageFormData);
         uploadImgSingle(formData).then(res => {
           if (res.data[0]) {
+            console.log(res.data[0]);
             setLoading(false);
             socket.emit('send_and_recive', {
               message: res.data[0],
@@ -46,8 +46,6 @@ const InputChat = () => {
             });
             setVisible(false);
           }
-          setImageFormData(undefined);
-          setType('String');
         });
       } else {
         socket.emit('send_and_recive', {
@@ -63,17 +61,11 @@ const InputChat = () => {
   };
   const resetFieldOnSubmit = () => {
     form.resetFields();
-    setLoading(false);
-    setStatus(false);
+    setImageFormData();
   };
   const onHandleChangeMessage = mess => {
     setMessage(mess);
     setType('String');
-    if (mess == '') {
-      setStatus(false);
-    } else {
-      setStatus(true);
-    }
   };
 
   const sendTextMess = mess => {
@@ -92,6 +84,7 @@ const InputChat = () => {
     setVisible(false);
     setMessErr(false);
     setListItem([]);
+    setLoading(false);
   };
   const onUploadFile = () => {
     setVisible(true);

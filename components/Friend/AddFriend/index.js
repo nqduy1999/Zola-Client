@@ -1,11 +1,16 @@
-import { Input, Form, Collapse, Spin } from 'antd';
+import { Input, Form, Collapse } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
 import SuggestFriend from '../SuggestFriend';
-import { searchFriendAction } from 'actions/friendAction';
+import {
+  fetchFriendsContactAction,
+  getUserSentRequestAction,
+  searchFriendAction,
+  fetchFriendsRequestAction
+} from 'actions/friendAction';
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 }
@@ -17,7 +22,7 @@ const AddFriend = props => {
   const [statusSearch, setStatusSearch] = useState(false);
   const [suggestFriend, setSuggestFriend] = useState(null);
   const { Panel } = Collapse;
-  const { loading } = useSelector(state => state.FriendReducer);
+  const { userProfile } = useSelector(state => state.userData);
   const handleChangeSearch = e => {
     if (e.target.value.length > 0) {
       dispatch(searchFriendAction(e.target.value)).then(res => {
@@ -42,6 +47,15 @@ const AddFriend = props => {
     setStatusSearch(false);
     form.resetFields();
   };
+  useEffect(() => {
+    dispatch(getUserSentRequestAction());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchFriendsContactAction(userProfile?.id));
+  }, [dispatch, userProfile?.id]);
+  useEffect(() => {
+    dispatch(fetchFriendsRequestAction());
+  }, [dispatch]);
   return (
     <Modal
       title="Thêm bạn"
@@ -77,20 +91,13 @@ const AddFriend = props => {
                 key="1"
                 style={{ backgroundColor: 'white' }}
               >
-                {loading ? (
-                  <Spin
-                    tip="Đang tải ..."
-                    style={{ width: '100%', justifyContent: 'center' }}
-                  ></Spin>
-                ) : (
-                  <div className="scrollable-container">
-                    <div>
-                      {suggestFriend?.map((value, key) => {
-                        return <SuggestFriend key={key} suggestF={value} />;
-                      })}
-                    </div>
+                <div className="scrollable-container">
+                  <div>
+                    {suggestFriend?.map((value, key) => {
+                      return <SuggestFriend key={key} suggestF={value} />;
+                    })}
                   </div>
-                )}
+                </div>
               </Panel>
             </Collapse>
           </Form.Item>

@@ -35,7 +35,7 @@ const MessageRoom = ({ ...props }) => {
   const onScrollMessage = e => {
     const position = e.target.scrollTop;
     setIsLoading(true);
-    if (position <= 20) {
+    if (position <= 0) {
       setTimeout(() => {
         setMessageInRoom(
           messages.slice(pos - 10 <= 0 ? 0 : pos - 10, messages.length) // Nếu post <=0 thì vị trí bị âm sẽ lõi nên phải check
