@@ -2,7 +2,7 @@
 // React Libary
 import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Dropdown, Menu, Popconfirm } from 'antd';
+import { Button, Dropdown, Menu, Popconfirm, Avatar } from 'antd';
 import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
 
 // Redux
@@ -35,7 +35,6 @@ const ChangePasswordUser = dynamic(() =>
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
 import useFetchAllGroup from 'components/common/hook/useFetchAllGroup';
-import Avatar from 'react-avatar';
 import useRenderAvatar from 'components/common/hook/useRenderAvatar';
 import ManagePeopleInGroup from 'components/ManagePeople';
 import { ManagePeopleGroupContext } from 'components/common/context/ManagePeopleGroupContext';
@@ -309,15 +308,30 @@ const SideBarTab = () => {
         <SubMenu
           className="Submenu"
           title={
-            <div className="avatar" style={{ cursor: 'pointer' }}>
-              <img
-                src={userProfile?.avatar}
-                className="img_avatar"
-                data-reactid="23"
-              />
+            userProfile?.avatar == null ? (
+              <div className="avatar" style={{ cursor: 'pointer' }}>
+                <Avatar
+                  size={56}
+                  style={{
+                    backgroundColor: '#4287f5'
+                  }}
+                >
+                  {userProfile?.name}
+                </Avatar>
+                <div className="icon-online"></div>
+              </div>
+            ) : (
+              <div className="avatar" style={{ cursor: 'pointer' }}>
+                <img
+                  src={userProfile?.avatar}
+                  className="img_avatar"
+                  data-reactid="23"
+                  alt="null"
+                />
 
-              <div className="icon-online"></div>
-            </div>
+                <div className="icon-online"></div>
+              </div>
+            )
           }
         >
           <MenuItemGroup className="styleMenuItem">
