@@ -62,10 +62,12 @@ const InputChat = () => {
   const resetFieldOnSubmit = () => {
     form.resetFields();
     setImageFormData();
+    setType('String');
   };
   const onHandleChangeMessage = mess => {
     setMessage(mess);
     setType('String');
+    setLoading(false);
   };
 
   const sendTextMess = mess => {
