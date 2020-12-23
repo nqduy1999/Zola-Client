@@ -27,7 +27,7 @@ export const pattern = (nameField, regx, message) => ({
 });
 
 export const emailFormat = (nameField, message) => ({
-  pattern: /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g,
+  pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   message: message || `Invalid ${nameField}.`
 });
 
