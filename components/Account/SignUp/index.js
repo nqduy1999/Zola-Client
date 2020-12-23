@@ -27,34 +27,34 @@ const SignUp = () => {
       const apiSendOtp = `active/send?email=${value.email}`;
       setValueSent(value);
       dispatch(sendOtp(apiSendOtp)).then(res => {
-        if (res.error) {
-          toast.error(res.data[0].msg, {
-            position: 'top-right',
-            autoClose: 3000
-          });
-        } else {
+        if (!res.error) {
           toast.success('Gửi mã otp thành công', {
             position: 'top-right',
             autoClose: 3000
           });
           setOtpSent(true);
+        } else {
+          toast.error(res.data, {
+            position: 'top-right',
+            autoClose: 3000
+          });
         }
       });
     } else if (value.phone) {
       const apiSendOtp = `active/send?phone=${value.phone}`;
       setValueSent(value);
       dispatch(sendOtp(apiSendOtp)).then(res => {
-        if (res.error) {
-          toast.error(res.data[0].msg, {
-            position: 'top-right',
-            autoClose: 3000
-          });
-        } else {
+        if (!res.error) {
           toast.success('Gửi mã otp thành công', {
             position: 'top-right',
             autoClose: 3000
           });
           setOtpSent(true);
+        } else {
+          toast.error(res.data, {
+            position: 'top-right',
+            autoClose: 3000
+          });
         }
       });
     }

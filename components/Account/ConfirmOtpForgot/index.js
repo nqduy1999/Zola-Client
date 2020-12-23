@@ -28,7 +28,7 @@ const ConfirmOtpForgot = props => {
       const apiSendOtp = `email=${valueSent.email}`;
       dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -43,7 +43,7 @@ const ConfirmOtpForgot = props => {
       const apiSendOtp = `phone=${valueSent.phone}`;
       dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -64,7 +64,7 @@ const ConfirmOtpForgot = props => {
       };
       dispatch(verifyForgotAccount(valueActive)).then(res => {
         if (res.error) {
-          toast.error(res.message, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -75,7 +75,7 @@ const ConfirmOtpForgot = props => {
           };
           dispatch(changePassword(push, valueChange)).then(res => {
             if (res.error) {
-              toast.error(res.message, {
+              toast.error(res.data, {
                 position: 'top-right',
                 autoClose: 3000
               });

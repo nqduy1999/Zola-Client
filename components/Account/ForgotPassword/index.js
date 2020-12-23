@@ -29,7 +29,7 @@ const ForgotPassword = () => {
       setValueSent(value);
       dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.message, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -46,7 +46,7 @@ const ForgotPassword = () => {
       setValueSent(value);
       dispatch(sendOtpForgot(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });

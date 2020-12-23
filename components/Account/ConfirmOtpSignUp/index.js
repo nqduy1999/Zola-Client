@@ -1,27 +1,32 @@
 import React from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form, Input } from 'antd';
 import { activeAccount, sendOtp, SignUp } from 'actions/accountAction';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import * as Validator from 'utils/validatorFormat';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const prefix = 'confirm-otp-sign-up';
 const c = classPrefixor(prefix);
 
 const ConfirmOtpSignUp = props => {
+  const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
+
   const { NAME_RGX } = Validator.RGX;
   const { valueSent } = props;
   const { push } = useRouter();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector(state => state.accountData);
   const SendOtpAgain = () => {
     if (valueSent && valueSent.email) {
       const apiSendOtp = `active/send?email=${valueSent.email}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -36,7 +41,7 @@ const ConfirmOtpSignUp = props => {
       const apiSendOtp = `active/send?phone=${valueSent.phone}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -56,12 +61,7 @@ const ConfirmOtpSignUp = props => {
         email: valueSent.email
       };
       dispatch(activeAccount(valueActive)).then(res => {
-        if (res.error) {
-          toast.error(res.message, {
-            position: 'top-right',
-            autoClose: 3000
-          });
-        } else {
+        if (!res.error) {
           const valueSignUp = {
             name: value.name,
             password: value.password,
@@ -81,6 +81,11 @@ const ConfirmOtpSignUp = props => {
               });
             }
           });
+        } else {
+          toast.error(res.data, {
+            position: 'top-right',
+            autoClose: 3000
+          });
         }
       });
     } else {
@@ -89,17 +94,13 @@ const ConfirmOtpSignUp = props => {
         phone: valueSent.phone
       };
       dispatch(activeAccount(valueActive)).then(res => {
-        if (res.error) {
-          toast.error(res.message, {
-            position: 'top-right',
-            autoClose: 3000
-          });
-        } else {
+        console.log(res);
+        if (!res.error) {
           const valueSignUp = {
             name: value.name,
             password: value.password,
             passwordConfirm: value.passwordConfirm,
-            phone: valueSent.phone
+            email: valueSent.email
           };
           dispatch(SignUp(push, valueSignUp)).then(res => {
             if (res.error) {
@@ -113,6 +114,11 @@ const ConfirmOtpSignUp = props => {
                 autoClose: 3000
               });
             }
+          });
+        } else {
+          toast.error(res.data, {
+            position: 'top-right',
+            autoClose: 3000
           });
         }
       });
@@ -205,13 +211,19 @@ const ConfirmOtpSignUp = props => {
             />
           </div>
         </Form.Item>
-        <Form.Item name="name">
-          <div className="line-form">
-            <Button type="primary" htmlType="submit">
-              Đăng ký
-            </Button>
-          </div>
-        </Form.Item>
+        {isLoading ? (
+          <Button type="primary">
+            <Spin indicator={antIcon} style={{ color: 'white' }} />
+          </Button>
+        ) : (
+          <Form.Item name="name">
+            <div className="line-form">
+              <Button type="primary" htmlType="submit">
+                Đăng ký
+              </Button>
+            </div>
+          </Form.Item>
+        )}
       </Form>
     </div>
   );

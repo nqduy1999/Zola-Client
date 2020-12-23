@@ -38,8 +38,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const onSignIn = data => {
     dispatch(SignInAccount(data, push)).then(res => {
-      const { error } = res;
-      if (!error) {
+      if (!res.error) {
         if (data.email) {
           const type = 'email';
           localStorage.setItem('type', JSON.stringify(type));
@@ -52,7 +51,7 @@ const SignIn = () => {
           autoClose: 3000
         });
       } else {
-        toast.error(res?.data[0]?.msg, {
+        toast.error(res.data, {
           position: 'top-right',
           autoClose: 3000
         });

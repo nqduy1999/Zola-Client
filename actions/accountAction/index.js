@@ -10,57 +10,44 @@ export const SignInAccount = (dataDispatch, push) => dispatch => {
   return accountService
     .SignInService(dataDispatch)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        cookiesServices.setToken(data);
-        push('/home');
-        dispatch({
-          type: AUTHENTICATION_TYPE.SIGNIN_SUCCESS,
-          payload: {
-            auth_token: data,
-            data: dataDispatch
-          }
-        });
-        return { error, data };
-      }
-    })
-    .catch(err => {
-      const { error, data } = err.response?.data;
+      cookiesServices.setToken(res.data);
+      push('/home');
       dispatch({
-        type: AUTHENTICATION_TYPE.SIGNIN_FAILURE,
+        type: AUTHENTICATION_TYPE.SIGNIN_SUCCESS,
         payload: {
-          error,
-          data
+          auth_token: res.data,
+          data: dataDispatch
         }
       });
-      return { error, data };
+      return { error: false, data: res.data };
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTHENTICATION_TYPE.SIGNIN_FAILURE
+      });
+      return { error: true, data: err.response.data[0].msg };
     });
 };
 export const SignUp = (push, dataDispatch) => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SIGNUP_REQUEST
   });
-  return accountService.SignUpService(dataDispatch).then(res => {
-    const { error, data, message } = res.data;
-    if (error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.SIGNUP_FAILURE,
-        payload: {
-          error,
-          data
-        }
-      });
-      return { error, data, message };
-    }
-    if (!error) {
+  return accountService
+    .SignUpService(dataDispatch)
+    .then(res => {
       dispatch({
         type: AUTHENTICATION_TYPE.SIGNUP_SUCCESS
       });
       cookiesServices.clearToken();
       push('/');
-      return { error, data };
-    }
-  });
+      return { error: false, data: res.data };
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTHENTICATION_TYPE.SIGNUP_FAILURE
+      });
+      return { error: true, data: err.response.data[0].msg };
+    });
 };
 export const saveAccount = dataDispatch => dispatch => {
   dispatch({
@@ -77,46 +64,36 @@ export const activeAccount = dataDispatch => dispatch => {
   return accountService
     .ActiveService(dataDispatch)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
-        });
-        cookiesServices.setToken(data);
-        return res?.data;
-      }
+      dispatch({
+        type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
+      });
+      return { error: false, data: res.data };
     })
     .catch(err => {
-      const { error, data, message } = err.response?.data;
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
       });
-      return { error, data, message };
+      return { error: true, data: err.response.data.message };
     });
 };
 export const sendOtp = apiDefault => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.SEND_OTP_REQUEST
   });
-  return accountService.sendOtpService(apiDefault).then(res => {
-    const { error, data, message } = res.data;
-    if (error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE,
-        payload: {
-          error: error,
-          data: data
-        }
-      });
-      return { error, data };
-    }
-    if (!error) {
+  return accountService
+    .sendOtpService(apiDefault)
+    .then(res => {
       dispatch({
         type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
       });
-      return { message };
-    }
-  });
+      return { error: false, data: res.data };
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE
+      });
+      return { error: true, data: err.response.data[0].msg };
+    });
 };
 export const isTokenExpired = () => dispatch => {
   const token = cookiesServices.getAccessToken();
@@ -145,20 +122,17 @@ export const sendOtpForgot = value => dispatch => {
   return accountService
     .sendOtpForgotService(value)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
-        });
-        return { message, error };
-      }
+      console.log(res);
+      dispatch({
+        type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
+      });
+      return { error: false, data: res.data };
     })
     .catch(err => {
-      const { error, data, message } = err.response?.data;
       dispatch({
         type: AUTHENTICATION_TYPE.SEND_OTP_FAILURE
       });
-      return { error, data, message };
+      return { error: false, data: err.response.data[0].msg };
     });
 };
 export const verifyForgotAccount = dataDispatch => dispatch => {
@@ -168,21 +142,17 @@ export const verifyForgotAccount = dataDispatch => dispatch => {
   return accountService
     .verifyForgotAccountService(dataDispatch)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
-        });
-        cookiesServices.setToken(data);
-        return res?.data;
-      }
+      dispatch({
+        type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
+      });
+      cookiesServices.setToken(res.data);
+      return { error: false, data: res?.data };
     })
     .catch(err => {
-      const { error, data, message } = err.response?.data;
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
       });
-      return { error, data, message };
+      return { error: true, data: err.response.data[0].msg };
     });
 };
 export const changePassword = (push, dataDispatch) => dispatch => {
@@ -190,25 +160,15 @@ export const changePassword = (push, dataDispatch) => dispatch => {
     type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST
   });
   return accountService.changePasswordService(dataDispatch).then(res => {
-    const { error, data, message } = res.data;
-    if (error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE,
-        payload: {
-          error,
-          data
-        }
-      });
-      return { error, data, message };
-    }
-    if (!error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS
-      });
-      cookiesServices.clearToken();
-      push('/');
-      return { error, data };
-    }
+    dispatch({
+      type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS,
+      payload: {
+        data: res.data
+      }
+    });
+    cookiesServices.clearToken();
+    push('/');
+    return { error: false, data: res.data };
   });
 };
 export const changePasswordUser = dataDispatch => dispatch => {

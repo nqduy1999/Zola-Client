@@ -6,7 +6,8 @@ const initialState = {
   isAuthenticated: false,
   auth_token: null,
   message: null,
-  data: null
+  data: null,
+  status: null
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -21,7 +22,6 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isAuthenticated: true,
-        error: null,
         message: null,
         auth_token: action.payload.auth_token,
         data: action.payload.data
@@ -29,9 +29,7 @@ const loginReducer = (state = initialState, action) => {
     case AUTHENTICATION_TYPE.SIGNIN_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        error: action.payload.error,
-        message: action.payload.data[0]
+        isLoading: false
       };
     case AUTHENTICATION_TYPE.LOGOUT_REQUEST:
       return {

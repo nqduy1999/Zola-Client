@@ -22,14 +22,14 @@ class RoomService {
   getDetailGroup = idRoom => {
     return axios.request({
       method: 'GET',
-      url: `https://api-chat.ga/api/v0/rooms/detail?id=${idRoom}`
+      url: `https://api-chat.ga/api/v0/rooms/${idRoom}`
     });
   };
 
   deleteRoom = idRoom => {
     return axios.request({
       method: 'DELETE',
-      url: `https://api-chat.ga/api/v0/rooms?id=${idRoom}`
+      url: `https://api-chat.ga/api/v0/rooms/${idRoom}`
     });
   };
 }
