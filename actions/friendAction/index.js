@@ -10,20 +10,15 @@ export const fetchFriendsByPhoneBookAction = id => dispatch => {
   friendService
     .fetchFriendsByPhoneBook(id)
     .then(res => {
-      const { data } = res.data;
       dispatch({
         type: FRIENDS_TYPE.FETCH_PHONE_BOOK_SUCCESS,
-        payload: data
+        payload: res.data
       });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
+      console.log(err.response);
       dispatch({
-        type: FRIENDS_TYPE.FETCH_PHONE_BOOK_FAILURE,
-        payload: {
-          error,
-          data
-        }
+        type: FRIENDS_TYPE.FETCH_PHONE_BOOK_FAILURE
       });
     });
 };
@@ -36,20 +31,14 @@ export const fetchFriendsContactAction = id => dispatch => {
   friendService
     .fetchFriendsContact(id)
     .then(res => {
-      const { data } = res.data;
       dispatch({
         type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_SUCCESS,
-        payload: data
+        payload: res.data
       });
     })
-    .catch(err => {
-      const { error, data } = err.response?.data;
+    .catch(() => {
       dispatch({
-        type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_FAILURE,
-        payload: {
-          error,
-          data
-        }
+        type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_FAILURE
       });
     });
 };
@@ -62,16 +51,14 @@ export const fetchFriendsRequestAction = id => dispatch => {
   friendService
     .fetchFriendsRequest(id)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_SUCCESS,
-          payload: data
-        });
-      }
+      dispatch({
+        type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_SUCCESS,
+        payload: res.data
+      });
     })
     .catch(err => {
       const { error, data } = err.response?.data;
+      console.log(err.response);
       dispatch({
         type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_FAILURE,
         payload: {
@@ -88,18 +75,15 @@ export const searchFriendAction = value => dispatch => {
   return friendService
     .searchFriendByEmailorPhone(value)
     .then(res => {
-      const { data } = res.data;
       dispatch({
         type: FRIENDS_TYPE.SEARCH_FRIEND_SUCCESS
       });
-      return data;
+      return res.data;
     })
-    .catch(err => {
-      const { error, data } = err.response?.data;
+    .catch(() => {
       dispatch({
         type: FRIENDS_TYPE.SEARCH_FRIEND_FAILURE
       });
-      return { error, data };
     });
 };
 export const acceptFriendAction = (userID, userIDWantAccept) => dispatch => {
@@ -109,22 +93,14 @@ export const acceptFriendAction = (userID, userIDWantAccept) => dispatch => {
   friendService
     .acceptFriend(userID, userIDWantAccept)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: FRIENDS_TYPE.ACCEPT_FRIEND_SUCCESS,
-          payload: message
-        });
-      }
-    })
-    .catch(err => {
-      const { error, data } = err.response?.data;
       dispatch({
-        type: FRIENDS_TYPE.ACCEPT_FRIEND_FAILURE,
-        payload: {
-          error,
-          data
-        }
+        type: FRIENDS_TYPE.ACCEPT_FRIEND_SUCCESS,
+        payload: res.data.message
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: FRIENDS_TYPE.ACCEPT_FRIEND_FAILURE
       });
     });
 };
@@ -139,13 +115,14 @@ export const avoidFriendRequestAcion = (
   friendService
     .avoidFriendRequest(userID, userIDWantAvoid)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
-          payload: message
-        });
-      }
+      console.log(res.data);
+      // const { error, message } = res.data;
+      // if (!error) {
+      //   dispatch({
+      //     type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
+      //     payload: message
+      //   });
+      // }
     })
     .catch(err => {
       const { error, data } = err.response?.data;
@@ -165,18 +142,16 @@ export const addFriendAction = value => dispatch => {
   return friendService
     .addFriend(value)
     .then(res => {
-      const { data } = res.data;
       dispatch({
         type: FRIENDS_TYPE.ADD_FRIEND_SUCCESS
       });
-      return { data };
+      return res.data;
     })
     .catch(err => {
-      const { error } = err.response?.data;
       dispatch({
         type: FRIENDS_TYPE.ADD_FRIEND_FAILURE
       });
-      return { error };
+      return err.response;
     });
 };
 export const deleteFriendByPhoneBookAction = (

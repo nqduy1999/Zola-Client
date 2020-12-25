@@ -175,23 +175,18 @@ export const changePasswordUser = dataDispatch => dispatch => {
   dispatch({
     type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST
   });
-  return accountService.changePasswordService(dataDispatch).then(res => {
-    const { error, data, message } = res.data;
-    if (error) {
-      dispatch({
-        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE,
-        payload: {
-          error,
-          data
-        }
-      });
-      return { error, data, message };
-    }
-    if (!error) {
+  return accountService
+    .changePasswordService(dataDispatch)
+    .then(res => {
       dispatch({
         type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS
       });
-      return { error, data };
-    }
-  });
+      return { error: false, data: res.data };
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE
+      });
+      return { error: true, data: err.response.data[0].msg };
+    });
 };

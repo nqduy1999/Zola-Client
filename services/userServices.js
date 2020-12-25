@@ -5,14 +5,14 @@ class UserServices {
   updateProfileUserService = data => {
     return axios.request({
       method: 'PUT',
-      url: `${prefix}profile`,
+      url: `${prefix}profiles`,
       data: data
     });
   };
   updateOtpUserService = data => {
     return axios.request({
       method: 'PUT',
-      url: `${prefix}profile/contacts`,
+      url: `${prefix}profiles/contacts`,
       data: data
     });
   };

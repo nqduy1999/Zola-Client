@@ -20,44 +20,36 @@ export const getProfileUser = auth_token => dispatch => {
   } else {
     value = decoded?.data?.phone || decoded?.data?.email;
   }
-  return axiosServices.get(`${prefix}detail?${type}=${value}`).then(res => {
-    const { error, data } = res.data;
-    if (error) {
+  return axiosServices
+    .get(`${prefix}detail?${type}=${value}`)
+    .then(res => {
+      dispatch({
+        type: USER_TYPE.GET_DATA_USER_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(() => {
       dispatch({
         type: USER_TYPE.GET_DATA_USER_FAILURE
       });
-      return error;
-    }
-    if (!error) {
-      dispatch({
-        type: USER_TYPE.GET_DATA_USER_SUCCESS,
-        payload: data
-      });
-    }
-  });
+    });
 };
 export const updateProfileUser = dataDispatch => async dispatch => {
-  console.log(dataDispatch);
   dispatch({
     type: USER_TYPE.UPDATE_USER_REQUEST
   });
   return userService
     .updateProfileUserService(dataDispatch)
-    .then(res => {
-      const { error } = res.data;
-      if (!error) {
-        dispatch({
-          type: USER_TYPE.UPDATE_USER_SUCCESS,
-          payload: dataDispatch
-        });
-      }
+    .then(() => {
+      dispatch({
+        type: USER_TYPE.UPDATE_USER_SUCCESS,
+        payload: dataDispatch
+      });
     })
-    .catch(err => {
-      const { error, data, message } = err.response?.data;
+    .catch(() => {
       dispatch({
         type: USER_TYPE.UPDATE_USER_FAILURE
       });
-      return { error, data, message };
     });
 };
 export const updateOtpUser = dataDispatch => dispatch => {
@@ -67,20 +59,16 @@ export const updateOtpUser = dataDispatch => dispatch => {
   return userService
     .updateOtpUserService(dataDispatch)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: USER_TYPE.UPDATE_USER_SUCCESS
-        });
-      }
-      return { message };
+      dispatch({
+        type: USER_TYPE.UPDATE_USER_SUCCESS
+      });
+      return res.data;
     })
     .catch(err => {
-      const { error, data, message } = err.response?.data;
       dispatch({
         type: USER_TYPE.UPDATE_USER_FAILURE
       });
-      return { error, data, message };
+      return { error: true, message: err.response?.data };
     });
 };
 export const findUserByIdAction = id => dispatch => {
@@ -90,20 +78,17 @@ export const findUserByIdAction = id => dispatch => {
   return userService
     .findUserById(id)
     .then(res => {
-      const { error, data } = res.data;
       if (!error) {
         dispatch({
           type: USER_TYPE.FIND_USER_SUCCESS,
-          payload: data
+          payload: res.data
         });
       }
-      return { data };
+      return res.data;
     })
-    .catch(err => {
-      const { error, data } = err.response?.data;
+    .catch(() => {
       dispatch({
         type: USER_TYPE.FIND_USER_FAILURE
       });
-      return { error, data, message };
     });
 };

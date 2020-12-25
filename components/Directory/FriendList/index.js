@@ -146,7 +146,7 @@ const FriendList = () => {
         />
         <span>Danh Sách Kết Bạn</span>
       </div>
-      {listFriendRequest.length >= 1 ? (
+      {listFriendRequest?.length >= 1 ? (
         <section className={prefix}>
           <div className={c`content`}>
             <div className="scroll-chat">

@@ -75,7 +75,7 @@ const SendOtpComponent = props => {
             autoClose: 3000
           });
         } else {
-          toast.success('Xác nhận thành công', {
+          toast.success('Gửi mã xác nhận thành công', {
             position: 'top-right',
             autoClose: 3000
           });

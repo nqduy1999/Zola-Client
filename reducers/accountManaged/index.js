@@ -92,6 +92,21 @@ const loginReducer = (state = initialState, action) => {
         isAuthenticated: true,
         auth_token: action.payload
       };
+    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case AUTHENTICATION_TYPE.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
     default:
       return state;
   }

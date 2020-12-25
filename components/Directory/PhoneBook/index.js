@@ -35,10 +35,10 @@ const PhoneBook = () => {
         position: 'top-right',
         autoClose: 2000
       });
-      dispatch(fetchFriendsByPhoneBookAction(userProfile.id));
+      dispatch(fetchFriendsByPhoneBookAction(userProfile?.id));
     }
     dispatch(dispatchDefaultAction());
-  }, [dispatch, messageDeletePhoneBook, userProfile.id]);
+  }, [dispatch, messageDeletePhoneBook, userProfile?.id]);
 
   const renderListFriendPhoneBook = () => {
     if (listFriendPhoneBook?.length < 0) return null;
