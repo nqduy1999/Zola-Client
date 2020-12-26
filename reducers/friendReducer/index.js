@@ -29,8 +29,7 @@ const FriendReducer = (state = initialState, action) => {
     }
 
     case FRIENDS_TYPE.FETCH_FRIEND_CONTACT_FAILURE: {
-      const { error, data } = action.payload;
-      return { ...state, errorStatus: error, errorData: data };
+      return { ...state, errorData: action.payload.data };
     }
     case FRIENDS_TYPE.SEARCH_FRIEND_REQUEST: {
       return { ...state, loading: true };
@@ -56,11 +55,9 @@ const FriendReducer = (state = initialState, action) => {
     }
 
     case FRIENDS_TYPE.FETCH_FRIEND_REQUEST_FAILURE: {
-      const { error, data } = action.payload;
       return {
         ...state,
-        errorStatusRequest: error,
-        errorDataRequest: data,
+        errorDataRequest: action.payload.data,
         listFriendRequest: []
       };
     }

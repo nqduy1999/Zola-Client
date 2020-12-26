@@ -70,10 +70,8 @@ const FriendList = () => {
   };
 
   const handleAvoidFriendRequest = userIDWantAvoid => {
-    if (userProfile.id) {
-      dispatch(avoidFriendRequestAcion(userProfile.id, userIDWantAvoid));
-      totalFriendRequest -= 1;
-    }
+    dispatch(avoidFriendRequestAcion(userIDWantAvoid));
+    totalFriendRequest -= 1;
   };
   const renderListFriendRequest = () => {
     if (errorDataRequest && errorDataRequest.length > 0) {

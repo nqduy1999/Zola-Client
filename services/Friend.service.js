@@ -41,36 +41,24 @@ class FriendService {
       }
     });
   };
-  avoidFriendRequest = (userID, userIDWantAvoid) => {
+  avoidFriendRequest = userIDWantAvoid => {
     return axios.request({
-      method: 'POST',
-      url: `users/deletePhoneByIdRequest`,
-      data: {
-        user_id: userID,
-        user_id_want_delete: userIDWantAvoid
-      }
+      method: 'DELETE',
+      url: `users/requests/deletePhone?user_id_want_delete=${userIDWantAvoid}`
     });
   };
 
-  deleteFriendByPhoneBook = (userID, userIDWantDelete) => {
+  deleteFriendByPhoneBook = userIDWantDelete => {
     return axios.request({
-      method: 'POST',
-      url: `users/deletePhoneByIdPhoneBook`,
-      data: {
-        user_id: userID,
-        user_id_want_delete: userIDWantDelete
-      }
+      method: 'DELETE',
+      url: `users/phonebooks/deletePhone?user_id_want_delete=${userIDWantDelete}`
     });
   };
 
-  deleteFriendContact = (userID, userIDWantDelete) => {
+  deleteFriendContact = userIDWantDelete => {
     return axios.request({
-      method: 'POST',
-      url: `users/deletePhoneByIdContact`,
-      data: {
-        user_id: String(userID),
-        user_id_want_delete: String(userIDWantDelete)
-      }
+      method: 'DELETE',
+      url: `users/contacts/deletePhone?user_id_want_delete=${userIDWantDelete}`
     });
   };
   getUserSentRequest = () => {

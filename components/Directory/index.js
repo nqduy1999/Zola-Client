@@ -42,10 +42,8 @@ const Directory = ({ ...props }) => {
   }, [messageDeletePhoneContact]);
 
   const handleDeleteFriend = userIDWantDelete => {
-    if (userProfile.id) {
-      dispatch(deleteFriendContactAction(userProfile.id, userIDWantDelete));
-      props.totalFriend -= 1;
-    }
+    dispatch(deleteFriendContactAction(userIDWantDelete));
+    props.totalFriend -= 1;
   };
   const getUserById = id => {
     dispatch(findUserByIdAction(id)).then(res => {

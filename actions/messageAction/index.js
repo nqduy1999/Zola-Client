@@ -10,6 +10,7 @@ export const getListMessage = page => dispatch => {
   return axiosServices
     .get(`${prefix}currentPage=${page}&perPage=9`)
     .then(res => {
+      console.log(res.data);
       const { error, data } = res.data;
       if (!error) {
         dispatch({

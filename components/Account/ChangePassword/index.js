@@ -5,10 +5,15 @@ import { toast } from 'react-toastify';
 import * as Validator from 'utils/validatorFormat';
 import { changePasswordUser } from 'actions/accountAction';
 import PropTypes, { func } from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ChangePasswordUser = props => {
   const { cancelPassword, visible, setVisible } = props;
+  const { isLoading } = useSelector(state => state.accountData);
   const dispatch = useDispatch();
   const submitPassword = value => {
     dispatch(changePasswordUser(value)).then(res => {
@@ -71,18 +76,33 @@ const ChangePasswordUser = props => {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              margin: '0px auto',
-              display: 'block'
-            }}
-          >
-            Cập nhật mật khẩu
-          </Button>
+          {isLoading ? (
+            <Button
+              type="primary"
+              style={{
+                fontSize: '12px',
+                fontWeight: '500',
+                margin: '0px auto',
+                display: 'block',
+                padding: '0px 70px'
+              }}
+            >
+              <Spin indicator={antIcon} style={{ color: 'white' }} />
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{
+                fontSize: '12px',
+                fontWeight: '500',
+                margin: '0px auto',
+                display: 'block'
+              }}
+            >
+              Cập nhật mật khẩu
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </Modal>

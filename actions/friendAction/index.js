@@ -15,8 +15,7 @@ export const fetchFriendsByPhoneBookAction = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => {
-      console.log(err.response);
+    .catch(() => {
       dispatch({
         type: FRIENDS_TYPE.FETCH_PHONE_BOOK_FAILURE
       });
@@ -36,9 +35,12 @@ export const fetchFriendsContactAction = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(() => {
+    .catch(err => {
       dispatch({
-        type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_FAILURE
+        type: FRIENDS_TYPE.FETCH_FRIEND_CONTACT_FAILURE,
+        payload: {
+          data: err.response.data
+        }
       });
     });
 };
@@ -57,13 +59,11 @@ export const fetchFriendsRequestAction = id => dispatch => {
       });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
-      console.log(err.response);
+      console.log(err.response.data);
       dispatch({
         type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response?.data
         }
       });
     });
@@ -105,32 +105,27 @@ export const acceptFriendAction = (userID, userIDWantAccept) => dispatch => {
     });
 };
 
-export const avoidFriendRequestAcion = (
-  userID,
-  userIDWantAvoid
-) => dispatch => {
+export const avoidFriendRequestAcion = userIDWantAvoid => dispatch => {
+  console.log(userIDWantAvoid);
   dispatch({
     type: FRIENDS_TYPE.AVOID_FRIEND_REQUEST
   });
   friendService
-    .avoidFriendRequest(userID, userIDWantAvoid)
+    .avoidFriendRequest(userIDWantAvoid)
     .then(res => {
       console.log(res.data);
-      // const { error, message } = res.data;
-      // if (!error) {
-      //   dispatch({
-      //     type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
-      //     payload: message
-      //   });
-      // }
+      const { message } = res.data;
+      dispatch({
+        type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
+        payload: message
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
+      console.log(err.response.data);
       dispatch({
         type: FRIENDS_TYPE.AVOID_FRIEND_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response?.data
         }
       });
     });
@@ -154,64 +149,53 @@ export const addFriendAction = value => dispatch => {
       return err.response;
     });
 };
-export const deleteFriendByPhoneBookAction = (
-  userID,
-  userIDWantDelete
-) => dispatch => {
-  dispatch({
-    type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_REQUEST
-  });
-  friendService
-    .deleteFriendByPhoneBook(userID, userIDWantDelete)
-    .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_SUCCESS,
-          payload: message
-        });
-      }
-    })
-    .catch(err => {
-      const { error, data } = err.response?.data;
-      dispatch({
-        type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_FAILURE,
-        payload: {
-          error,
-          data
-        }
-      });
-    });
-};
+// export const deleteFriendByPhoneBookAction = userIDWantDelete => dispatch => {
+//   dispatch({
+//     type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_REQUEST
+//   });
+//   friendService
+//     .deleteFriendByPhoneBook(userIDWantDelete)
+//     .then(res => {
+//       const { error, message } = res.data;
+//       if (!error) {
+//         dispatch({
+//           type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_SUCCESS,
+//           payload: message
+//         });
+//       }
+//     })
+//     .catch(err => {
+//       const { error, data } = err.response?.data;
+//       dispatch({
+//         type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_BOOK_FAILURE,
+//         payload: {
+//           error,
+//           data
+//         }
+//       });
+//     });
+// };
 
-export const deleteFriendContactAction = (
-  userID,
-  userIDWantDelete
-) => dispatch => {
+export const deleteFriendContactAction = userIDWantDelete => dispatch => {
   dispatch({
     type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_REQUEST
   });
   friendService
-    .deleteFriendContact(userID, userIDWantDelete)
+    .deleteFriendContact(userIDWantDelete)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS,
-          payload: message
-        });
-      }
+      dispatch({
+        type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_SUCCESS,
+        payload: res.data.message
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
+      console.log(err.response);
       dispatch({
         type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response?.data
         }
       });
-      return err.response?.data;
     });
 };
 export const getUserSentRequestAction = () => dispatch => {

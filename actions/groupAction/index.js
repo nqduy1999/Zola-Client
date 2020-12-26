@@ -9,21 +9,18 @@ export const createGroupChatAction = values => dispatch => {
   groupChatService
     .createGroupChat(values)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: GROUP_CHAT_TYPE.CREATE_CHAT_GROUP_SUCCESS,
-          payload: data
-        });
-      }
+      const { data } = res.data;
+      console.log(res.data);
+      dispatch({
+        type: GROUP_CHAT_TYPE.CREATE_CHAT_GROUP_SUCCESS,
+        payload: data
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
       dispatch({
         type: GROUP_CHAT_TYPE.CREATE_CHAT_GROUP_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response.data
         }
       });
     });
@@ -37,21 +34,16 @@ export const exitGroupChatAction = id => dispatch => {
   groupChatService
     .exitGroupChat(id)
     .then(res => {
-      const { error, message } = res?.data;
-      if (!error) {
-        dispatch({
-          type: GROUP_CHAT_TYPE.EXIT_GROUP_SUCCESS,
-          payload: message
-        });
-      }
+      dispatch({
+        type: GROUP_CHAT_TYPE.EXIT_GROUP_SUCCESS,
+        payload: res.data.message
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
       dispatch({
         type: GROUP_CHAT_TYPE.EXIT_GROUP_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response.data
         }
       });
     });

@@ -78,12 +78,11 @@ export const findUserByIdAction = id => dispatch => {
   return userService
     .findUserById(id)
     .then(res => {
-      if (!error) {
-        dispatch({
-          type: USER_TYPE.FIND_USER_SUCCESS,
-          payload: res.data
-        });
-      }
+      console.log(res.data);
+      dispatch({
+        type: USER_TYPE.FIND_USER_SUCCESS,
+        payload: res.data
+      });
       return res.data;
     })
     .catch(() => {
