@@ -27,7 +27,7 @@ const useChatWithSocket = (dataGroup, id) => {
         setMessages(msg);
       });
     } else {
-      if (dataGroup.id === id) {
+      if (dataGroup?.id === id) {
         const infoUser = {
           list_user: [userProfile, dataGroup],
           positionUserCurrent: 0

@@ -58,28 +58,23 @@ export const addUserToGroupAction = (idRoom, list_user_id) => dispatch => {
 };
 
 export const getDetailGroupAction = idRoom => dispatch => {
+  console.log(idRoom);
   dispatch({
     type: ROOMS_TYPE.GET_DETAIL_GROUP_REQUEST
   });
-
   roomService
     .getDetailGroup(idRoom)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: ROOMS_TYPE.GET_DETAIL_GROUP_SUCCESS,
-          payload: data
-        });
-      }
+      dispatch({
+        type: ROOMS_TYPE.GET_DETAIL_GROUP_SUCCESS,
+        payload: res.data
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
       dispatch({
         type: ROOMS_TYPE.GET_DETAIL_GROUP_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response?.data
         }
       });
     });
@@ -93,21 +88,17 @@ export const deleteRoomAction = idRoom => dispatch => {
   roomService
     .deleteRoom(idRoom)
     .then(res => {
-      const { error, message } = res.data;
-      if (!error) {
-        dispatch({
-          type: ROOMS_TYPE.DELETE_ROOM_SUCCESS,
-          payload: message
-        });
-      }
+      console.log(res.data);
+      dispatch({
+        type: ROOMS_TYPE.DELETE_ROOM_SUCCESS,
+        payload: res.data.message
+      });
     })
     .catch(err => {
-      const { error, data } = err.response?.data;
       dispatch({
         type: ROOMS_TYPE.DELETE_ROOM_FAILURE,
         payload: {
-          error,
-          data
+          data: err.response?.data
         }
       });
     });

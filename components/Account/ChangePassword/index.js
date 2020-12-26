@@ -80,11 +80,7 @@ const ChangePasswordUser = props => {
             <Button
               type="primary"
               style={{
-                fontSize: '12px',
-                fontWeight: '500',
-                margin: '0px auto',
-                display: 'block',
-                padding: '0px 70px'
+                width: '100%'
               }}
             >
               <Spin indicator={antIcon} style={{ color: 'white' }} />
@@ -94,10 +90,7 @@ const ChangePasswordUser = props => {
               type="primary"
               htmlType="submit"
               style={{
-                fontSize: '12px',
-                fontWeight: '500',
-                margin: '0px auto',
-                display: 'block'
+                width: '100%'
               }}
             >
               Cập nhật mật khẩu

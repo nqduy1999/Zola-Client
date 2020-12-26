@@ -35,8 +35,10 @@ const Message = ({ ...props }) => {
   }, [message]);
 
   const handleDeleteMess = () => {
-    socket.emit('delete_message', message?._id);
-    dispatch(getDetailGroupAction(infoRoom?._id));
+    if (message._id) {
+      socket.emit('delete_message', message._id);
+      dispatch(getDetailGroupAction(infoRoom?._id));
+    }
   };
   const convertDateTime = date => {
     const newDate = new Date(date);
@@ -73,7 +75,7 @@ const Message = ({ ...props }) => {
             />
           )}
         </div>
-      ) : infoRoom.active ? (
+      ) : infoRoom?.active ? (
         <div className="avatar avatar--huge">
           {infoRoom?.avatar === null ? (
             <Avatar

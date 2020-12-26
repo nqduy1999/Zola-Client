@@ -70,7 +70,7 @@ const SendOtpComponent = props => {
       const apiSendOtp = `active/send?email=${value.email}`;
       dispatch(sendOtp(apiSendOtp)).then(res => {
         if (res.error) {
-          toast.error(res.data[0].msg, {
+          toast.error(res.data, {
             position: 'top-right',
             autoClose: 3000
           });
@@ -221,17 +221,33 @@ const SendOtpComponent = props => {
             )}
           </Form.Item>
           <Form.Item>
-            <Button
-              htmlType="submit"
-              style={{
-                background: '#0068ff',
-                fontSize: '12px',
-                color: 'white',
-                marginLeft: '40%'
-              }}
-            >
-              Tiếp tục
-            </Button>
+            {isLoading ? (
+              <Button
+                htmlType="submit"
+                style={{
+                  background: '#0068ff',
+                  fontSize: '12px',
+                  color: 'white',
+                  marginLeft: '40%',
+                  width: '100px'
+                }}
+              >
+                <Spin indicator={antIcon} style={{ color: 'white' }} />
+              </Button>
+            ) : (
+              <Button
+                htmlType="submit"
+                style={{
+                  background: '#0068ff',
+                  fontSize: '12px',
+                  color: 'white',
+                  marginLeft: '40%',
+                  width: '100px'
+                }}
+              >
+                Tiếp tục
+              </Button>
+            )}
           </Form.Item>
         </Form>
       )}

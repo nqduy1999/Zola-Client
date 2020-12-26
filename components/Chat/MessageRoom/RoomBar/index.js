@@ -235,7 +235,7 @@ const RoomBar = () => {
           </div>
           {renderRoomBarGroup}
         </div>
-      ) : infoRoom.active ? (
+      ) : infoRoom?.active ? (
         renderBarRoomFromContactList()
       ) : (
         renderBarRoomFromTabRoom(infoRoom?.users)
