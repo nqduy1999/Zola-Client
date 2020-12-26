@@ -23,8 +23,15 @@ const useChatWithSocket = (dataGroup, id) => {
 
       socket.emit('join', info);
 
-      socket.on('load_message', function (msg) {
-        setMessages(msg);
+      socket.on('load_message', function (room) {
+        const { messages: _messages, users } = room;
+        const userLogin = users.find(user => user.id === userProfile.id);
+
+        setMessages(
+          _messages.filter(
+            msg => new Date(msg.createAt) > new Date(userLogin.startDate)
+          )
+        );
       });
     } else {
       if (dataGroup?.id === id) {
@@ -33,8 +40,15 @@ const useChatWithSocket = (dataGroup, id) => {
           positionUserCurrent: 0
         };
         socket.emit('join', infoUser);
-        socket.on('load_message', function (msg) {
-          setMessages(msg);
+        socket.on('load_message', function (room) {
+          const { messages: _messages, users } = room;
+          const userLogin = users.find(user => user.id === userProfile.id);
+
+          setMessages(
+            _messages.filter(
+              msg => new Date(msg.createAt) > new Date(userLogin.startDate)
+            )
+          );
         });
       }
     }
