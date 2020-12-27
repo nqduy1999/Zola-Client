@@ -43,10 +43,11 @@ export const SignUp = (push, dataDispatch) => dispatch => {
       return { error: false, data: res.data };
     })
     .catch(err => {
+      console.log(err.response);
       dispatch({
         type: AUTHENTICATION_TYPE.SIGNUP_FAILURE
       });
-      return { error: true, data: err.response.data[0].msg };
+      return { error: true, data: err.response.data.msg };
     });
 };
 export const saveAccount = dataDispatch => dispatch => {
@@ -67,9 +68,11 @@ export const activeAccount = dataDispatch => dispatch => {
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_SUCCESS
       });
+      cookiesServices.setToken(res.data);
       return { error: false, data: res.data };
     })
     .catch(err => {
+      console.log(err.response);
       dispatch({
         type: AUTHENTICATION_TYPE.ACTIVE_FAILURE
       });
