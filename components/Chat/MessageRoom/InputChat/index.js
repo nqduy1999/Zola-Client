@@ -41,7 +41,6 @@ const InputChat = () => {
         setLoading(true);
         uploadImgSingle(formData).then(res => {
           if (res.data[0]) {
-            console.log(res.data[0]);
             setLoading(false);
             socket.emit('send_and_recive', {
               message: res.data[0],

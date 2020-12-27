@@ -59,7 +59,6 @@ export const fetchFriendsRequestAction = id => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
       dispatch({
         type: FRIENDS_TYPE.FETCH_FRIEND_REQUEST_FAILURE,
         payload: {
@@ -106,14 +105,12 @@ export const acceptFriendAction = (userID, userIDWantAccept) => dispatch => {
 };
 
 export const avoidFriendRequestAcion = userIDWantAvoid => dispatch => {
-  console.log(userIDWantAvoid);
   dispatch({
     type: FRIENDS_TYPE.AVOID_FRIEND_REQUEST
   });
   friendService
     .avoidFriendRequest(userIDWantAvoid)
     .then(res => {
-      console.log(res.data);
       const { message } = res.data;
       dispatch({
         type: FRIENDS_TYPE.AVOID_FRIEND_SUCCESS,
@@ -121,7 +118,6 @@ export const avoidFriendRequestAcion = userIDWantAvoid => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
       dispatch({
         type: FRIENDS_TYPE.AVOID_FRIEND_FAILURE,
         payload: {
@@ -189,7 +185,6 @@ export const deleteFriendContactAction = userIDWantDelete => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response);
       dispatch({
         type: FRIENDS_TYPE.DELETE_FRIEND_PHONE_CONTACT_FAILURE,
         payload: {
