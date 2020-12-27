@@ -4,7 +4,7 @@ class RoomService {
   editRoomName = (idRoom, roomName) => {
     return axios.request({
       method: 'PUT',
-      url: `https://api-chat.ga/api/v0/rooms?id=${idRoom}`,
+      url: `rooms/${idRoom}`,
       data: roomName
     });
   };
@@ -12,7 +12,7 @@ class RoomService {
   addUserToGroup = (idRoom, list_user_id) => {
     return axios.request({
       method: 'PUT',
-      url: `https://api-chat.ga/api/v0/rooms/members?id=${idRoom}`,
+      url: `rooms/members?id=${idRoom}`,
       data: {
         list_user_id
       }
@@ -22,14 +22,14 @@ class RoomService {
   getDetailGroup = idRoom => {
     return axios.request({
       method: 'GET',
-      url: `https://api-chat.ga/api/v0/rooms/${idRoom}`
+      url: `rooms/${idRoom}`
     });
   };
 
   deleteRoom = idRoom => {
     return axios.request({
       method: 'DELETE',
-      url: `https://api-chat.ga/api/v0/rooms/${idRoom}`
+      url: `rooms/${idRoom}`
     });
   };
 }
