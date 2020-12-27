@@ -25,13 +25,11 @@ const useChatWithSocket = (dataGroup, id) => {
 
       socket.on('load_message', function (room) {
         const { messages: _messages, users } = room;
-        const userLogin = users.find(user => user.id === userProfile.id);
-
-        setMessages(
-          _messages.filter(
-            msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
-          )
+        const userLogin = users.find(user => user.id === userProfile?.id);
+        const newMessage = _messages.filter(
+          msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
         );
+        setMessages(newMessage);
       });
     } else {
       if (dataGroup?.id === id) {
@@ -42,17 +40,17 @@ const useChatWithSocket = (dataGroup, id) => {
         socket.emit('join', infoUser);
         socket.on('load_message', function (room) {
           const { messages: _messages, users } = room;
-          const userLogin = users.find(user => user.id === userProfile.id);
-          console.log(userLogin.startDate);
-          setMessages(
-            _messages.filter(
-              msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
-            )
+          const userLogin = users.find(user => user.id === userProfile?.id);
+
+          const newMessage = _messages.filter(
+            msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
           );
+          setMessages(newMessage);
         });
       }
     }
   }, [dataGroup]);
+
   useEffect(() => {
     socket.on('send_and_recive', function (msg) {
       setMessages(preMess => [...preMess, msg]);

@@ -10,7 +10,6 @@ export const createGroupChatAction = values => dispatch => {
     .createGroupChat(values)
     .then(res => {
       const { data } = res.data;
-      console.log(res.data);
       dispatch({
         type: GROUP_CHAT_TYPE.CREATE_CHAT_GROUP_SUCCESS,
         payload: data

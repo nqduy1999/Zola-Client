@@ -58,7 +58,6 @@ export const addUserToGroupAction = (idRoom, list_user_id) => dispatch => {
 };
 
 export const getDetailGroupAction = idRoom => dispatch => {
-  console.log(idRoom);
   dispatch({
     type: ROOMS_TYPE.GET_DETAIL_GROUP_REQUEST
   });
@@ -88,7 +87,6 @@ export const deleteRoomAction = idRoom => dispatch => {
   roomService
     .deleteRoom(idRoom)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: ROOMS_TYPE.DELETE_ROOM_SUCCESS,
         payload: res.data.message

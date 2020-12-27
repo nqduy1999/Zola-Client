@@ -78,7 +78,6 @@ export const findUserByIdAction = id => dispatch => {
   return userService
     .findUserById(id)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: USER_TYPE.FIND_USER_SUCCESS,
         payload: res.data

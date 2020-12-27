@@ -94,7 +94,6 @@ const ConfirmOtpSignUp = props => {
         phone: valueSent.phone
       };
       dispatch(activeAccount(valueActive)).then(res => {
-        console.log(res);
         if (!res.error) {
           const valueSignUp = {
             name: value.name,
