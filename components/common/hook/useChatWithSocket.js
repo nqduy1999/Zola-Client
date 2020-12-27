@@ -26,10 +26,11 @@ const useChatWithSocket = (dataGroup, id) => {
       socket.on('load_message', function (room) {
         const { messages: _messages, users } = room;
         const userLogin = users.find(user => user.id === userProfile?.id);
-        const newMessage = _messages.filter(
-          msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+        setMessages(
+          _messages.filter(
+            msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+          )
         );
-        setMessages(newMessage);
       });
     } else {
       if (dataGroup?.id === id) {
@@ -41,11 +42,11 @@ const useChatWithSocket = (dataGroup, id) => {
         socket.on('load_message', function (room) {
           const { messages: _messages, users } = room;
           const userLogin = users.find(user => user.id === userProfile?.id);
-
-          const newMessage = _messages.filter(
-            msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+          setMessages(
+            _messages.filter(
+              msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+            )
           );
-          setMessages(newMessage);
         });
       }
     }
