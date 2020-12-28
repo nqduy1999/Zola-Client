@@ -5,7 +5,7 @@ const SocketIOContext = createContext(null);
 const { Provider } = SocketIOContext;
 
 const SocketIOProvider = ({ ...props }) => {
-  const socket = io('https://api-chat.ga', {
+  const socket = io('https://api-chat.cf', {
     reconnectionDelay: 1000,
     reconnection: false,
     reconnectionAttempts: 10,
