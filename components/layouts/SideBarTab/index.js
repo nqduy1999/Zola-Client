@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React Libary
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Dropdown, Menu, Popconfirm, Avatar } from 'antd';
+// import { Tab, Tabs, TabPanel } from 'react-tabs';
+import { Button, Dropdown, Menu, Popconfirm, Avatar, Collapse } from 'antd';
 import { EditOutlined, EllipsisOutlined, KeyOutlined } from '@ant-design/icons';
 
 // Redux
@@ -44,14 +44,17 @@ import InfoConversation from 'components/InfoConversation';
 const prefix = 'sidebar-tab';
 const c = classPrefixor(prefix);
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const { Panel } = Collapse;
 
 const SideBarTab = () => {
   // react hook
   const [visible, setVisible] = useState(false);
   const [userData, setUserData] = useState({});
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [tabIndex, setTabIndex] = useState(0);
+  // const [tabIndex, setTabIndex] = useState();
+  const [stateIcon, setStateIcon] = useState('message_icon');
+  const [stateIconInContact, setStateIconInContact] = useState('add-friend');
+  const [clickRoom, setClickRoom] = useState(null);
   // redux hook
   const dispatch = useDispatch();
   const { userProfile } = useSelector(state => state.userData);
@@ -74,9 +77,9 @@ const SideBarTab = () => {
     setStatusRoom,
     setInfoRoom,
     setLoading,
-    infoRoom,
-    sendMessage,
-    setSendMessage
+    infoRoom
+    // sendMessage,
+    // setSendMessage
   } = useContext(InfoRoomContext);
   // variable Global
   const totalFriend = listFriendContact?.length;
@@ -93,13 +96,11 @@ const SideBarTab = () => {
     );
     return renderAvatarUserGroup();
   };
-
   useEffect(() => {
     if (userProfile?.id) {
       dispatch(fetchFriendsContactAction(userProfile?.id));
     }
   }, [userProfile]);
-
   useEffect(() => {
     if (messageDeleteRoom?.length > 0) {
       dispatch(getDetailGroupAction(infoRoom?._id));
@@ -143,8 +144,8 @@ const SideBarTab = () => {
       </Menu.Item>
     </Menu>
   );
-
   const handleClickRoom = async value => {
+    setClickRoom(value);
     setLoading(true);
     setInfoRoom(value);
     if (!value.group) {
@@ -155,19 +156,6 @@ const SideBarTab = () => {
       setTimeout(setLoading(false), 3000);
     }
   };
-
-  const renderRooms = () => {
-    return listGroup?.map((item, key) => {
-      return (
-        <>
-          <TabPanel key={key}>
-            <MessageRoom id={item.id} />
-          </TabPanel>
-        </>
-      );
-    });
-  };
-
   const renderDropdownThreeDots = room => {
     return (
       <Dropdown overlay={() => menu(room._id)} trigger={['click']}>
@@ -223,7 +211,7 @@ const SideBarTab = () => {
             >
               <p className="group__name">{user?.name}</p>
             </div>
-            {renderDropdownThreeDots(room)}
+            <div>{renderDropdownThreeDots(room)}</div>
           </div>
         );
       }
@@ -248,24 +236,15 @@ const SideBarTab = () => {
       </div>
     );
   };
-
-  const renderContactRooms = () => {
-    return listFriendContact?.map((item, key) => {
-      return (
-        <>
-          <TabPanel key={key}>
-            <MessageRoom id={item.id} />
-          </TabPanel>
-        </>
-      );
-    });
-  };
   // Hiển thị các group và single group
   const renderNameListRoom = useCallback(() => {
     return listGroup?.map((room, key) => {
       return (
         <>
-          <Tab onClick={() => handleClickRoom(room)}>
+          <Menu.Item
+            onClick={() => handleClickRoom(room)}
+            style={{ height: '100px' }}
+          >
             <div className="message_tab_chat" key={key}>
               <div className="list_user_room">
                 <div className="info_user_room">
@@ -275,25 +254,31 @@ const SideBarTab = () => {
                 </div>
               </div>
             </div>
-          </Tab>
+          </Menu.Item>
         </>
       );
     });
   }, [listGroup]);
-
+  const ClickAndressIcon = () => {
+    setClickPeopleIcon('unClickPeopleIcon');
+    setStateIcon('address_icon');
+  };
   // Hiển thị ra các tab với các icon tương ứng
   const renderTabsIcon = () => {
     return (
-      <>
-        <Tab style={{ padding: '24.5%' }}>
+      <Menu className="sidebar_render_left">
+        <Menu.Item
+          style={{ paddingTop: '10px', height: '60px' }}
+          onClick={() => setStateIcon('message_icon')}
+        >
           <i className="fa fa-comment" style={{ fontSize: '20px' }}></i>
-        </Tab>
-        <Tab
-          style={{ padding: '24.5%', paddingLeft: '29%' }}
-          onClick={() => setClickPeopleIcon('unClickPeopleIcon')}
+        </Menu.Item>
+        <Menu.Item
+          onClick={ClickAndressIcon}
+          style={{ paddingTop: '10px', height: '60px' }}
         >
           <i className="fa fa-address-book" style={{ fontSize: '20px' }}></i>
-        </Tab>
+        </Menu.Item>
         <div className="sign-out">
           <Button
             onClick={() => {
@@ -303,7 +288,7 @@ const SideBarTab = () => {
             <i className="fa fa-sign-out-alt"></i>
           </Button>
         </div>
-      </>
+      </Menu>
     );
   };
 
@@ -340,23 +325,22 @@ const SideBarTab = () => {
             )
           }
         >
-          <MenuItemGroup className="styleMenuItem">
+          <Menu.Item className="styleMenuItem" onClick={showModal}>
             <EditOutlined className="styleIcon" />
-            <a target="_blank" onClick={showModal} style={{ color: 'black' }}>
+            <a target="_blank" style={{ color: 'black' }}>
               Cập nhật thông tin
             </a>
-          </MenuItemGroup>
-          <MenuItemGroup className="styleMenuItem">
+          </Menu.Item>
+          <Menu.Item
+            className="styleMenuItem"
+            onClick={() => setVisiblePassword(true)}
+          >
             <KeyOutlined className="styleIcon" />
-            <a
-              target="_blank"
-              onClick={() => setVisiblePassword(true)}
-              style={{ color: 'black' }}
-            >
+            <a target="_blank" style={{ color: 'black' }}>
               Đổi mật khẩu
             </a>
-          </MenuItemGroup>
-          <MenuItemGroup className="submenu__delete">
+          </Menu.Item>
+          <Menu.Item className="submenu__delete">
             <a
               target="_blank"
               style={{ color: 'red' }}
@@ -366,7 +350,7 @@ const SideBarTab = () => {
             >
               Đăng Xuất
             </a>
-          </MenuItemGroup>
+          </Menu.Item>
         </SubMenu>
       </>
     );
@@ -375,156 +359,139 @@ const SideBarTab = () => {
   //Đây là tab để render ra bên cây màu xanh nè!
   const renderTabList = () => {
     return (
-      <TabList className={c`tabs__tablist`}>
+      <div className={c`tabs__tablist`}>
         <div className="tablist__content">
           <Menu className="menuUser" triggerSubMenuAction="click">
             {renderSubMenuWhenClickIconAvatar()}
           </Menu>
           {renderTabsIcon()}
         </div>
-      </TabList>
+      </div>
     );
   };
+  const clickFriendInContact = friend => {
+    handleClickRoom(friend);
+    setStateIconInContact('room-friend');
+  };
+  //render Friend in Contact List
   const renderFriend = () => {
     return listFriendContact?.map((friend, key) => {
       return (
-        <Tab key={key} onClick={() => handleClickRoom(friend)}>
+        <div key={key} onClick={() => clickFriendInContact(friend)}>
           <Directory elm={friend} totalFriend={totalFriend} />
-        </Tab>
+        </div>
       );
     });
-  };
-  // Đây là tabpanel của các tab trong tab danh bạ điện thoại
-  const renderTabPanelItemInIconPhoneBook = () => {
-    return (
-      <>
-        <TabPanel>
-          <FriendList />
-        </TabPanel>
-        <TabPanel>
-          <PhoneBook />
-        </TabPanel>
-        <TabPanel>
-          <GroupList />
-        </TabPanel>
-        {renderContactRooms()}
-      </>
-    );
   };
 
   // Đây là tab của icon danh bạ điện thoại
   const renderTabPanelInPhoneBook = () => {
     return (
-      <TabPanel>
-        <Tabs forceRenderTabPanel>
-          <TabList className={c`tabs__tablist`}>
-            <SearchComponent />
-            <div className="scrollCustom">
-              <Tab className="tab">
-                <img
-                  src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
-                  alt="imgAddF"
-                />
-                <span>Danh Sách Kết Bạn</span>
-              </Tab>
-
-              <Tab className="tab">
-                <i className="fa fa-address-book"></i>
-                <span>Danh Bạ Bạn Bè</span>
-              </Tab>
-              <Tab className="tab">
-                <img
-                  src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
-                  alt="imgAddF"
-                />
-                <span>Danh Sách Nhóm</span>
-              </Tab>
-              <div style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }} />
-              <p
-                style={{
-                  marginTop: '15px',
-                  textAlign: 'center',
-                  color: '#1890ff',
-                  fontWeight: 'bold'
-                }}
-              >
-                Bạn bè ({totalFriend})
-              </p>
-              {renderFriend()}
+      <div className="tab-chat-render">
+        <div className={c`tabs__tablist`}>
+          <SearchComponent />
+          <div className="scrollCustom">
+            <div
+              className="tab"
+              onClick={() => setStateIconInContact('add-friend')}
+            >
+              <img
+                src="https://zalo-chat-static.zadn.vn/v1/NewFr@2x.png"
+                alt="imgAddF"
+              />
+              <span>Danh Sách Kết Bạn</span>
             </div>
-          </TabList>
-          {renderTabPanelItemInIconPhoneBook()}
-        </Tabs>
-      </TabPanel>
-    );
-  };
 
-  const renderTabPanelItemInIconChat = () => {
-    return (
-      <>
-        <TabPanel>
-          <HomePage />
-        </TabPanel>
-        {renderRooms()}
-      </>
+            <div
+              className="tab"
+              onClick={() => setStateIconInContact('phone-book')}
+            >
+              <i className="fa fa-address-book"></i>
+              <span>Danh sách đồng bộ</span>
+            </div>
+            <div
+              className="tab"
+              onClick={() => setStateIconInContact('group-list')}
+            >
+              <img
+                src="https://zalo-chat-static.zadn.vn/v1/group@2x.png"
+                alt="imgAddF"
+              />
+              <span>Danh Sách Nhóm</span>
+            </div>
+            <div style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }} />
+            <Collapse
+              defaultActiveKey={['1']}
+              bordered={false}
+              expandIconPosition="right"
+            >
+              <Panel
+                header={`Bạn bè ${totalFriend}`}
+                key="1"
+                style={{ backgroundColor: 'white' }}
+                className="friend-list-contact"
+              >
+                <div className="scrollable-container">{renderFriend()}</div>
+              </Panel>
+            </Collapse>
+          </div>
+        </div>
+      </div>
     );
-  };
-  const renderSelectedTab = index => {
-    setSendMessage(false);
-    setTabIndex(index);
   };
   // Đây là tab của icon chat
   const renderTabpanelInChatting = useCallback(() => {
     return (
-      <TabPanel>
-        <Tabs
-          forceRenderTabPanel
-          selectedIndex={sendMessage ? 1 : tabIndex}
-          onSelect={index => renderSelectedTab(index)}
-        >
-          <TabList className={c`tabs__tablist`}>
-            <SearchComponent />
-            <Menu
-              style={{ border: 'none' }}
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-            ></Menu>
-            <div className="scrollCustom">
-              <Tab style={{ display: 'none' }}></Tab>
-              {renderNameListRoom()}
-            </div>
-          </TabList>
-          {renderTabPanelItemInIconChat()}
-        </Tabs>
-      </TabPanel>
+      <div className={c`tabs__tablist`}>
+        <SearchComponent />
+        <Menu
+          style={{ border: 'none' }}
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+        ></Menu>
+        <div className="scrollCustom">
+          <Menu className="listRoom_name">{renderNameListRoom()}</Menu>
+        </div>
+      </div>
     );
-  }, [renderNameListRoom, renderRooms]);
-
-  const renderTabPanel = () => {
-    return (
-      <>
-        {renderTabpanelInChatting()}
-        {renderTabPanelInPhoneBook()}
-      </>
-    );
+  }, [renderNameListRoom]);
+  const renderRoom = () => {
+    return <MessageRoom id={clickRoom?.id} />;
   };
-
+  const chooseOnList = () => {
+    switch (stateIconInContact) {
+      case 'add-friend':
+        return <FriendList />;
+      case 'phone-book':
+        return <PhoneBook />;
+      case 'group-list':
+        return <GroupList />;
+      case 'room-friend':
+        return <MessageRoom id={clickRoom?.id} />;
+    }
+  };
   const renderTabsTree = () => {
     return (
       <>
         <secion className={`${prefix} ${clickPeopleIcon} ${clickSideBarIcon}`}>
-          <Tabs
-            forceRenderTabPanel
-            defaultIndex={0}
-            className={c`tabs`}
-            selectedTabClassName="is-selected"
-          >
+          <div className={c`tabs`}>
             {renderTabList()}
-            {renderTabPanel()}
-          </Tabs>
+            {stateIcon == 'message_icon' ? (
+              <div className="tab-chat-render">
+                {renderTabpanelInChatting()}
+                {clickRoom ? renderRoom() : <HomePage />}
+              </div>
+            ) : stateIcon == 'address_icon' ? (
+              <div className="tab-chat-render">
+                {renderTabPanelInPhoneBook()}
+                {chooseOnList()}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
           <ManagePeopleInGroup />
-          <InfoConversation />
-          {visible && (
+          {visible ? (
             <Update
               cancelAvatar={cancelModal}
               visible={visible}
@@ -532,7 +499,11 @@ const SideBarTab = () => {
               setVisible={setVisible}
               setUserProfile={setUserData}
             />
+          ) : (
+            ' '
           )}
+          <InfoConversation />
+
           {visiblePassword && (
             <ChangePasswordUser
               visible={visiblePassword}

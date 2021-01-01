@@ -5,6 +5,10 @@
     .is-selected {
       background-color: #0783cc;
     }
+    .tab-chat-render{
+      display: grid;
+      grid-template-columns: 320px auto;
+    }
     &__tablist {
       display: flex;
       flex-direction: column;
@@ -17,7 +21,7 @@
         width: 100%;
         position: relative;
         .ant-menu {
-          height: 100px;
+          height: 95px;
           width: 64px;
           margin-top: 7px;
           font-size: 14px;
@@ -150,6 +154,14 @@
         margin-right: 10px;
       }
     }
+    .sidebar_render_left{
+        .ant-menu-item-selected{
+          background-color: #0783cc;
+        }
+        .ant-menu-item-only-child{
+          border: none;
+        }
+    }
   }
   .react-tabs {
     display: grid;
@@ -221,6 +233,11 @@
 .scrollCustom {
   overflow-y: hidden !important;
   transition: opacity 1s;
+  .friend-list-contact{
+    .ant-collapse-content-box{
+      padding:0;
+    }
+  }
   &:hover {
     overflow-y: scroll !important;
   }
@@ -263,4 +280,7 @@
 }
 .ant-modal-mask{
    background-color: rgba(0, 0, 0, 0.1);
+}
+.ant-list-split .ant-list-item {
+  border:none;
 }

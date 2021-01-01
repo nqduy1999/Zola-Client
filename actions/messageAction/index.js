@@ -22,11 +22,10 @@ export const getListMessage = page => dispatch => {
       }
     })
     .catch(err => {
-      const { error } = err.response.data;
       dispatch({
         type: MESSAGE_TYPE.FETCH_LIST_MESSAGE_FAILURE
       });
-      return error;
+      return err.response?.msg;
     });
 };
 export const getDetailMesage = id => dispatch => {
@@ -36,19 +35,15 @@ export const getDetailMesage = id => dispatch => {
   return axiosServices
     .get(`${prefix}detail?id=${id}`)
     .then(res => {
-      const { error, data } = res.data;
-      if (!error) {
-        dispatch({
-          type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_SUCCESS,
-          payload: data
-        });
-      }
+      dispatch({
+        type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_SUCCESS,
+        payload: res.data
+      });
     })
     .catch(err => {
-      const { error } = err.response.data;
       dispatch({
         type: MESSAGE_TYPE.FETCH_MESSAGE_ROOM_FAILURE
       });
-      return error;
+      return err?.response?.msg;
     });
 };

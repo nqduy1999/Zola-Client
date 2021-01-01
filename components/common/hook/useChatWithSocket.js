@@ -25,10 +25,10 @@ const useChatWithSocket = (dataGroup, id) => {
 
       socket.on('load_message', function (room) {
         const { messages: _messages, users } = room;
-        const userLogin = users.find(user => user.id === userProfile?.id);
+        const userLogin = users.find(user => user.id == userProfile?.id);
         setMessages(
           _messages.filter(
-            msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+            msg => new Date(msg.createdAt) > new Date(userLogin?.startDate)
           )
         );
       });
@@ -41,10 +41,10 @@ const useChatWithSocket = (dataGroup, id) => {
         socket.emit('join', infoUser);
         socket.on('load_message', function (room) {
           const { messages: _messages, users } = room;
-          const userLogin = users.find(user => user.id === userProfile?.id);
+          const userLogin = users.find(user => user.id == userProfile?.id);
           setMessages(
             _messages.filter(
-              msg => new Date(msg.createdAt) > new Date(userLogin.startDate)
+              msg => new Date(msg.createdAt) > new Date(userLogin?.startDate)
             )
           );
         });

@@ -10,10 +10,9 @@ const prefix = 'search-bar';
 const SearchComponent = () => {
   const { userProfile } = useSelector(state => state.userData);
   const [userData, setUserData] = useState(null);
-  // const [visibleModalSearch, setVisibleModalSearch] = useState(false);
-  const { visibleAddFriend, setVisibleAddFriend } = useContext(InfoRoomContext);
 
   const [showModalAddGroup, setShowModalAddGroup] = useState(false);
+  const { visibleAddFriend, setVisibleAddFriend } = useContext(InfoRoomContext);
 
   useEffect(() => {
     if (userProfile) {
@@ -64,14 +63,7 @@ const SearchComponent = () => {
             </Button>
           </Col>
         </Row>
-        {visibleAddFriend ? (
-          <AddFriend
-            visible={visibleAddFriend}
-            setVisible={setVisibleAddFriend}
-          />
-        ) : (
-          ''
-        )}
+        {visibleAddFriend ? <AddFriend /> : ''}
 
         {showModalAddGroup && (
           <AddGroup

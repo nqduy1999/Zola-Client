@@ -19,7 +19,7 @@ export const createGroupChatAction = values => dispatch => {
       dispatch({
         type: GROUP_CHAT_TYPE.CREATE_CHAT_GROUP_FAILURE,
         payload: {
-          data: err.response.data
+          data: err.response
         }
       });
     });

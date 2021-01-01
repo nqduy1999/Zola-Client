@@ -102,12 +102,23 @@ const GroupList = () => {
         />
         <span>Danh Sách Nhóm</span>
       </div>
-      <section className={prefix}>
-        <div className={c`content`}>
-          <div className={c`content__inside`}>
-            <div className="scroll-list">{renderListGroup()}</div>
+      <section
+        className={prefix}
+        style={{
+          top: '120px',
+          left: '400px',
+          position: 'absolute'
+        }}
+      >
+        {listGroup.length > 0 ? (
+          <div className={c`content`}>
+            <div className={c`content__inside`}>
+              <div className="scroll-list">{renderListGroup()}</div>
+            </div>
           </div>
-        </div>
+        ) : (
+          ''
+        )}
       </section>
     </>
   );

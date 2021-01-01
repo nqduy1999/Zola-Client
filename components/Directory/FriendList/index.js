@@ -153,7 +153,7 @@ const FriendList = () => {
                 {renderListFriendRequest()}
               </div>
             </div>
-          </div>{' '}
+          </div>
         </section>
       ) : (
         <AddFriendPage />

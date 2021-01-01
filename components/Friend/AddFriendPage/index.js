@@ -8,12 +8,16 @@ import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 
 const prefix = 'homePage';
 const c = classPrefixor(prefix);
-
+const style = {
+  top: '150px',
+  left: '400px',
+  position: 'absolute'
+};
 const AddFriendPage = () => {
   const { setVisibleAddFriend } = useContext(InfoRoomContext);
-  useChangeMeta('Trang Chủ');
+  useChangeMeta('Danh sách kết Bạn');
   return (
-    <div className={c`main-container`}>
+    <div className={c`main-container`} style={style}>
       <div
         style={{
           width: '475px',

@@ -12,6 +12,7 @@ import {
 
 // Common
 import { classPrefixor } from 'utils/classPrefixor';
+import FriendOnPhoneBook from 'components/Friend/FriendOnPhoneBook';
 
 const prefix = 'phoneBook';
 const c = classPrefixor(prefix);
@@ -75,14 +76,25 @@ const PhoneBook = () => {
     <>
       <div className={c`header`}>
         <i className="fa fa-address-book"></i>
-        <span>Danh Bạ Bạn Bè</span>
+        <span>Danh sách đồng bộ</span>
       </div>
-      <section className={prefix}>
-        <div className={c`content`}>
-          <div className={c`content__inside`}>
-            {renderListFriendPhoneBook()}
+      <section
+        className={prefix}
+        style={{
+          top: '120px',
+          left: '400px',
+          position: 'absolute'
+        }}
+      >
+        {listFriendPhoneBook.length > 0 ? (
+          <div className={c`content`}>
+            <div className={c`content__inside`}>
+              {renderListFriendPhoneBook()}
+            </div>
           </div>
-        </div>
+        ) : (
+          <FriendOnPhoneBook />
+        )}
       </section>
     </>
   );
