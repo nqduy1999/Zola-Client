@@ -1,11 +1,12 @@
 import { Button } from 'antd';
 import PropTypes, { func } from 'prop-types';
 import Modal from 'antd/lib/modal/Modal';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { classPrefixor } from 'utils/classPrefixor';
 import Avatar from 'react-avatar';
-import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import { PlusOutlined, CheckOutlined, MessageFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 import { acceptFriendAction, addFriendAction } from 'actions/friendAction';
 const prefix = 'view-user-friend';
 const c = classPrefixor(prefix);
@@ -21,33 +22,20 @@ const label_user = {
 };
 
 const ViewUserFriend = props => {
+  //Redux
+  const { setChatWithStanger, setVisibleAddFriend } = useContext(
+    InfoRoomContext
+  );
   const { userProfile } = useSelector(state => state.userData);
   const { listUserSentReq, listFriendContact, listFriendRequest } = useSelector(
     state => state.FriendReducer
   );
+  const dispatch = useDispatch();
+  //Props
   const { visible, onCancelModal, userData } = props;
   const [idAccept, setIdAccept] = useState();
   const [statusFriend, setStatusFriend] = useState(1);
-  const dispatch = useDispatch();
-  const OnAddFriend = () => {
-    const value = {
-      user_id: userProfile?.id,
-      user_request_id: userData?.id
-    };
-    dispatch(addFriendAction(value)).then(res => {
-      if (!res.error) {
-        setStatusFriend(2);
-      }
-    });
-  };
-  const closeModalView = () => {
-    onCancelModal();
-  };
-  const AcceptFriend = () => {
-    if (idAccept) {
-      dispatch(acceptFriendAction(userProfile.id, idAccept));
-    }
-  };
+  //UseEffect
   useEffect(() => {
     if (userProfile?.id == userData?.id) {
       setStatusFriend(0);
@@ -90,6 +78,35 @@ const ViewUserFriend = props => {
       }
     }
   }, [listFriendContact, userData?.id]);
+  //Function Add Friend
+  const OnAddFriend = () => {
+    const value = {
+      user_id: userProfile?.id,
+      user_request_id: userData?.id
+    };
+    dispatch(addFriendAction(value)).then(res => {
+      if (!res.error) {
+        setStatusFriend(2);
+      }
+    });
+  };
+  // Close Modal Add Friend
+  const closeModalView = () => {
+    onCancelModal();
+  };
+  //Function Accept Friend
+  const AcceptFriend = () => {
+    if (idAccept) {
+      dispatch(acceptFriendAction(userProfile.id, idAccept));
+    }
+  };
+  //Send message to stranger
+  const chatWithStranger = () => {
+    setChatWithStanger(true);
+    setVisibleAddFriend(false);
+    closeModalView();
+    console.log('Chat with stranger');
+  };
   return (
     <Modal
       className={c`main`}
@@ -126,6 +143,14 @@ const ViewUserFriend = props => {
       </div>
       <div className="friend-profile__actions friend-profile__actions__header">
         <div>
+          <Button
+            type="success"
+            style={{ marginLeft: '27%' }}
+            onClick={chatWithStranger}
+          >
+            <MessageFilled />
+            Nhắn tin
+          </Button>
           {statusFriend == 1 ? (
             <Button type="primary" onClick={OnAddFriend}>
               <PlusOutlined />

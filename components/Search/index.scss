@@ -20,15 +20,9 @@
           padding-bottom: 8%;
           padding-left: 10%;
           width: 100%;
-          .search-zola-message {
-            margin-left: 10px;
-          }
-          .icon-zola-message {
-            margin-top: 5px;
-            margin-left: 15px;
-            color: #8e8e93;
-            font-size: 14px;
-          }
+          button{
+            cursor: pointer;
+          }    
         }
       }
     }

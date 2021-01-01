@@ -1,6 +1,6 @@
 import { Input, Form, Collapse } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { classPrefixor } from 'utils/classPrefixor';
@@ -11,13 +11,15 @@ import {
   searchFriendAction,
   fetchFriendsRequestAction
 } from 'actions/friendAction';
+import { InfoRoomContext } from 'components/common/context/InfoRoomContext';
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 }
 };
 const prefix = 'add-friend';
 const c = classPrefixor(prefix);
-const AddFriend = props => {
+const AddFriend = () => {
+  const { visibleAddFriend, setVisibleAddFriend } = useContext(InfoRoomContext);
   const [form] = Form.useForm();
   const [statusSearch, setStatusSearch] = useState(false);
   const [suggestFriend, setSuggestFriend] = useState(null);
@@ -40,9 +42,8 @@ const AddFriend = props => {
     }
   };
   const dispatch = useDispatch();
-  const { visible, setVisible } = props;
   const cancelAddFriend = () => {
-    setVisible(false);
+    setVisibleAddFriend(false);
     setSuggestFriend(null);
     setStatusSearch(false);
     form.resetFields();
@@ -59,7 +60,7 @@ const AddFriend = props => {
   return (
     <Modal
       title="Thêm bạn"
-      visible={visible}
+      visible={visibleAddFriend}
       onCancel={cancelAddFriend}
       footer={null}
       style={{
@@ -110,12 +111,8 @@ const AddFriend = props => {
 };
 export default AddFriend;
 AddFriend.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any),
-  visible: PropTypes.any,
-  setVisible: PropTypes.any
+  children: PropTypes.objectOf(PropTypes.any)
 };
 AddFriend.defaultProps = {
-  children: {},
-  visible: {},
-  setVisible: {}
+  children: {}
 };

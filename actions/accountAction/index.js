@@ -86,6 +86,7 @@ export const sendOtp = apiDefault => dispatch => {
   return accountService
     .sendOtpService(apiDefault)
     .then(res => {
+      cookiesService.setToken(res.data);
       dispatch({
         type: AUTHENTICATION_TYPE.SEND_OTP_SUCCESS
       });

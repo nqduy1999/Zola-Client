@@ -30,7 +30,6 @@ const MessageRoom = ({ ...props }) => {
       setPos(currentPost);
       setMessageInRoom(messages.slice(currentPost, messages.length));
       setIsLoading(false);
-      console.log(messages);
     }
   }, [messages]);
   const onScrollMessage = e => {
